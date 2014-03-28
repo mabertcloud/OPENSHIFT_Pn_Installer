@@ -11,6 +11,8 @@ esac
 
 client_result "Install called $version"
 
+jboss() {
+
 DOWNLOAD_FILE_JBOSS="jboss-${version}.zip"
 DOWNLOAD_FILE_TOMCAT="tomcat-${version}.zip"
 
@@ -40,6 +42,11 @@ cp $OPENSHIFT_PLN_DIR/conf/jboss-service.xml PlanonProCenter/jboss-6.1.0.Final/s
 cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/jboss-6.1.0.Final/server/default/conf/
 cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/hornetq/
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
+}
 
+case "$1" in
+  jboss)       jboss ;;
+  *)           exit 0
+esac
 
 exit 0
