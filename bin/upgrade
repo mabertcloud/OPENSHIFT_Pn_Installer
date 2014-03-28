@@ -1,0 +1,12 @@
+#!/bin/bash -eu
+
+PATH=/bin/:/usr/bin:$PATH
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+php_version=$1
+curr=$2
+next=$3
+
+
+client_result "Upgrade called $1, $2, $3"
