@@ -19,9 +19,10 @@ COCKPIT_LOCATION="http://cockpit-prod.eu.cloudiswhoweare.com/CloudCockpit"
 
 cd $OPENSHIFT_PLN_DIR
 
-
 #Get the right DB connections 
 wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
+
+client_result < $OPENSHIFT_PLN_DIR/conf/planon-ds.xml
 
 wget $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
@@ -40,5 +41,33 @@ cp $OPENSHIFT_PLN_DIR/conf/jboss-service.xml PlanonProCenter/jboss-6.1.0.Final/s
 cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/jboss-6.1.0.Final/server/default/conf/
 cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/hornetq/
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
+
+#TOMCAT
+
+wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
+
+client_result "Tomcat downloaded"
+
+unzip -q $DOWNLOAD_FILE_TOMCAT -d PlanonProCenter
+
+client_result "Tomcat unzipped"
+
+rm $DOWNLOAD_FILE_TOMCAT
+
+cp $OPENSHIFT_PLN_DIR/conf/setenv.sh PlanonProCenter/tomcat-7.0.47/bin/
+cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/mobile.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/pss.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/sdk.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/mobile.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/pss.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/sdk.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+
+
+chmod +x PlanonProCenter/tomcat-7.0.47/bin/startup.sh
+chmod +x PlanonProCenter/tomcat-7.0.47/bin/catalina.sh
+chmod +x PlanonProCenter/tomcat-7.0.47/bin/shutdown.sh
+chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
 
 exit 0
