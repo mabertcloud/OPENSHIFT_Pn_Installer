@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-PATH=/bin/:/usr/bin:$PATH
-
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
-
-client_result "Controll Main called $1"
-
-exit 0

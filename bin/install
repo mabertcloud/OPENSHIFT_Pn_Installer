@@ -9,6 +9,6 @@ case "$1" in
     version="$2"
 esac
 
-client_result "Install called $2"
+client_result "Install called $version"
 
 exit 0

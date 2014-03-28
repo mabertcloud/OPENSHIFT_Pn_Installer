@@ -4,6 +4,11 @@ PATH=/bin/:/usr/bin:$PATH
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-client_result "Setup called $1"
+case "$1" in
+  -v|--version)
+    version="$2"
+esac
+
+client_result "Setup called $version"
 
 exit 0
