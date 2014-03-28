@@ -7,6 +7,7 @@ Display-Name: Planon 14.3
 Description: "Planon cartridge"
 Version: '14.3'
 Versions: 
+- '13.17'
 - '14.3'
 Vendor: CloudIsWhoWeAre.com
 Categories:
@@ -23,6 +24,11 @@ Scaling:
   Min: 1
   Max: 1
 Group-Overrides:
+Version-Overrides:
+  '13.17':
+    Display-Name: planon 13.17
+    Provides:
+    - planon-13.17
 Endpoints:
 Additional-Control-Actions:
 - threaddump
