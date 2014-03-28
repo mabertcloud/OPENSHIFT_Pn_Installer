@@ -3,9 +3,9 @@ Cartridge-Short-Name: PLN
 Source-Url: https://github.com/HenkLaracker/PnEE/archive/master.zip
 Cartridge-Version: '0.9'
 Cartridge-Vendor: cloudiswhoweare
-Display-Name: Planon
+Display-Name: Planon 14.3
 Description: "Planon cartridge"
-Version: '13.17'
+Version: '14.3'
 Versions: 
 - '13.17'
 - '14.3'
@@ -18,11 +18,17 @@ Help-Topics:
   "Developer Center": https://openshift.redhat.com/community/developers
 Cart-Data:
 Provides:
+- planon-14.3
 Subscribes:
 Scaling:
   Min: 1
   Max: 1
 Group-Overrides:
+Version-Overrides:
+  '13.17':
+    Display-Name: planon 13.17
+    Provides:
+    - mysql-13.17
 Endpoints:
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_TOMCAT
