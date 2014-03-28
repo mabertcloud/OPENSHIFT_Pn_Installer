@@ -28,7 +28,7 @@ Version-Overrides:
   '13.17':
     Display-Name: planon 13.17
     Provides:
-    - mysql-13.17
+    - planon-13.17
 Endpoints:
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_TOMCAT
