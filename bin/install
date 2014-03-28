@@ -11,8 +11,6 @@ esac
 
 client_result "Install called $version"
 
-jboss() {
-
 DOWNLOAD_FILE_JBOSS="jboss-${version}.zip"
 DOWNLOAD_FILE_TOMCAT="tomcat-${version}.zip"
 
@@ -23,13 +21,13 @@ cd $OPENSHIFT_PLN_DIR
 
 
 #Get the right DB connections 
-wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${PN_VERSION}
+wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
 
-wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
+wget $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
 client_result "JBoss downloaded"
 
-unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
+unzip $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
 
 client_result "JBoss unzipped"
 
@@ -42,11 +40,5 @@ cp $OPENSHIFT_PLN_DIR/conf/jboss-service.xml PlanonProCenter/jboss-6.1.0.Final/s
 cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/jboss-6.1.0.Final/server/default/conf/
 cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/hornetq/
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
-}
-
-case "$1" in
-  jboss)       jboss ;;
-  *)           exit 0
-esac
 
 exit 0
