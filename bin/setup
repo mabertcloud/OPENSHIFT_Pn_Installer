@@ -11,6 +11,6 @@ esac
 
 client_result "Setup called $version"
 
-#cp $OPENSHIFT_PLN_DIR/versions/$version/* $OPENSHIFT_PLN_DIR/
+cp -r $OPENSHIFT_PLN_DIR/versions/$version/* $OPENSHIFT_PLN_DIR/
 
 exit 0
