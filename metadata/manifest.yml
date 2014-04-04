@@ -8,9 +8,9 @@ Cartridge-Vendor: cloudiswhoweare
 Display-Name: Planon 14.3
 Description: "Planon cartridge"
 Version: '14.3'
-Versions: 
+Versions:
+- '14.3' 
 - '13.17'
-- '14.3'
 Vendor: CloudIsWhoWeAre.com
 Categories:
   - web_framework
