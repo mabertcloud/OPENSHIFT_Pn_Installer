@@ -4,7 +4,7 @@ PATH=/bin/:/usr/bin:$PATH
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-php_version=$1
+version=$1
 curr=$2
 next=$3
 
