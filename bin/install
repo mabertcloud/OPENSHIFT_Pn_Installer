@@ -14,8 +14,8 @@ client_result "Install called $version"
 DOWNLOAD_FILE_JBOSS="jboss-${version}.zip"
 DOWNLOAD_FILE_TOMCAT="tomcat-${version}.zip"
 
-DOWNLOAD_LOCATION="http://172.16.1.5"
-COCKPIT_LOCATION="http://cockpit-prod.eu.cloudiswhoweare.com/CloudCockpit"
+DOWNLOAD_LOCATION=$PLANON_FILESERVER_URL
+COCKPIT_LOCATION=$PLANON_COCKPIT_URL
 
 cd $OPENSHIFT_PLN_DIR
 
