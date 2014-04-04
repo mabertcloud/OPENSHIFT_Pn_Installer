@@ -15,12 +15,14 @@ Vendor: CloudIsWhoWeAre.com
 Categories:
   - web_framework
   - service
+  - planon
 Website: http://cloudiswhoweare.com
 Help-Topics:
   "Developer Center": https://openshift.redhat.com/community/developers
 Cart-Data:
 Provides:
-- planon-14.3
+- Planon-14.3
+- Planon
 Subscribes:
 Scaling:
   Min: 1
@@ -29,7 +31,8 @@ Version-Overrides:
   '13.17':
     Display-Name: planon 13.17
     Provides:
-    - planon-13.17
+    - Planon-13.17
+    - Planon
 Group-Overrides:
 Endpoints:
   - Private-IP-Name: IP
