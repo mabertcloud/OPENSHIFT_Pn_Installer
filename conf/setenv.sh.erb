@@ -22,8 +22,6 @@ export CATALINA_OPTS="$CATALINA_OPTS -DCSSFILE=<%= ENV['OPENSHIFT_PLN_DIR'] %>/P
 export CATALINA_OPTS="$CATALINA_OPTS -DPlanonReserved_nl.planon.logging.properties=reserved"
 export CATALINA_OPTS="$CATALINA_OPTS -Dnl.planon.planon.logging.properties=<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.47/conf/pss.logging.properties"
 export CATALINA_OPTS="$CATALINA_OPTS -Djdk.util.TimeZone.allowSetDefault=true"
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.util.logging.config.file=<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.47/conf/logging.properties"
 export CATALINA_OPTS="$CATALINA_OPTS -Dplanon.config=<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.47/conf"
-
-
-#wrapper.java.additional.10=-Djavax.net.ssl.trustStore=D:\PlanonProCenterR13\PlanonEE201210\Server\jdk-1.7.0_45/cacerts
-
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"

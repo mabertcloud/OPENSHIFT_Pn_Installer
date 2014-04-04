@@ -55,11 +55,11 @@ rm $DOWNLOAD_FILE_TOMCAT
 cp $OPENSHIFT_PLN_DIR/conf/setenv.sh PlanonProCenter/tomcat-7.0.47/bin/
 cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/mobile.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/pss.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/planon.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/sdk.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/logging.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/mobile.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/pss.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/planon.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/sdk.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
 
 
