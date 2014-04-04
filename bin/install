@@ -11,8 +11,8 @@ esac
 
 client_result "Install called $version"
 
-DOWNLOAD_FILE_JBOSS="jboss-${version}.zip"
-DOWNLOAD_FILE_TOMCAT="tomcat-${version}.zip"
+DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
+DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 
 DOWNLOAD_LOCATION=$PLANON_FILESERVER_URL
 COCKPIT_LOCATION=$PLANON_COCKPIT_URL
