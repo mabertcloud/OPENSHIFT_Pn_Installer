@@ -25,7 +25,7 @@ wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
 client_result "JBoss downloaded"
 
-unzip $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
+unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
 
 client_result "JBoss unzipped"
 
