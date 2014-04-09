@@ -22,7 +22,7 @@ cd $OPENSHIFT_PLN_DIR
 #Get the right DB connections 
 wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
 
-wget $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
+wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
 client_result "JBoss downloaded"
 
