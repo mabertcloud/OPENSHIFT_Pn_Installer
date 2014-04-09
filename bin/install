@@ -38,7 +38,7 @@ chmod +x PlanonProCenter/jboss-6.1.0.Final/bin/shutdown.sh
 cp $OPENSHIFT_PLN_DIR/conf/jboss-service.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/http-invoker.sar/META-INF/
 cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/jboss-6.1.0.Final/server/default/conf/
 cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/hornetq/
-cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
+#cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
 #TOMCAT
 
@@ -67,5 +67,13 @@ chmod +x PlanonProCenter/tomcat-7.0.47/bin/startup.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/catalina.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/shutdown.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
+
+while [-s $OPENSHIFT_PLN_DIR/conf/planon-ds.xml ]
+{
+  wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
+  sleep	5
+}
+
+cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
 exit 0
