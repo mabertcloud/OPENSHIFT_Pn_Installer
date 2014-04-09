@@ -15,12 +15,11 @@ DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 
 DOWNLOAD_LOCATION=$PLANON_FILESERVER_URL
-COCKPIT_LOCATION=$PLANON_COCKPIT_URL
 
 cd $OPENSHIFT_PLN_DIR
 
 #Get the right DB connections 
-wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
+wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
 
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
@@ -68,11 +67,12 @@ chmod +x PlanonProCenter/tomcat-7.0.47/bin/catalina.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/shutdown.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
 
-while [-s $OPENSHIFT_PLN_DIR/conf/planon-ds.xml ]
-{
-  wget --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $COCKPIT_LOCATION/Database/${OPENSHIFT_APP_DNS}/${version}
-  sleep	5
-}
+#wait till the database is ready
+while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
+do
+  wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
+  sleep 10
+done
 
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
