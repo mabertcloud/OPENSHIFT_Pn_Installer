@@ -67,12 +67,19 @@ chmod +x PlanonProCenter/tomcat-7.0.47/bin/catalina.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/shutdown.sh
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
 
+client_result "Waiting for database to be ready."
+
 #wait till the database is ready
+COUNTER=0
 while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
 do
+  let COUNTER=COUNTER+1 
+  sleep 10  
+  client_result "Check if database is ready.($COUNTER)"
   wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
-  sleep 10
 done
+
+client_result "Database is ready."
 
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
