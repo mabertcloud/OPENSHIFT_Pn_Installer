@@ -9,7 +9,7 @@ case "$1" in
     version="$2"
 esac
 
-client_result "Install called $version"
+echo "Install called $version"
 
 DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
@@ -20,19 +20,19 @@ cd $OPENSHIFT_PLN_DIR
 
 #Get the right DB connections 
 
-client_result "Request database "
+echo "Request database "
 wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
-client_result "Request database executed name : ${OPENSHIFT_APP_DNS}"
+echo "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
-client_result "JBoss download started"
+echo "JBoss download started"
 
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
-client_result "JBoss downloaded ended"
+echo "JBoss downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
 
-client_result "JBoss unzipped "
+echo "JBoss unzipped "
 
 rm $DOWNLOAD_FILE_JBOSS
 
@@ -46,15 +46,15 @@ cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/ser
 
 #TOMCAT
 
-client_result "Tomcat download started"
+echo "Tomcat download started"
 
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
 
-client_result "Tomcat downloaded ended"
+echo "Tomcat downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_TOMCAT -d PlanonProCenter
 
-client_result "Tomcat unzipped"
+echo "Tomcat unzipped"
 
 rm $DOWNLOAD_FILE_TOMCAT
 
@@ -82,7 +82,7 @@ while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
 do
   let COUNTER=COUNTER+1 
   sleep 10  
-  client_result "Check if database is ready.($COUNTER)"
+  echo "  Check if database is ready.($COUNTER)"
   wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}
   if [ $COUNTER -eq 5 ]; then
         break
@@ -91,9 +91,9 @@ done
 
 if [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
 then
-  client_result "Database not ready, still taking a shot."
+  client_error "    Database not ready, still taking a shot."
 else
-  client_result "Database is ready."
+  client_result "    Database is ready."
   cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 fi
 
