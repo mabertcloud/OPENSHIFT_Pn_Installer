@@ -19,6 +19,7 @@ function start {
     client_result "   No DB connection string found, give it a new try"
     wget  -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}
     if [ -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ];
+    then
       cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
     fi  
   fi
