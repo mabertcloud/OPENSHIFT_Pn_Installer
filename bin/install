@@ -76,9 +76,9 @@ chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
 
 client_result "Waiting for database to be ready."
 
-#wait till the database is ready
+#wait till the database is ready stop after 80 seconds
 COUNTER=0
-while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
+while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" -o COUNTER == 8]
 do
   let COUNTER=COUNTER+1 
   sleep 10  
@@ -86,7 +86,12 @@ do
   wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
 done
 
-client_result "Database is ready."
+if [! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml"]; then
+  client_result "Database not ready, still taking a shot."
+else
+  client_result "Database is ready."
+fi
+
 
 cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
