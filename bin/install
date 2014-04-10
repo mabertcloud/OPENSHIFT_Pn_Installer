@@ -51,7 +51,7 @@ cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/ser
 
 echo "Tomcat download started"
 
-wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
+wget $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
 
 echo "Tomcat downloaded ended"
 
