@@ -46,7 +46,7 @@ function catchall {
 
 case "$1" in
   start)       start ;;
-  stop)        stop ;;
+  stop)        catchall ;;
   restart)     catchall ;;
   status)      catchall ;;
   deploy)      catchall ;;
