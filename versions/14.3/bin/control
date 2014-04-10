@@ -39,24 +39,30 @@ function stop {
   $OPENSHIFT_PLN_DIR/PlanonProCenter/jboss-6.1.0.Final/bin/shutdown.sh --host=$OPENSHIFT_PLN_IP || echo Shutdown JBoss failed
 }
 
+function restart {
+  stop $1
+  start $1
+}
+
+
 function catchall {
     client_result "   $1: not yet implemented"
 }
 
 
 case "$1" in
-  start)       start ;;
-  stop)        catchall ;;
-  restart)     catchall ;;
-  status)      catchall ;;
-  deploy)      catchall ;;
-  reload)      catchall ;;
-  tidy)        catchall ;;
-  pre-build)   catchall ;;
-  build)       catchall ;;
-  post-deploy) catchall ;;
-  pre-repo-archive) catchall ;;
-  update-configuration) catchall ;;
+  start)       start $1 ;;
+  stop)        stop $1 ;;
+  restart)     restart $1 ;;
+  status)      catchall $1 ;;
+  deploy)      catchall $1 ;;
+  reload)      catchall $1 ;;
+  tidy)        catchall $1 ;;
+  pre-build)   catchall $1 ;;
+  build)       catchall $1 ;;
+  post-deploy) catchall $1 ;;
+  pre-repo-archive) catchall $1 ;;
+  update-configuration) catchall $1 ;;
   *)           exit 0
 esac
 
