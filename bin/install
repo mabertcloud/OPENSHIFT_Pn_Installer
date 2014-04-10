@@ -19,6 +19,8 @@ DOWNLOAD_LOCATION=$PLANON_FILESERVER_URL
 cd $OPENSHIFT_PLN_DIR
 
 #Get the right DB connections 
+
+client_result "Request database "
 wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
 
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
