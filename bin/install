@@ -94,9 +94,9 @@ then
   client_result "Database not ready, still taking a shot."
 else
   client_result "Database is ready."
+  cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 fi
 
 
-cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
 
 exit 0
