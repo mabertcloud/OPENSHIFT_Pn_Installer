@@ -20,9 +20,12 @@ cd $OPENSHIFT_PLN_DIR
 
 #Get the right DB connections 
 
-echo "Request database "
+echo "Request database connect string"
 wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
 echo "Request database executed name : ${OPENSHIFT_APP_DNS}"
+
+echo "Request webdav account"
+wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/tomcat-users.xml $PLANON_COCKPIT_URL/WebdavResource/${OPENSHIFT_APP_DNS}
 
 echo "JBoss download started"
 
@@ -67,6 +70,7 @@ cp $OPENSHIFT_PLN_DIR/conf/logging.properties PlanonProCenter/tomcat-7.0.47/conf
 cp $OPENSHIFT_PLN_DIR/conf/mobile.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/planon.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
 cp $OPENSHIFT_PLN_DIR/conf/sdk.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
+cp $OPENSHIFT_PLN_DIR/conf/tomcat-users.xml PlanonProCenter/tomcat-7.0.47/conf/
 
 
 chmod +x PlanonProCenter/tomcat-7.0.47/bin/startup.sh
