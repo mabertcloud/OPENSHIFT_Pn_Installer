@@ -89,7 +89,7 @@ do
   fi
 done
 
-if [ -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
+if [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
 then
   client_result "Database not ready, still taking a shot."
 else
