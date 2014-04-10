@@ -22,14 +22,17 @@ cd $OPENSHIFT_PLN_DIR
 
 client_result "Request database "
 wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
+client_result "Request database executed name : ${OPENSHIFT_APP_DNS}"
+
+client_result "JBoss download started"
 
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
 
-client_result "JBoss downloaded"
+client_result "JBoss downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
 
-client_result "JBoss unzipped"
+client_result "JBoss unzipped "
 
 rm $DOWNLOAD_FILE_JBOSS
 
@@ -43,9 +46,11 @@ cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/ser
 
 #TOMCAT
 
+client_result "Tomcat download started"
+
 wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
 
-client_result "Tomcat downloaded"
+client_result "Tomcat downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_TOMCAT -d PlanonProCenter
 
