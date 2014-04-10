@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+PATH=/bin/:/usr/bin:$PATH
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+client_result "Teardown called Main"
+
+call cockpit to remove database.
+curl -u cockpit:test1234 -i -H "Accept: application/json" -X DELETE $PLANON_FILESERVER_URL/Database/${OPENSHIFT_APP_DNS}
