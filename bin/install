@@ -78,7 +78,7 @@ client_result "Waiting for database to be ready."
 
 #wait till the database is ready stop after 80 seconds
 COUNTER=0
-while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ];
+while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
 do
   let COUNTER=COUNTER+1 
   sleep 10  
@@ -89,7 +89,7 @@ do
   fi
 done
 
-if [ -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml"]; then
+if [ -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ] then
   client_result "Database not ready, still taking a shot."
 else
   client_result "Database is ready."
