@@ -83,7 +83,7 @@ do
   let COUNTER=COUNTER+1 
   sleep 10  
   client_result "Check if database is ready.($COUNTER)"
-  wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
+  wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}
   if [ $COUNTER -eq 5 ]; then
         break
   fi
