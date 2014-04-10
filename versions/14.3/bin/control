@@ -9,14 +9,21 @@ client_result "Controll Main called 14.3"
 function start { 
   client_result "start"
   client_result "   Start openshift cartridge runtime"
+  
+  if [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
+  then
+    wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
+  fi
 
-  export JAVA_OPTS="-Xms128m -Xmx1236m -XX:MaxPermSize=256m -Dorg.jboss.resolver.warning=true -Dsun.rmi.dgc.client.gcInterval=3600000"
-  export JAVA_OPTS="$JAVA_OPTS -Dsun.rmi.dgc.server.gcInterval=3600000 -Djboss.service.binding.set=ports-1 -Djboss.server.log.dir=$OPENSHIFT_PLN_DIR/logs/"
-  export JAVA_OPTS="$JAVA_OPTS -Djboss.boot.server.log.dir=$OPENSHIFT_PLN_DIR/logs/ -server -Dlogging.configuration=file:../../bin/logging.properties"
-  export JAVA_OPTS="$JAVA_OPTS -da" 
-
-  nohup $OPENSHIFT_PLN_DIR/PlanonProCenter/jboss-6.1.0.Final/bin/run.sh -H $OPENSHIFT_PLN_IP -b $OPENSHIFT_PLN_IP  &
-  nohup $OPENSHIFT_PLN_DIR/PlanonProCenter/tomcat-7.0.47/bin/startup.sh &
+  if [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
+  then
+    export JAVA_OPTS="-Xms128m -Xmx1236m -XX:MaxPermSize=256m -Dorg.jboss.resolver.warning=true -Dsun.rmi.dgc.client.gcInterval=3600000"
+    export JAVA_OPTS="$JAVA_OPTS -Dsun.rmi.dgc.server.gcInterval=3600000 -Djboss.service.binding.set=ports-1 -Djboss.server.log.dir=$OPENSHIFT_PLN_DIR/logs/"
+    export JAVA_OPTS="$JAVA_OPTS -Djboss.boot.server.log.dir=$OPENSHIFT_PLN_DIR/logs/ -server -Dlogging.configuration=file:../../bin/logging.properties"
+    export JAVA_OPTS="$JAVA_OPTS -da" 
+    nohup $OPENSHIFT_PLN_DIR/PlanonProCenter/jboss-6.1.0.Final/bin/run.sh -H $OPENSHIFT_PLN_IP -b $OPENSHIFT_PLN_IP  &
+    nohup $OPENSHIFT_PLN_DIR/PlanonProCenter/tomcat-7.0.47/bin/startup.sh &
+  fi
 }
 
 function stop { 
