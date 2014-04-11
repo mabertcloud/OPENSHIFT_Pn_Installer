@@ -36,37 +36,16 @@ Version-Overrides:
 Group-Overrides:
 Endpoints:
   - Private-IP-Name: IP
-    Private-Port-Name: HTTP_PORT_TOMCAT
+    Private-Port-Name: HTTP_PORT
     Private-Port: 18070
     Public-Port-Name: HTTP_PROXY_PORT
-    Protocols:
-    - http
-    - ws
     primary: true
     Mappings:
-    - Frontend: ''
-      Backend: ''
-      Options: { websockets: false }
+    - Frontend: ""
+      Backend: ""
+      Options: { "websocket": 1}
     - Frontend:      "/health"
-      Backend:       "/webclient"
+      Backend:       ""
       Options:       { health: true }
-  - Private-IP-Name: IP
-    Private-Port-Name: HTTP_PORT_JBOSS
-    Private-Port: 18080
-    Public-Port-Name: HTTP_PROXY_PORT
-    Protocols:
-    - http
-    - ws
-    primary: true
-    Mappings:
-    - Frontend: 'invoker'
-      Backend: 'invoker'
-      Options: { websockets: false }
-  - Private-IP-Name:   IP
-    Private-Port: 11098
-    Private-Port-Name:  INTERNAL_RMI_PORT 
-  - Private-IP-Name:   IP
-    Private-Port: 11099
-    Private-Port-Name:  INTERNAL_NAMING_PORT
 Additional-Control-Actions:
 - threaddump
