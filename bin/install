@@ -178,14 +178,14 @@ typeset -i COUNTER=0
 while [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 do
 	COUNTER=COUNTER+1
-	sleep 10
+	sleep 1
 
 	echo "  Check if database is ready.($COUNTER)"
 	get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}			\
 		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 	status "${?}" "Database XML downloaded"
 
-	if [[ ${COUNTER} -ge 3 ]]
+	if [[ ${COUNTER} -ge 30 ]]
 	then
 		break
 	fi
