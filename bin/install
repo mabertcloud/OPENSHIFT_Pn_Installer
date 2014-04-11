@@ -199,4 +199,6 @@ else
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS_DEF}/deploy
 fi
 
+touch ${TOMCAT}/webapps/webdav/${OPENSHIFT_APP_DNS}
+
 exit 0
