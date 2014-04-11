@@ -77,8 +77,7 @@ get()
 	SRC="${1}"
 	DST="${2}"
 
-	wget -q								\
-		--http-user=cockpit 			\
+	wget --http-user=cockpit 			\
 		--http-password=test1234 		\
 		--output-document="${DST}" 		\
 	 	"${SRC}"
