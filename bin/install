@@ -96,7 +96,7 @@ do
 	in
 		-h) usage
 			;;
-		-v) version="${2}"
+		-v|--version) version="${2}"
 			shift
 			;;
 		-*) echo "${IAM}: error - unrecognized option ${1}" 1>&2
