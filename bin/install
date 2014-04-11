@@ -89,24 +89,11 @@ get()
 
 # Get the commandline options
 version=""
-set -- $(getopt hv: "${@}")
-while [[ ${#} -gt 0 ]]
-do
-	case "${1}"
-	in
-		-h) usage
-			;;
-		-v|--version) version="${2}"
-			shift
-			;;
-		-*) echo "${IAM}: error - unrecognized option ${1}" 1>&2
-			exit 1
-			;;
-		*)  break
-			;;
-	esac
-	shift
-done
+case "${1}" in
+ 	-v|--version)
+ 		version="${2}"
+ 		;;
+esac
 
 if [[ x"${version}" == x"" ]]
 then
@@ -157,12 +144,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/hornetq-jms.xml 	${JBOSS_DEF}/deploy/hornetq/
 
 status "0" "JBoss done!"
 
-<<<<<<< HEAD
-wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
-=======
 # TOMCAT
->>>>>>> pr/2
-
 status "0" "Tomcat download started"
 get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_TOMCAT} 					\
 	${DOWNLOAD_FILE_TOMCAT}
@@ -217,8 +199,4 @@ else
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS_DEF}/deploy
 fi
 
-<<<<<<< HEAD
-
-=======
->>>>>>> pr/2
 exit 0
