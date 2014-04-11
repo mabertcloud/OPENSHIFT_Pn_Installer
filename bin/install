@@ -80,8 +80,8 @@ get()
 	wget -q								\
 		--http-user=cockpit 			\
 		--http-password=test1234 		\
-		--output-document="${SRC}" 		\
-	 	"{DST}"
+		--output-document="${DST}" 		\
+	 	"${SRC}"
 
 	 return ${?}
 }
