@@ -1,107 +1,216 @@
-#!/bin/bash -e
-
-PATH=/bin/:/usr/bin:$PATH
-
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
-
-case "$1" in
-  -v|--version)
-    version="$2"
-esac
 #!/bin/bash
+# vi: set sw=4 ts=4 ai:
 
-echo "Install called $version"
+# Determine the program name and the 'running directory'
+IAM="${0##*/}"
+CRD="$( [[ "${0:0:2}" = "./" ]] &&
+	{	printf "${PWD}/${0#./}"
+	} || {
+		printf "${0}"
+	})"
+CRD="${CRD%/*}"
+CUR="${PWD}"
 
+# Make sure all language settings are correct
+export LANG=C
+
+# Save the shell settings
+SETA=0; [[ ${-} = *a* ]] && SETA=1
+SETE=0; [[ ${-} = *e* ]] && SETE=1
+SETU=0; [[ ${-} = *u* ]] && SETU=1
+SETX=0; [[ ${-} = *x* ]] && SETX=1
+
+# Set and unset the needed shell settings
+set +o noclobber		# Overwrite existing files, if needed
+set -o nounset			# Don't allow uninitialized variables
+set +o errexit			# No returncode checking
+
+# Set the PATH
+PATH=/bin/:/usr/bin:${PATH}
+
+# Read the OpenShift functions
+source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
+
+# Program usage
+usage()
+{
+	T="	"
+	cat <<- @EOF
+		Usage: ${IAM} [-v version|-h]
+
+		${T}-h 	Shows this help
+		${T}-v 	Gives the version number to install
+	@EOF
+
+	exit 1
+}
+
+
+# Return date/time in standard format
+now()
+{
+	date '+%Y-%m-%d %H:%M:%S'
+}
+
+
+# Display a status message
+status()
+{	RC="${1}"
+	shift
+	message="${*}"
+
+	[[ ${RC} == 0 ]] && STATTXT="OK " || STATTXT="ERR"
+	str="$(printf -- "%s - %-3d - %s - %s\n" "$(now)" "${RC}" "${STATTXT}" "${message}")"
+
+	printf -- "${str}" >&2
+	if [[ x"${RC}" == x"0" ]]
+	then
+		client_result "${str}"
+	else
+		client_error "${str}"
+	fi
+}
+
+# Get a file from the web
+get()
+{
+	SRC="${1}"
+	DST="${2}"
+
+	wget -q								\
+		--http-user=cockpit 			\
+		--http-password=test1234 		\
+		--output-document="${SRC}" 		\
+	 	"{DST}"
+
+	 return ${?}
+}
+
+
+# Get the commandline options
+version=""
+set -- $(getopt hv: "${@}")
+while [[ ${#} -gt 0 ]]
+do
+	case "${1}"
+	in
+		-h) usage
+			;;
+		-v) version="${2}"
+			shift
+			;;
+		-*) echo "${IAM}: error - unrecognized option ${1}" 1>&2
+			exit 1
+			;;
+		*)  break
+			;;
+	esac
+	shift
+done
+
+if [[ x"${version}" == x"" ]]
+then
+	status "0" "Install called without extra version info"
+else
+	status "0" "Install called with version ${version}"
+fi
+
+# Define constants
 DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
+DOWNLOAD_LOCATION="${PLANON_FILESERVER_URL}"
 
-DOWNLOAD_LOCATION=$PLANON_FILESERVER_URL
+JBOSS="PlanonProCenter/jboss-6.1.0.Final"
+JBOSS_DEF="${JBOSS}/server/default"
+TOMCAT="PlanonProCenter/tomcat-7.0.47"
 
-cd $OPENSHIFT_PLN_DIR
+# We assume this directory exists
+cd ${OPENSHIFT_PLN_DIR}
 
-#Get the right DB connections 
+# Get the right DB connections
+status "0" "Request database connect string"
+get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}/${version}	\
+	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
+status "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
-echo "Request database connect string"
-wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}/${version}
-echo "Request database executed name : ${OPENSHIFT_APP_DNS}"
+status "0" "Request webdav account"
+get	${PLANON_COCKPIT_URL}/WebdavResource/${OPENSHIFT_APP_DNS}		\
+	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
+status "${?}" "JBoss download started"
 
-echo "Request webdav account"
-wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/tomcat-users.xml $PLANON_COCKPIT_URL/WebdavResource/${OPENSHIFT_APP_DNS}
-
-echo "JBoss download started"
-
-wget -q $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_JBOSS
-
-echo "JBoss downloaded ended"
+get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_JBOSS}						\
+	${DOWNLOAD_FILE_JBOSS}
+status "${?}" "JBoss downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
+status "${?}" "JBoss unzipped"
 
-echo "JBoss unzipped "
-
-rm $DOWNLOAD_FILE_JBOSS
+rm ${DOWNLOAD_FILE_JBOSS}
 
 chmod +x PlanonProCenter/jboss-6.1.0.Final/bin/run.sh
 chmod +x PlanonProCenter/jboss-6.1.0.Final/bin/shutdown.sh
 
-cp $OPENSHIFT_PLN_DIR/conf/jboss-service.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/http-invoker.sar/META-INF/
-cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/jboss-6.1.0.Final/server/default/conf/
-cp $OPENSHIFT_PLN_DIR/conf/hornetq-jms.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy/hornetq/
-#cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
+cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/hornetq-jms.xml 	${JBOSS_DEF}/deploy/hornetq/
+#cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 	${JBOSS_DEF}/deploy
 
-#TOMCAT
+status "0" "JBoss done!"
 
-echo "Tomcat download started"
+# TOMCAT
 
-wget $DOWNLOAD_LOCATION/$DOWNLOAD_FILE_TOMCAT
+status "0" "Tomcat download started"
+get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_TOMCAT} 					\
+	${DOWNLOAD_FILE_TOMCAT}
+status "${?}" "Tomcat downloaded ended"
 
-echo "Tomcat downloaded ended"
+unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
+status "${?}" "Tomcat unzipped"
 
-unzip -q $DOWNLOAD_FILE_TOMCAT -d PlanonProCenter
+rm ${DOWNLOAD_FILE_TOMCAT}
 
-echo "Tomcat unzipped"
+cp ${OPENSHIFT_PLN_DIR}/conf/setenv.sh 					${TOMCAT}/bin/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/logging.properties 		${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
 
-rm $DOWNLOAD_FILE_TOMCAT
+chmod +x ${TOMCAT}/bin/startup.sh
+chmod +x ${TOMCAT}/bin/catalina.sh
+chmod +x ${TOMCAT}/bin/shutdown.sh
+chmod +x ${TOMCAT}/bin/setenv.sh
 
-cp $OPENSHIFT_PLN_DIR/conf/setenv.sh PlanonProCenter/tomcat-7.0.47/bin/
-cp $OPENSHIFT_PLN_DIR/conf/jndi.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/mobile.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/planon.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/sdk.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/logging.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/mobile.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/planon.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/sdk.logging.properties PlanonProCenter/tomcat-7.0.47/conf/
-cp $OPENSHIFT_PLN_DIR/conf/tomcat-users.xml PlanonProCenter/tomcat-7.0.47/conf/
+status "0" "Waiting for database to be ready."
 
-
-chmod +x PlanonProCenter/tomcat-7.0.47/bin/startup.sh
-chmod +x PlanonProCenter/tomcat-7.0.47/bin/catalina.sh
-chmod +x PlanonProCenter/tomcat-7.0.47/bin/shutdown.sh
-chmod +x PlanonProCenter/tomcat-7.0.47/bin/setenv.sh
-
-client_result "Waiting for database to be ready."
-
-#wait till the database is ready stop after 80 seconds
-COUNTER=0
-while [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]
+# wait untill the database is ready stop after 80 seconds
+typeset -i COUNTER=0
+while [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 do
-  let COUNTER=COUNTER+1 
-  sleep 10  
-  echo "  Check if database is ready.($COUNTER)"
-  wget -q --http-user=cockpit --http-password=test1234 --output-document=$OPENSHIFT_PLN_DIR/conf/planon-ds.xml $PLANON_COCKPIT_URL/Database/${OPENSHIFT_APP_DNS}
-  if [ $COUNTER -eq 5 ]; then
-        break
-  fi
+	COUNTER=COUNTER+1
+	sleep 10
+
+	echo "  Check if database is ready.($COUNTER)"
+	get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}			\
+		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
+	status "${?}" "Database XML downloaded"
+
+	if [[ ${COUNTER} -ge 5 ]]
+	then
+		break
+	fi
 done
 
-if [ ! -s "$OPENSHIFT_PLN_DIR/conf/planon-ds.xml" ]; 
+if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 then
-  client_error "    Database not ready, still taking a shot."
+	status "1" "    Database not ready, still taking a shot."
 else
-  client_result "    Database is ready."
-  cp $OPENSHIFT_PLN_DIR/conf/planon-ds.xml PlanonProCenter/jboss-6.1.0.Final/server/default/deploy
+ 	status "0" "    Database is ready."
+	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS_DEF}/deploy
 fi
-
-
 
 exit 0
