@@ -1,0 +1,169 @@
+#!/bin/bash
+# vi: set sw=4 ts=4 ai:
+
+# Determine the program name and the 'running directory'
+IAM="${0##*/}"
+CRD="$( [[ "${0:0:2}" = "./" ]] &&
+	{	printf "${PWD}/${0#./}"
+	} || {
+		printf "${0}"
+	})"
+CRD="${CRD%/*}"
+CUR="${PWD}"
+
+# Make sure all language settings are correct
+export LANG=C
+
+# Save the shell settings
+SETA=0; [[ ${-} = *a* ]] && SETA=1
+SETE=0; [[ ${-} = *e* ]] && SETE=1
+SETU=0; [[ ${-} = *u* ]] && SETU=1
+SETX=0; [[ ${-} = *x* ]] && SETX=1
+
+# Set and unset the needed shell settings
+set +o noclobber		# Overwrite existing files, if needed
+set -o nounset			# Don't allow uninitialized variables
+set +o errexit			# No returncode checking
+
+# Set the PATH
+PATH=/bin/:/usr/bin:${PATH}
+
+# Read the OpenShift functions
+source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
+
+# Set constants
+VERSION="${1:-14.3}"
+PLANON="${OPENSHIFT_PLN_DIR}}/PlanonProCenter"
+JBOSS="${PLANON}/jboss-6.1.0.Final"
+TOMCAT="${PLANON}/tomcat-7.0.47"
+
+
+# Return date/time in standard format
+now()
+{
+	date '+%Y-%m-%d %H:%M:%S'
+}
+
+
+# Get a file from the web
+get()
+{
+	SRC="${1}"
+	DST="${2}"
+
+	wget --http-user=cockpit 			\
+		--http-password=test1234 		\
+		--output-document="${DST}" 		\
+	 	"${SRC}"
+
+	 return ${?}
+}
+
+
+# Display a status message
+status()
+{	RC="${1}"
+	shift
+	message="${*}"
+
+	[[ ${RC} == 0 ]] && STATTXT="OK " || STATTXT="ERR"
+	str="$(printf -- "%s - %-3d - %s - %s\n" "$(now)" "${RC}" "${STATTXT}" "${message}")"
+
+	printf -- "${str}" >&2
+	if [[ x"${RC}" == x"0" ]]
+	then
+		client_result "${str}"
+	else
+		client_error "${str}"
+	fi
+}
+
+
+# Start all services
+start()
+{
+	status "0" "start"
+	status "0" "	Start openshift cartridge runtime"
+
+	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
+
+
+	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
+	then
+		status "0" "	No DB connection string found, give it a new try"
+		get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
+		if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
+		then
+			cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
+		fi
+	fi
+
+	if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
+	then
+		status "0" "	Starting......."
+		JAVA_OPTS=""
+		JAVA_OPTS="${JAVA_OPTS} -server -Xms128m -Xmx1236m -XX:MaxPermSize=256m"
+		JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.resolver.warning=true"
+		JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000"
+		JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.server.gcInterval=3600000"
+		JAVA_OPTS="${JAVA_OPTS} -Djboss.service.binding.set=ports-1"
+		JAVA_OPTS="${JAVA_OPTS} -Djboss.server.log.dir=${OPENSHIFT_PLN_DIR}/logs/"
+		JAVA_OPTS="${JAVA_OPTS} -Djboss.boot.server.log.dir=${OPENSHIFT_PLN_DIR}/logs/"
+		JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:../../bin/logging.properties"
+		JAVA_OPTS="${JAVA_OPTS} -da"
+		export JAVA_OPTS
+
+		nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
+		nohup ${TOMCAT}/bin/startup.sh &
+	else
+		status "1" "	Cannot start, still no DB available"
+	fi
+	status "0" "trats"
+}
+
+
+# Stop all services
+stop()
+{
+	status "0" "	Stop openshift cartridge runtime"
+	${TOMCAT}/bin/shutdown.sh
+	status "${?}" "TomCat shutdown"
+	${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
+	status "${?}" "JBoss shutdown"
+}
+
+
+# Restart all services
+restart()
+{
+	stop
+	sleep 2
+	start
+}
+
+
+catchall()
+{
+	status "1" "	${1}: not yet implemented"
+}
+
+
+status "0" "Control Main called ${VERSION}"
+case "${1}"
+in
+	start)					start    ;;
+	stop)					stop     ;;
+	restart)				restart  ;;
+	status)					catchall ;;
+	deploy)					catchall ;;
+	reload)					catchall ;;
+	tidy)					catchall ;;
+	pre-build)				catchall ;;
+	build)					catchall ;;
+	post-deploy)			catchall ;;
+	pre-repo-archive)		catchall ;;
+	update-configuration)	catchall ;;
+	*)						exit 0
+esac
+
+exit 0

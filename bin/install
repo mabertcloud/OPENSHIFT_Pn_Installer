@@ -133,8 +133,8 @@ status "${?}" "JBoss unzipped"
 
 rm ${DOWNLOAD_FILE_JBOSS}
 
-chmod +x PlanonProCenter/jboss-6.1.0.Final/bin/run.sh
-chmod +x PlanonProCenter/jboss-6.1.0.Final/bin/shutdown.sh
+chmod +x ${JBOSS}/bin/run.sh
+chmod +x ${JBOSS}/bin/shutdown.sh
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
