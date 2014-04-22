@@ -18,8 +18,12 @@ export TOMCAT="${PLANON}/tomcat-7.0.47"
 export TOMCATPID="${OPENSHIFT_PLN_DIR}/run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}/run/jboss.pid"
 #
-export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
-export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
+if [[ x"${version:-}" != x"" ]]
+then
+  export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
+  export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
+fi
+#
 export DOWNLOAD_LOCATION="${PLANON_FILESERVER_URL}"
 
 
