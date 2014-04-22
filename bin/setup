@@ -38,14 +38,6 @@ LIBRARY="${LIBDIR}/library"
 . ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
 
 
-if [[ x"${version}" == x"" ]]
-then
-	status "0" "Install called without extra version info"
-else
-	status "0" "Install called with version ${version}"
-fi
-
-
 client_result "Setup called $version"
 
 # Create the some extra directories
