@@ -192,7 +192,7 @@ catchall()
 }
 
 
-showstatus "0" "Control Main called ${version}"
+showstatus "0" "Control Main called"
 case "${1}"
 in
 #	start)					start		;;
