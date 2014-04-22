@@ -31,12 +31,6 @@ PATH=/bin:/usr/bin:${PATH}
 # Read the OpenShift functions
 source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
 
-# Set constants and read constants
-LIBDIR="${CRD}/../lib"
-LIBRARY="${LIBDIR}/library"
-[[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
-. ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
-
 # Get the commandline options
 version=""
 case "${1}" in
@@ -51,6 +45,12 @@ then
 else
 	status "0" "Install called with version ${version}"
 fi
+
+# Set constants and read constants
+LIBDIR="${CRD}/../lib"
+LIBRARY="${LIBDIR}/library"
+[[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
+. ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
 
 
 # Check if the process is running
