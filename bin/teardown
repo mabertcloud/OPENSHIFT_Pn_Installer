@@ -1,8 +1,56 @@
-#!/bin/bash -e
+#!/bin/bash
+# vi: set sw=4 ts=4 ai:
 
-PATH=/bin/:/usr/bin:$PATH
+# Determine the program name and the 'running directory'
+IAM="${0##*/}"
+CRD="$( [[ "${0:0:2}" = "./" ]] &&
+	{	printf "${PWD}/${0#./}"
+	} || {
+		printf "${0}"
+	})"
+CRD="${CRD%/*}"
+CUR="${PWD}"
 
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
+# Make sure all language settings are correct
+export LANG=C
+
+# Save the shell settings
+SETA=0; [[ ${-} = *a* ]] && SETA=1
+SETE=0; [[ ${-} = *e* ]] && SETE=1
+SETU=0; [[ ${-} = *u* ]] && SETU=1
+SETX=0; [[ ${-} = *x* ]] && SETX=1
+
+# Set and unset the needed shell settings
+set +o noclobber		# Overwrite existing files, if needed
+set -o nounset			# Don't allow uninitialized variables
+set +o errexit			# No returncode checking
+
+# Set the PATH
+PATH=/bin:/usr/bin:${PATH}
+
+# Read the OpenShift functions
+source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
+
+# Set constants and read constants
+LIBDIR="${CRD}/../lib"
+LIBRARY="${LIBDIR}/library"
+[[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
+. ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
+
+# Get the commandline options
+version=""
+case "${1}" in
+	-v|--version)
+		version="${2}"
+		;;
+esac
+
+if [[ x"${version}" == x"" ]]
+then
+	status "0" "Install called without extra version info"
+else
+	status "0" "Install called with version ${version}"
+fi
 
 client_result "Teardown called Main"
 

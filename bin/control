@@ -31,67 +31,80 @@ PATH=/bin:/usr/bin:${PATH}
 # Read the OpenShift functions
 source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
 
-# Set constants
-VERSION="${1:-14.3}"
-PLANON="${OPENSHIFT_PLN_DIR}}/PlanonProCenter"
-JBOSS="${PLANON}/jboss-6.1.0.Final"
-TOMCAT="${PLANON}/tomcat-7.0.47"
+# Set constants and read constants
+LIBDIR="${CRD}/../lib"
+LIBRARY="${LIBDIR}/library"
+[[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
+. ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
+
+# Get the commandline options
+version=""
+case "${1}" in
+	-v|--version)
+		version="${2}"
+		;;
+esac
+
+if [[ x"${version}" == x"" ]]
+then
+	status "0" "Install called without extra version info"
+else
+	status "0" "Install called with version ${version}"
+fi
 
 
-# Return date/time in standard format
-now()
-{
-	date '+%Y-%m-%d %H:%M:%S'
-}
+# Check if the process is running
+# ${1} is the PID file for the app (Tomcat / JBoss)
+isrunning() {
+	PIDFILE="${1}"
 
-
-# Get a file from the web
-get()
-{
-	SRC="${1}"
-	DST="${2}"
-
-	wget --http-user=cockpit 			\
-		--http-password=test1234 		\
-		--output-document="${DST}" 		\
-	 	"${SRC}"
-
-	 return ${?}
-}
-
-
-# Display a status message
-status()
-{
-	RC="${1}"
-	shift
-	message="${*}"
-
-	[[ ${RC} == 0 ]] && STATTXT="OK " || STATTXT="ERR"
-	str="$(printf -- "%s - %-3d - %s - %s\n" "$(now)" "${RC}" "${STATTXT}" "${message}")"
-
-	printf -- "${str}" >&2
-	if [[ x"${RC}" == x"0" ]]
+	# Check for running app
+	if [[ -f "${PIDFILE}" ]]
 	then
-		client_result "${str}"
-	else
-		client_error "${str}"
+		running=$(/bin/ps --no-headers --pid $(<${PIDFILE}))
+		if [[ x"${running}" = x"" ]]
+		then
+			# Not running
+			return 1
+		else
+			# running
+			return 0
+		fi
 	fi
+
+	# No PID file. Not running
+	return 1
 }
 
 
 # Start all services
 start()
 {
-	status "0" "start"
-	status "0" "	Start openshift cartridge runtime"
+	typeset -i RC=0
+	showstatus "0" "start"
+	showstatus "0" "	Start openshift cartridge runtime"
 
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 
+	# Check if JBoss is running
+	if running ${JBOSSPID}
+	then
+		showstatus "1" "Program JBoss is already running"
+		return 1
+	fi
 
+	# Check if Tomcat is running
+	if running ${TOMCATPID}
+	then
+		showstatus "1" "Program Tomcat is already running"
+		return 1
+	fi
+	# Come here, nothing is running
+
+	# Copy database XML
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
-		status "0" "	No DB connection string found, give it a new try"
+		showstatus "0" "	No DB connection string found, give it a new try"
 		get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 		if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 		then
@@ -101,62 +114,116 @@ start()
 
 	if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
-		status "0" "	Starting......."
+		showstatus "0" "	Starting......."
 
 		source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 		nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
+		echo "${!}" > ${JBOSSPID}
 
 		source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 		nohup ${TOMCAT}/bin/startup.sh &
+		echo "${!}" > ${TOMCATPID}
 	else
-		status "1" "	Cannot start, still no DB available"
+		showstatus "1" "	Cannot start, still no DB available"
 	fi
-	status "0" "trats"
+	showstatus "0" "trats"
 }
 
 
 # Stop all services
 stop()
 {
-	status "0" "	Stop openshift cartridge runtime"
-	${TOMCAT}/bin/shutdown.sh
-	status "${?}" "TomCat shutdown"
-	${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
-	status "${?}" "JBoss shutdown"
+	typeset -i RC=0
+
+	showstatus "0" "	Stop openshift cartridge runtime"
+
+	# Check if JBoss is running
+	if running ${JBOSSPID}
+	then
+		${TOMCAT}/bin/shutdown.sh
+	else
+		showstatus "1" "Program JBoss is already stopped"
+		RC=RC+1
+	fi
+
+	# Check if Tomcat is running
+	if running ${TOMCATPID}
+	then
+		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
+	else
+		showstatus "1" "Program Tomcat is already stopped"
+		RC=RC+1
+	fi
+
+	return ${RC}
 }
 
 
 # Restart all services
 restart()
 {
-	stop
+	typeset RC=0
+
+	stop	|| RC=RC+1
 	sleep 2
-	start
+	start	|| RC=RC+1
+
+	return ${RC}
+}
+
+
+# Display the status of the services
+status()
+{
+	typeset RC=0
+	# Check if JBoss is running
+	if running ${JBOSSPID}
+	then
+		showstatus "0" "	JBoss is running"
+	else
+		showstatus "1" "	JBoss is NOT running"
+		RC=RC+1
+	fi
+
+	# Check if Tomcat is running
+	if running ${TOMCATPID}
+	then
+		showstatus "0" "	Tomcat is running"
+	else
+		showstatus "1" "	Tomcat is NOT running"
+		RC=RC+1
+	fi
+
+	return ${RC}
 }
 
 
 catchall()
 {
-	status "1" "	${1}: not yet implemented"
+	showstatus "1" "	${1}: not yet implemented"
+
+	return 0
 }
 
 
-status "0" "Control Main called ${VERSION}"
+showstatus "0" "Control Main called ${version}"
 case "${1}"
 in
-	start)					start    ;;
-	stop)					stop     ;;
-	restart)				restart  ;;
-	status)					catchall ;;
-	deploy)					catchall ;;
-	reload)					catchall ;;
-	tidy)					catchall ;;
-	pre-build)				catchall ;;
-	build)					catchall ;;
-	post-deploy)			catchall ;;
-	pre-repo-archive)		catchall ;;
-	update-configuration)	catchall ;;
+	start)					start		;;
+	stop)					stop		;;
+	restart)				restart		;;
+	status)					status		;;
+	deploy)					catchall	;;
+	reload)					catchall	;;
+	tidy)					catchall	;;
+	pre-build)				catchall	;;
+	build)					catchall	;;
+	post-deploy)			catchall	;;
+	pre-repo-archive)		catchall	;;
+	update-configuration)	catchall	;;
 	*)						exit 0
 esac
 
-exit 0
+# Exit. No exit code!! The exit code will be the exit code
+# of the last run process!!
+exit
