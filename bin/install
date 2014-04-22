@@ -28,6 +28,23 @@ set +o errexit			# No returncode checking
 # Read the OpenShift functions
 source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
 
+
+# Get the commandline options
+version=""
+case "${1}" in
+ 	-v|--version)
+ 		version="${2}"
+ 		;;
+esac
+
+if [[ x"${version}" == x"" ]]
+then
+	showstatus "0" "Install called without extra version info"
+else
+	showstatus "0" "Install called with version ${version}"
+fi
+
+
 # Set constants and read constants
 LIBDIR="${CRD}/../lib"
 LIBRARY="${LIBDIR}/library"
@@ -48,22 +65,6 @@ usage()
 
 	exit 1
 }
-
-
-# Get the commandline options
-version=""
-case "${1}" in
- 	-v|--version)
- 		version="${2}"
- 		;;
-esac
-
-if [[ x"${version}" == x"" ]]
-then
-	showstatus "0" "Install called without extra version info"
-else
-	showstatus "0" "Install called with version ${version}"
-fi
 
 
 # We assume this directory exists
