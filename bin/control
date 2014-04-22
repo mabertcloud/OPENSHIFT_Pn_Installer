@@ -138,7 +138,7 @@ stop()
 	showstatus "0" "	Stop openshift cartridge runtime"
 
 	# Check if JBoss is running
-	if running ${JBOSSPID}
+	if isrunning ${JBOSSPID}
 	then
 		${TOMCAT}/bin/shutdown.sh
 	else
@@ -147,7 +147,7 @@ stop()
 	fi
 
 	# Check if Tomcat is running
-	if running ${TOMCATPID}
+	if isrunning ${TOMCATPID}
 	then
 		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
 	else

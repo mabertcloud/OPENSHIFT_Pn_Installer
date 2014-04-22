@@ -37,9 +37,6 @@ LIBRARY="${LIBDIR}/library"
 [[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
 . ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
 
-
-client_result "Setup called $version"
-
 # Create the some extra directories
 # run -> the PID files
 # lib -> the library files
