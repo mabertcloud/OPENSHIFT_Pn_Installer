@@ -26,7 +26,7 @@ set -o nounset			# Don't allow uninitialized variables
 set +o errexit			# No returncode checking
 
 # Set the PATH
-PATH=/bin/:/usr/bin:${PATH}
+PATH=/bin:/usr/bin:${PATH}
 
 # Read the OpenShift functions
 source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
@@ -62,7 +62,8 @@ get()
 
 # Display a status message
 status()
-{	RC="${1}"
+{
+	RC="${1}"
 	shift
 	message="${*}"
 
