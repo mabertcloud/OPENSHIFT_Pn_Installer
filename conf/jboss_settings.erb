@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Calculate the memory alotted to JBOSS
+# OPENSHIFT_GEAR_MEMORY_MB=4096
+# 128m -> ms
+# 10%  -> MaxPermSize
+# 50%  -> mx
+#
+
+MEMPERC=40		# Percentage of total memory for JBOSS
+MAXPERM=20		# Percentage of memory for MaxPermSize (% of MEMPERC)
+MAXMX=60		# Percentage of memory for Xmx (% of MEMPERC)
+
+TOTMEM=$(awk -v perc=${MEMPERC} -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
+	BEGIN { print int(tot * perc / 100) }')
+
+MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
+	BEGIN { print int(tot * perc / 100) }')
+
+MAXMXMEM=$(awk -v perc=${MAXMX} -v tot=${TOTMEM} '
+	BEGIN { print int(tot * perc / 100) }')
+
+JAVA_OPTS=""
+JAVA_OPTS="${JAVA_OPTS} -server -Xms128m -Xmx${MAXMXMEM}m -XX:MaxPermSize=${MAXPERMSIZE}m"
+JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.resolver.warning=true"
+JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000"
+JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.server.gcInterval=3600000"
+JAVA_OPTS="${JAVA_OPTS} -Djboss.service.binding.set=ports-1"
+JAVA_OPTS="${JAVA_OPTS} -Djboss.server.log.dir=<%= ENV['OPENSHIFT_PLN_DIR'] %>/logs/"
+JAVA_OPTS="${JAVA_OPTS} -Djboss.boot.server.log.dir=<%= ENV['OPENSHIFT_PLN_DIR'] %>/logs/"
+JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:../../bin/logging.properties"
+JAVA_OPTS="${JAVA_OPTS} -da"
+export JAVA_OPTS

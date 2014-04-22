@@ -102,19 +102,11 @@ start()
 	if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
 		status "0" "	Starting......."
-		JAVA_OPTS=""
-		JAVA_OPTS="${JAVA_OPTS} -server -Xms128m -Xmx1236m -XX:MaxPermSize=256m"
-		JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.resolver.warning=true"
-		JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000"
-		JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.server.gcInterval=3600000"
-		JAVA_OPTS="${JAVA_OPTS} -Djboss.service.binding.set=ports-1"
-		JAVA_OPTS="${JAVA_OPTS} -Djboss.server.log.dir=${OPENSHIFT_PLN_DIR}/logs/"
-		JAVA_OPTS="${JAVA_OPTS} -Djboss.boot.server.log.dir=${OPENSHIFT_PLN_DIR}/logs/"
-		JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:../../bin/logging.properties"
-		JAVA_OPTS="${JAVA_OPTS} -da"
-		export JAVA_OPTS
 
+		source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 		nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
+
+		source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 		nohup ${TOMCAT}/bin/startup.sh &
 	else
 		status "1" "	Cannot start, still no DB available"

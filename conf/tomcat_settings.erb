@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Calculate the memory alotted to Tomcat
+# 128m -> ms
+# 10%  -> MaxPermSize
+# 50%  -> mx
+#
+
+MEMPERC=50		# Percentage of total memory for Tomcat
+MAXPERM=20		# Percentage of memory for MaxPermSize (% of MEMPERC)
+MAXMX=60		# Percentage of memory for Xmx (% of MEMPERC)
+
+TOTMEM=$(awk -v perc=${MEMPERC} -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
+	BEGIN { print int(tot * perc / 100) }')
+
+MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
+	BEGIN { print int(tot * perc / 100) }')
+
+MAXMXMEM=$(awk -v perc=${MAXMX} -v tot=${TOTMEM} '
+	BEGIN { print int(tot * perc / 100) }')
+
+PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.47"
+
+CATALINA_OPTS=""
+CATALINA_OPTS="${CATALINA_OPTS} -server"
+CATALINA_OPTS="${CATALINA_OPTS} -Xms256m"
+CATALINA_OPTS="${CATALINA_OPTS} -Xmx${MAXMXMEM}m"
+CATALINA_OPTS="${CATALINA_OPTS} -XX:MaxPermSize=${MAXPERMSIZE}m"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.endorsed.dirs=${PLANONDIR}/endorsed"
+CATALINA_OPTS="${CATALINA_OPTS} -Dcatalina.base=${PLANONDIR}/"
+CATALINA_OPTS="${CATALINA_OPTS} -Dcatalina.home=${PLANONDIR}/"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.io.tmpdir=${PLANONDIR}/temp"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.security.auth.login.config=${PLANONDIR}/conf/jaas.config"
+CATALINA_OPTS="${CATALINA_OPTS} -DJNDIFILE=${PLANONDIR}/conf/jndi.properties"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.awt.headless=true"
+CATALINA_OPTS="${CATALINA_OPTS} -Dorg.jboss.security.SecurityAssociation.ThreadLocal=true"
+CATALINA_OPTS="${CATALINA_OPTS} -da"
+CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_XX-HeapDumpOnOutOfMemoryError=reserved"
+CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_XX-HeapDumpPath=reserved"
+CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.bundles=${PLANONDIR}/bundles"
+CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_planon.config=reserved"
+CATALINA_OPTS="${CATALINA_OPTS} -DPSSCONFIG=${PLANONDIR}/conf/pss.properties"
+CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
+CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_nl.planon.logging.properties=reserved"
+CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.planon.logging.properties=${PLANONDIR}/conf/pss.logging.properties"
+CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
+CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
+CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+export CATALINA_OPTS
