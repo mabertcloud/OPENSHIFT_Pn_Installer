@@ -37,19 +37,20 @@ case "${1}" in
  		;;
 esac
 
-if [[ x"${version}" == x"" ]]
-then
-	showstatus "0" "Install called without extra version info"
-else
-	showstatus "0" "Install called with version ${version}"
-fi
-
 
 # Set constants and read constants
 LIBDIR="${CRD}/../lib"
 LIBRARY="${LIBDIR}/library"
 [[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
 . ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
+
+
+if [[ x"${version}" == x"" ]]
+then
+	showstatus "0" "Install called without extra version info"
+else
+	showstatus "0" "Install called with version ${version}"
+fi
 
 
 # Program usage
