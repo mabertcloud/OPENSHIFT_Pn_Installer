@@ -8,7 +8,7 @@
 #
 
 MEMPERC=40		# Percentage of total memory for JBOSS
-MAXPERM=20		# Percentage of memory for MaxPermSize (% of MEMPERC)
+MAXPERM=30		# Percentage of memory for MaxPermSize (% of MEMPERC)
 MAXMX=60		# Percentage of memory for Xmx (% of MEMPERC)
 
 TOTMEM=$(awk -v perc=${MEMPERC} -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
