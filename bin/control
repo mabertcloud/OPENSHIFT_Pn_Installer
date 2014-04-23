@@ -124,20 +124,20 @@ stop()
 	showstatus "0" "	Stop openshift cartridge runtime"
 
 	# Check if JBoss is running
-	if isrunning ${JBOSSPID}
+	if isrunning ${TOMCATPID}
 	then
 		${TOMCAT}/bin/shutdown.sh
 	else
-		showstatus "1" "Program JBoss is already stopped"
+		showstatus "1" "Program Tomcat is already stopped"
 		RC=RC+1
 	fi
 
 	# Check if Tomcat is running
-	if isrunning ${TOMCATPID}
+	if isrunning ${JBOSSPID}
 	then
 		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
 	else
-		showstatus "1" "Program Tomcat is already stopped"
+		showstatus "1" "Program JBoss is already stopped"
 		RC=RC+1
 	fi
 
@@ -151,7 +151,7 @@ restart()
 	typeset RC=0
 
 	stop	|| RC=RC+1
-	sleep 2
+	sleep 30
 	start	|| RC=RC+1
 
 	return ${RC}
