@@ -58,12 +58,6 @@ Endpoints:
     - Frontend: 'invoker'
       Backend: 'invoker'
       Options: { websockets: false }
-  - Private-IP-Name:   IP
-    Private-Port: 11098
-    Private-Port-Name:  INTERNAL_RMI_PORT 
-  - Private-IP-Name:   IP
-    Private-Port: 11099
-    Private-Port-Name:  INTERNAL_NAMING_PORT
 Additional-Control-Actions:      
 Additional-Control-Actions:
 - threaddump
