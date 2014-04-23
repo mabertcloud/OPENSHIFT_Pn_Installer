@@ -111,7 +111,6 @@ showstatus "${?}" "Tomcat unzipped"
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
-cp ${OPENSHIFT_PLN_DIR}/conf/setenv.sh 					${TOMCAT}/bin/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.properties 			${TOMCAT}/conf/
@@ -125,7 +124,6 @@ cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
-chmod +x ${TOMCAT}/bin/setenv.sh
 
 showstatus "0" "Waiting for database to be ready."
 
@@ -134,14 +132,14 @@ typeset -i COUNTER=0
 while [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 do
 	COUNTER=COUNTER+1
-	sleep 1
+	sleep 5
 
 	echo "  Check if database is ready.($COUNTER)"
 	get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}			\
 		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
-	showstatus "${?}" "Database XML downloaded"
+	showstatus "${?}" "Waiting for database to be ready."
 
-	if [[ ${COUNTER} -ge 30 ]]
+	if [[ ${COUNTER} -ge 5 ]]
 	then
 		break
 	fi
