@@ -41,6 +41,10 @@ Endpoints:
     primary: true
     Mappings:
     - Frontend: ''
+      Backend: 'planon/webclient'
+      Options: 
+         websocket: true
+    - Frontend: ''
       Backend: ''
       Options: 
          websocket: true
