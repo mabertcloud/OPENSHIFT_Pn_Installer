@@ -63,8 +63,8 @@
     -->
 
     <Connector URIEncoding="UTF-8"
-               address="${OPENSHIFT_PLN_IP}"
-               port="${OPENSHIFT_PLN_HTTP_PORT_TOMCAT}"
+               address="<%= ENV['OPENSHIFT_PLN_IP'] %>"
+               port="<%= ENV['OPENSHIFT_PLN_HTTP_PORT_TOMCAT'] %>"
                protocol="HTTP/1.1"
                maxHttpHeaderSize="16384"
                connectionTimeout="20000"
