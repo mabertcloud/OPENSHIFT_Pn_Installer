@@ -69,8 +69,6 @@ start()
 	showstatus "0" "start"
 	showstatus "0" "	Start openshift cartridge runtime"
 
-	
-
 	# Check if JBoss is running
 	if isrunning ${JBOSSPID}
 	then
@@ -86,7 +84,7 @@ start()
 	fi
 	# Come here, nothing is running
 
-    cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
+	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
@@ -148,7 +146,7 @@ stop()
 # Restart all services
 restart()
 {
-	typeset RC=0
+	typeset -i RC=0
 
 	stop	|| RC=RC+1
 	sleep 30
@@ -161,7 +159,8 @@ restart()
 # Display the status of the services
 status()
 {
-	typeset RC=0
+	typeset -i RC=0
+
 	# Check if JBoss is running
 	if running ${JBOSSPID}
 	then
