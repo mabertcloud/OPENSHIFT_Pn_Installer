@@ -70,15 +70,6 @@ start()
 	showstatus "0" "	Start planon cartridge runtime"
 
 
-
-	# Check if Tomcat is running
-	if [! isrunning ${TOMCATPID}]
-	then
-		showstatus "1" "Program Tomcat is already running"
-		return 1
-	fi
-	# Come here, nothing is running
-
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
