@@ -139,7 +139,8 @@ stop()
 		RC=RC+1
 	fi
 
-	return ${RC}
+#	return ${RC}
+	return 0
 }
 
 
@@ -149,9 +150,8 @@ restart()
 	typeset -i RC=0
 
 	stop	|| RC=RC+1
-	sleep 5
+	sleep 60
 	start	|| RC=RC+1
-    sleep 20
 	return ${RC}
 }
 
