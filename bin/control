@@ -50,15 +50,15 @@ isrunning() {
 		if [[ x"${running}" = x"" ]]
 		then
 			# Not running
-			return 1
+			return 0
 		else
 			# running
-			return 0
+			return 1
 		fi
 	fi
 
 	# No PID file. Not running
-	return 1
+	return 0
 }
 
 
