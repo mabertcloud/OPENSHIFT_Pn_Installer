@@ -171,7 +171,8 @@ stop()
 	if isrunning ${JBOSSPID}
 	then
 	    showstatus "0" "Program JBoss is running, trying to stop it."
-		killtree ${JBOSSPID}
+	    pid=$(cat ${JBOSSPID});
+		killtree pid
 	else
 		showstatus "1" "Program JBoss is already stopped"
 		RC=RC+1
