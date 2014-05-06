@@ -206,7 +206,7 @@ in
 	post-deploy)			catchall	;;
 	pre-repo-archive)		catchall	;;
 	update-configuration)	catchall	;;
-	*)						exit 0
+  	*)           			catchall 	;;
 esac
 
 # Exit. No exit code!! The exit code will be the exit code
