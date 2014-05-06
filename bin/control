@@ -61,6 +61,42 @@ isrunning() {
 	return 1
 }
 
+# Kill the process given by $1 and its children
+killtree() {
+    local _pid=$1
+    for _child in $(ps -o pid --no-headers --ppid ${_pid}); do
+        killtree ${_child}
+    done
+
+    local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
+    if [ -z "$should_be_gone_pid" ]; then
+        return
+    else
+        # process might have finished stopping after the ps check above
+        # so prevent kill from throwing an error (which would exit the script due to bash -e)
+        # with || true
+        kill -TERM ${_pid} || true
+    fi
+
+    local count=0
+    while [ ${count} -lt 15 ]
+    do
+        local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
+        if [ -z "$should_be_gone_pid" ]; then
+                return
+        else
+                sleep 2
+                let count=${count}+1
+        fi
+    done
+
+    local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
+    if [ ! -z $should_be_gone_pid ]
+    then
+        kill -9 ${_pid}
+    fi
+}
+
 
 # Start all services
 start()
@@ -135,7 +171,7 @@ stop()
 	if isrunning ${JBOSSPID}
 	then
 	    showstatus "0" "Program JBoss is running, trying to stop it."
-		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
+		killtree ${JBOSSPID}
 	else
 		showstatus "1" "Program JBoss is already stopped"
 		RC=RC+1
