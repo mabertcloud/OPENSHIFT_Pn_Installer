@@ -104,7 +104,7 @@ start()
 		else
 			showstatus "0" "Program Tomcat is not running, trying to start it."
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
-			nohup ${TOMCAT}/bin/startup.sh &
+			nohup ${TOMCAT}/bin/tomcat start &
 			echo "${!}" > ${TOMCATPID}
 		fi
 	else
