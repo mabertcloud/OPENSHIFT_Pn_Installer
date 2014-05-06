@@ -69,12 +69,7 @@ start()
 	showstatus "0" "start"
 	showstatus "0" "	Start planon cartridge runtime"
 
-	# Check if JBoss is running
-	if [! isrunning ${JBOSSPID}]
-	then
-		showstatus "1" "Program JBoss is already running"
-		return 1
-	fi
+
 
 	# Check if Tomcat is running
 	if [! isrunning ${TOMCATPID}]
@@ -100,13 +95,27 @@ start()
 	then
 		showstatus "0" "	Starting......."
 
-		source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
-		nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
-		echo "${!}" > ${JBOSSPID}
+# Check if JBoss is running
+		if isrunning ${JBOSSPID}
+		then
+			showstatus "1" "Program JBoss is already running"
+		else
+			showstatus "0" "Program JBoss is not running, trying to start it."
+			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
+			nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
+			echo "${!}" > ${JBOSSPID}
+		fi
 
-		source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
-		nohup ${TOMCAT}/bin/startup.sh &
-		echo "${!}" > ${TOMCATPID}
+
+		if isrunning ${TOMCATPID}
+		then
+			showstatus "1" "Program Tomcat is already running"
+		else
+			showstatus "0" "Program Tomcat is not running, trying to start it."
+			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
+			nohup ${TOMCAT}/bin/startup.sh &
+			echo "${!}" > ${TOMCATPID}
+		fi
 	else
 		showstatus "1" "	Cannot start, still no DB available"
 	fi
@@ -164,7 +173,7 @@ status()
 	typeset -i RC=0
 
 	# Check if JBoss is running
-	if running ${JBOSSPID}
+	if isrunning ${JBOSSPID}
 	then
 		showstatus "0" "	JBoss is running"
 	else
@@ -173,7 +182,7 @@ status()
 	fi
 
 	# Check if Tomcat is running
-	if running ${TOMCATPID}
+	if isrunning ${TOMCATPID}
 	then
 		showstatus "0" "	Tomcat is running"
 	else
