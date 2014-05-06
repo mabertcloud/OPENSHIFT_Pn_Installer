@@ -124,6 +124,7 @@ stop()
 	# Check if Tomcat is running
 	if isrunning ${TOMCATPID}
 	then
+		showstatus "0" "Program Tomcat is running, trying to stop it."
 		${TOMCAT}/bin/shutdown.sh
 	else
 		showstatus "1" "Program Tomcat is already stopped"
@@ -133,6 +134,7 @@ stop()
 	# Check if Jboss is running
 	if isrunning ${JBOSSPID}
 	then
+	    showstatus "0" "Program JBoss is running, trying to stop it."
 		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
 	else
 		showstatus "1" "Program JBoss is already stopped"
