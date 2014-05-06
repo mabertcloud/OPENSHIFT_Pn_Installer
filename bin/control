@@ -67,17 +67,17 @@ start()
 {
 	typeset -i RC=0
 	showstatus "0" "start"
-	showstatus "0" "	Start openshift cartridge runtime"
+	showstatus "0" "	Start planon cartridge runtime"
 
 	# Check if JBoss is running
-	if isrunning ${JBOSSPID}
+	if [! isrunning ${JBOSSPID}]
 	then
 		showstatus "1" "Program JBoss is already running"
 		return 1
 	fi
 
 	# Check if Tomcat is running
-	if isrunning ${TOMCATPID}
+	if [! isrunning ${TOMCATPID}]
 	then
 		showstatus "1" "Program Tomcat is already running"
 		return 1
@@ -121,7 +121,7 @@ stop()
 
 	showstatus "0" "	Stop openshift cartridge runtime"
 
-	# Check if JBoss is running
+	# Check if Tomcat is running
 	if isrunning ${TOMCATPID}
 	then
 		${TOMCAT}/bin/shutdown.sh
@@ -130,7 +130,7 @@ stop()
 		RC=RC+1
 	fi
 
-	# Check if Tomcat is running
+	# Check if Jboss is running
 	if isrunning ${JBOSSPID}
 	then
 		${JBOSS}/bin/shutdown.sh --host=${OPENSHIFT_PLN_IP}
