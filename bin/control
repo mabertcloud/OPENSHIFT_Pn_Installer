@@ -98,15 +98,15 @@ start()
 		fi
 
 
-		if isrunning ${TOMCATPID}
-		then
-			showstatus "1" "Program Tomcat is already running"
-		else
-			showstatus "0" "Program Tomcat is not running, trying to start it."
+#		if isrunning ${TOMCATPID}
+#		then
+#			showstatus "1" "Program Tomcat is already running"
+#		else
+#			showstatus "0" "Program Tomcat is not running, trying to start it."
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
-			nohup ${TOMCAT}/bin/tomcat start &
+			nohup ${TOMCAT}/bin/startup.sh &
 			echo "${!}" > ${TOMCATPID}
-		fi
+#		fi
 	else
 		showstatus "1" "	Cannot start, still no DB available"
 	fi
@@ -122,14 +122,14 @@ stop()
 	showstatus "0" "	Stop openshift cartridge runtime"
 
 	# Check if Tomcat is running
-	if isrunning ${TOMCATPID}
-	then
-		showstatus "0" "Program Tomcat is running, trying to stop it."
+#	if isrunning ${TOMCATPID}
+#	then
+#		showstatus "0" "Program Tomcat is running, trying to stop it."
 		${TOMCAT}/bin/shutdown.sh
-	else
-		showstatus "1" "Program Tomcat is already stopped"
-		RC=RC+1
-	fi
+#	else
+#		showstatus "1" "Program Tomcat is already stopped"
+#		RC=RC+1
+#	fi
 
 	# Check if Jboss is running
 	if isrunning ${JBOSSPID}
