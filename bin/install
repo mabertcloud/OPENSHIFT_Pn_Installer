@@ -130,13 +130,13 @@ chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
 # WEBDAV
-showstatus "0" "Webdav resources download started"
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
-	${DOWNLOAD_FILE_WEBDAV}
-showstatus "${?}" "Webdav resource downloaded ended"
+#showstatus "0" "Webdav resources download started"
+#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
+#	${DOWNLOAD_FILE_WEBDAV}
+#showstatus "${?}" "Webdav resource downloaded ended"
 
-unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
-showstatus "${?}" "Webdav resources unzipped"
+#unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
+#showstatus "${?}" "Webdav resources unzipped"
 
 showstatus "0" "Waiting for database to be ready."
 
