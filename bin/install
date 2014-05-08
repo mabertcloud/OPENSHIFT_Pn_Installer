@@ -129,19 +129,22 @@ chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
-# WEBDAV
-#showstatus "0" "Webdav resources download started"
-#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
-#	${DOWNLOAD_FILE_WEBDAV}
-#showstatus "${?}" "Webdav resource downloaded ended"
 
-#unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
-#showstatus "${?}" "Webdav resources unzipped"
+showstatus "0" "Accelerator data download started"
+get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_ACC_DATA} 					\
+	${DOWNLOAD_FILE_ACC_DATA}
+showstatus "${?}" "Webdav resource downloaded ended"
 
-showstatus "0" "Waiting for database to be ready."
+unzip -q ${DOWNLOAD_FILE_ACC_DATA} -d data
+showstatus "${?}" "Webdav resources unzipped"
 
+rm ${DOWNLOAD_FILE_ACC_DATA}
+
+# create symbolic link 
 ln -s ${OPENSHIFT_PLN_DIR}/planon/data/  ${TOMCAT}/webapps/webdav/
 
+
+showstatus "0" "Waiting for database to be ready."
 # wait untill the database is ready stop after 30 seconds
 typeset -i COUNTER=0
 while [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
