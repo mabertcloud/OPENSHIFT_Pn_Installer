@@ -141,7 +141,9 @@ showstatus "${?}" "Webdav resources unzipped"
 rm ${DOWNLOAD_FILE_ACC_DATA}
 
 # create symbolic link 
-ln -s ${OPENSHIFT_PLN_DIR}data/  ${TOMCAT}/webapps/webdav/
+ln -s ${OPENSHIFT_PLN_DIR}data/files/PublishedImages/  ${TOMCAT}/webapps/webdav/
+ln -s ${OPENSHIFT_PLN_DIR}data/files/Uploads/  ${TOMCAT}/webapps/webdav/
+
 
 
 showstatus "0" "Waiting for database to be ready."
