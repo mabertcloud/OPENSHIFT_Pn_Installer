@@ -116,7 +116,9 @@ start()
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
 		showstatus "0" "	No DB connection string found, give it a new try"
-		get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
+		get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}	\
+			${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
+
 		if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 		then
 			cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
@@ -134,20 +136,22 @@ start()
 		else
 			showstatus "0" "Program JBoss is not running, trying to start it."
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
-			nohup ${JBOSS}/bin/run.sh -H ${OPENSHIFT_PLN_IP} -b ${OPENSHIFT_PLN_IP} &
+			nohup ${JBOSS}/bin/run.sh				\
+				-H ${OPENSHIFT_PLN_IP}				\
+				-b ${OPENSHIFT_PLN_IP} >/dev/null 2>&1 &
 			echo "${!}" > ${JBOSSPID}
 		fi
 
 
+		# TOMCAT creates its own PID file in ${CATALINA_PID}
+		# We point our ${TOMCATPID} to the same place
 		if isrunning ${TOMCATPID}
 		then
 			showstatus "1" "Program Tomcat is already running"
 		else
-			# TOMCAT creates its own PID file in ${CATALINA_PID}
-			# We point our ${TOMCATPID} to the same place
 			showstatus "0" "Program Tomcat is not running, trying to start it."
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
-			nohup ${TOMCAT}/bin/startup.sh &
+			nohup ${TOMCAT}/bin/startup.sh >/dev/null 2>&1 &
 		fi
 	else
 		showstatus "1" "	Cannot start, still no DB available"
