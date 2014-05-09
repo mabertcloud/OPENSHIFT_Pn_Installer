@@ -61,7 +61,8 @@ isrunning() {
 	return 1
 }
 
-# Kill the process given by $1 and its children
+
+# Kill the process given by ${1} and its children
 killtree() {
     local _pid=${1}
     showstatus "0" "killtree ${1}"
