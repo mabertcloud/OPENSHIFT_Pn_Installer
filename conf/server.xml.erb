@@ -126,7 +126,7 @@
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
-        <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
+      <Valve className="org.apache.catalina.authenticator.SingleSignOn" requireReauthentication="true"/>
 
 		<!-- Valve that adds the header X-Frame-Options to prevent clickjack attacks -->
 		<Valve className="nl.planon.owasp.valve.ClickjackValve" mode="SAMEORIGIN"/>
