@@ -61,38 +61,42 @@ isrunning() {
 	return 1
 }
 
-# Kill the process given by $1 and its children
-killtree() {	
-    local _pid=$1
+
+# Kill the process given by ${1} and its children
+killtree() {
+    local _pid=${1}
     showstatus "0" "killtree ${1}"
-    for _child in $(ps -o pid --no-headers --ppid ${_pid}); do
+    for _child in $(ps -o pid --no-headers --ppid ${_pid})
+    do
         killtree ${_child}
     done
 
     local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
-    if [ -z "$should_be_gone_pid" ]; then
+    if [[ x"${should_be_gone_pid}" = x"" ]]
+    then
         return
     else
         # process might have finished stopping after the ps check above
-        # so prevent kill from throwing an error (which would exit the script due to bash -e)
+        # so prevent kill from throwing an error
         # with || true
         kill -TERM ${_pid} || true
     fi
 
     local count=0
-    while [ ${count} -lt 15 ]
+    while [[ ${count} -lt 15 ]]
     do
         local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
-        if [ -z "$should_be_gone_pid" ]; then
+        if [[ x"${should_be_gone_pid}" = x"" ]]
+        then
                 return
         else
                 sleep 2
-                let count=${count}+1
+                count=$(( ${count} + 1 ))
         fi
     done
 
     local should_be_gone_pid=$(ps -o pid -p ${_pid} --no-headers)
-    if [ ! -z $should_be_gone_pid ]
+    if [[ x"${should_be_gone_pid}" != x"" ]]
     then
         kill -9 ${_pid}
     fi
@@ -225,28 +229,28 @@ status()
 
 catchall()
 {
-	showstatus "1" "	${1}: not yet implemented"
+	showstatus "1" "	${1:-}: not yet implemented"
 
 	return 0
 }
 
 
 showstatus "0" "Control Main called"
-case "${1}"
+case "${1:-}"
 in
-	start)					start		;;
-	stop)					stop		;;
-	restart)				restart		;;
-	status)					status		;;
-	deploy)					catchall	;;
-	reload)					catchall	;;
-	tidy)					catchall	;;
-	pre-build)				catchall	;;
-	build)					catchall	;;
-	post-deploy)			catchall	;;
-	pre-repo-archive)		catchall	;;
-	update-configuration)	catchall	;;
-  	*)           			catchall 	;;
+	start)					start				;;
+	stop)					stop				;;
+	restart)				restart				;;
+	status)					status				;;
+	deploy)					catchall "${1}"		;;
+	reload)					catchall "${1}"		;;
+	tidy)					catchall "${1}"		;;
+	pre-build)				catchall "${1}"		;;
+	build)					catchall "${1}"		;;
+	post-deploy)			catchall "${1}"		;;
+	pre-repo-archive)		catchall "${1}"		;;
+	update-configuration)	catchall "${1}"		;;
+  	*)           			catchall "Unknown"	;;
 esac
 
 # Exit. No exit code!! The exit code will be the exit code
