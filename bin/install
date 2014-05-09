@@ -130,6 +130,8 @@ chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
 
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
+
 showstatus "0" "Accelerator data download started"
 get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_ACC_DATA} 					\
 	${DOWNLOAD_FILE_ACC_DATA}
@@ -141,9 +143,7 @@ showstatus "${?}" "Webdav resources unzipped"
 rm ${DOWNLOAD_FILE_ACC_DATA}
 
 # create symbolic link 
-ln -s ${OPENSHIFT_PLN_DIR}data/files/PublishedImages/  ${TOMCAT}/webapps/webdav/
-ln -s ${OPENSHIFT_PLN_DIR}data/files/Uploads/  ${TOMCAT}/webapps/webdav/
-
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
 
 
 showstatus "0" "Waiting for database to be ready."
