@@ -148,13 +148,13 @@ ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
 
 
 #webdav installation
-showstatus "0" "Accelerator data download started"
+showstatus "0" "Webstart download started"
 get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBSTART} 					\
 	${DOWNLOAD_FILE_WEBSTART}
-showstatus "${?}" "Webdav resource downloaded ended"
+showstatus "${?}" "Webstart downloaded ended"
 
 unzip -q ${DOWNLOAD_FILE_WEBSTART} -d ${TOMCAT}/webapps/ROOT/
-showstatus "${?}" "Webdav resources unzipped"
+showstatus "${?}" "Webstart resources unzipped"
 
 rm ${DOWNLOAD_FILE_WEBSTART}
 
