@@ -211,7 +211,7 @@
         
           <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>   
     <property name="java.security.auth.login.config" value="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
-    <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" /> 
+    <property name="java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" /> 
     <property name="java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
     <property name="java.naming.provider.url" value="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory" />
   </resources>
