@@ -132,18 +132,24 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 
 mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
 
+#webdav installation
 showstatus "0" "Accelerator data download started"
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_ACC_DATA} 					\
-	${DOWNLOAD_FILE_ACC_DATA}
+get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
+	${DOWNLOAD_FILE_WEBDAV}
 showstatus "${?}" "Webdav resource downloaded ended"
 
-unzip -q ${DOWNLOAD_FILE_ACC_DATA} -d data
+unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
 showstatus "${?}" "Webdav resources unzipped"
 
-rm ${DOWNLOAD_FILE_ACC_DATA}
+rm ${DOWNLOAD_FILE_WEBDAV}
 
 # create symbolic link 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
+
+
+#webstart installation
+mkdir -p ${TOMCAT}/webapps/ROOT/PlanonWebstart
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/
 
 
 showstatus "0" "Waiting for database to be ready."
