@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart">
+<jnlp spec="1.0+" codebase="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart">
   <information>
     <title>Planon EE</title>
     <vendor>Planon B.V.</vendor>
@@ -201,18 +201,18 @@
         
           <jar href="xml-apis.jar"/>
         
-          <extension href="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/planon-batik-jviews-tiff.jar.jnlp"/>
+          <extension href="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/planon-batik-jviews-tiff.jar.jnlp"/>
         
-          <extension href="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/planon-jviews-chart-all.jar.jnlp"/>
+          <extension href="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/planon-jviews-chart-all.jar.jnlp"/>
         
-          <extension href="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/planon-jviews-diagrammer-all.jar.jnlp"/>
+          <extension href="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/planon-jviews-diagrammer-all.jar.jnlp"/>
         
-          <extension href="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/planon-jviews-framework-all.jar.jnlp"/>
+          <extension href="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/planon-jviews-framework-all.jar.jnlp"/>
         
-          <extension href="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>
+          <extension href="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>
         
            
-    <property name="java.security.auth.login.config" value="http://[jnlp-webserver-host]:[jnlp-webserver-port]/PlanonWebstart/auth.conf"/>
+    <property name="java.security.auth.login.config" value="http://<%= ENV['OPENSHIFT_APP_DNS']/PlanonWebstart/auth.conf"/>
     <property name="java.naming.factory.initial" value="org.jnp.interfaces.NamingContextFactory" /> 
     <property name="java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
     <property name="java.naming.provider.url" value="[jnlp-appserver-host]:[jnlp-appserver-naming-port]"/>
