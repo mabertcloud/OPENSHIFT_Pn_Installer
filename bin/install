@@ -176,7 +176,7 @@ do
 		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 	showstatus "${?}" "Waiting for database to be ready."
 
-	if [[ ${COUNTER} -ge 12 ]]
+	if [[ ${COUNTER} -ge 18 ]]
 	then
 		break
 	fi
