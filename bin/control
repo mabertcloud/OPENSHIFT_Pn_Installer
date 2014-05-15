@@ -1,6 +1,16 @@
 #!/bin/bash
 # vi: set sw=4 ts=4 ai:
 
+# Syntax:
+#	control start|stop|status|restart [what]
+#
+#   The 'what' can be 'jboss' or 'tomcat' and the default
+#	being 'all'.
+#
+# 	Example: control restart jboss
+#	will only restart the jboss server
+#
+
 # Determine the program name and the 'running directory'
 IAM="${0##*/}"
 CRD="$( [[ "${0:0:2}" = "./" ]] &&
@@ -106,10 +116,11 @@ killtree() {
 # Start all services
 start()
 {
+	progs="${1:-all}"
+
 	typeset -i RC=0
 	showstatus "0" "start"
 	showstatus "0" "	Start planon cartridge runtime"
-
 
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
@@ -125,10 +136,17 @@ start()
 		fi
 	fi
 
-	if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
+	# If the database config file does not exist we cannot continue
+	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
-		showstatus "0" "	Starting......."
+		showstatus "1" "	Cannot start, still no DB available"
+		return 0
+	fi
 
+	showstatus "0" "	Starting......."
+
+	if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"jboss" ) ]]
+	then
 		# Check if JBoss is running
 		if isrunning ${JBOSSPID}
 		then
@@ -141,8 +159,11 @@ start()
 				-b ${OPENSHIFT_PLN_IP} >/dev/null 2>&1 &
 			echo "${!}" > ${JBOSSPID}
 		fi
+	fi
 
 
+	if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
+	then
 		# TOMCAT creates its own PID file in ${CATALINA_PID}
 		# We point our ${TOMCATPID} to the same place
 		if isrunning ${TOMCATPID}
@@ -153,9 +174,8 @@ start()
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 			nohup ${TOMCAT}/bin/startup.sh >/dev/null 2>&1 &
 		fi
-	else
-		showstatus "1" "	Cannot start, still no DB available"
 	fi
+
 	showstatus "0" "trats"
 }
 
@@ -163,32 +183,41 @@ start()
 # Stop all services
 stop()
 {
+	progs="${1:-all}"
+
 	typeset -i RC=0
 
 	showstatus "0" "	Stop openshift cartridge runtime"
 
-	# Check if Tomcat is running
-	if isrunning ${TOMCATPID}
+	if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
 	then
-		showstatus "0" "Program Tomcat is running, trying to stop it."
-		${TOMCAT}/bin/shutdown.sh
-	else
-		showstatus "1" "Program Tomcat is already stopped"
-		RC=RC+1
+		# Check if Tomcat is running
+		if isrunning ${TOMCATPID}
+		then
+			showstatus "0" "Program Tomcat is running, trying to stop it."
+			${TOMCAT}/bin/shutdown.sh
+		else
+			showstatus "1" "Program Tomcat is already stopped"
+			RC=RC+1
+		fi
+		rm -f ${TOMCATPID}
 	fi
-	rm -f ${TOMCATPID}
 
-	# Check if Jboss is running
-	if isrunning ${JBOSSPID}
+
+	if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
 	then
-	    showstatus "0" "Program JBoss is running, trying to stop it."
-	    pid=$(cat ${JBOSSPID});
-		killtree $pid
-	else
-		showstatus "1" "Program JBoss is already stopped"
-		RC=RC+1
+		# Check if Jboss is running
+		if isrunning ${JBOSSPID}
+		then
+		    showstatus "0" "Program JBoss is running, trying to stop it."
+		    pid=$(cat ${JBOSSPID})
+			killtree $pid
+		else
+			showstatus "1" "Program JBoss is already stopped"
+			RC=RC+1
+		fi
+		rm -f ${JBOSSPID}
 	fi
-	rm -f ${JBOSSPID}
 
 	return ${RC}
 }
@@ -197,11 +226,13 @@ stop()
 # Restart all services
 restart()
 {
+	progs="${1:-all}"
+
 	typeset -i RC=0
 
-	stop	|| RC=RC+1
+	stop "${progs}"		|| RC=RC+1
 	sleep 15
-	start	|| RC=RC+1
+	start "${progs}"	|| RC=RC+1
 	return ${RC}
 }
 
@@ -244,9 +275,9 @@ catchall()
 showstatus "0" "Control Main called"
 case "${1:-}"
 in
-	start)					start				;;
-	stop)					stop				;;
-	restart)				restart				;;
+	start)					start   "${2:-all}"	;;
+	stop)					stop    "${2:-all}"	;;
+	restart)				restart	"${2:-all}"	;;
 	status)					status				;;
 	deploy)					catchall "${1}"		;;
 	reload)					catchall "${1}"		;;
