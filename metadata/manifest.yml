@@ -4,20 +4,20 @@ Source-Url: https://github.com/HenkLaracker/PnEE/archive/master.zip
 Cartridge-Version: 1.0.1
 Compatible-Versions:
 - 0.9
-Cartridge-Vendor: cloudiswhoweare
+Cartridge-Vendor: planonsoftware.com
 Display-Name: Planon 14.3
 Description: "Planon cartridge"
 Version: '14.3'
 Versions:
 - '14.3' 
 - '13.17'
-Vendor: CloudIsWhoWeAre.com
+Vendor: planonsoftware.com
 Categories:
   - web_framework
   - service
-Website: http://cloudiswhoweare.com
+Website: http://planoncloud.com
 Help-Topics:
-  "Developer Center": https://openshift.redhat.com/community/developers
+  "Developer Center": http://planoncloud.com
 Cart-Data:
 Provides:
 - Planon-14.3
@@ -28,7 +28,7 @@ Scaling:
   Max: 1
 Version-Overrides:
   '13.17':
-    Display-Name: planon 13.17
+    Display-Name: Planon 13.17
     Provides:
     - Planon-13.17
     - Planon
