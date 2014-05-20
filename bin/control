@@ -216,7 +216,7 @@ stop()
 		fi
 		rm -f ${JBOSSPID}
 	#fi
-	return ${RC}
+	return 0 #${RC}
 }
 
 
