@@ -39,7 +39,7 @@ Endpoints:
     Private-Port: 18070
     Public-Port-Name: HTTP_PROXY_PORT
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
@@ -56,7 +56,7 @@ Endpoints:
     Private-Port: 18080
     Public-Port-Name: HTTP_PROXY_PORT
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
