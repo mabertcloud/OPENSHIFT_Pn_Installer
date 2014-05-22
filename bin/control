@@ -122,6 +122,10 @@ start()
 	showstatus "0" "start"
 	showstatus "0" "	Start planon cartridge runtime"
 
+    #Create share for customer
+    mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs -o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv //
+    	CUSTSHARE ${OPENSHIFT_PLN_DIR}/data
+
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
