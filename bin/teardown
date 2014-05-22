@@ -37,22 +37,7 @@ LIBRARY="${LIBDIR}/library"
 [[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
 . ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
 
-# Get the commandline options
-version=""
-case "${1}" in
-	-v|--version)
-		version="${2}"
-		;;
-esac
-
-if [[ x"${version}" == x"" ]]
-then
-	status "0" "Install called without extra version info"
-else
-	status "0" "Install called with version ${version}"
-fi
-
-client_result "Teardown called Main"
-
 call cockpit to remove database.
 curl -u cockpit:test1234 -i -H "Accept: application/json" -X DELETE $PLANON_FILESERVER_URL/Database/${OPENSHIFT_APP_DNS}
+
+client_result "Teardown called Main"
