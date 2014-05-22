@@ -150,7 +150,7 @@ then
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt  	
 	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
-	chmod 400 $${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
+	chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 fi
 
 CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt) 
