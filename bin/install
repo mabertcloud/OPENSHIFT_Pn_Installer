@@ -147,14 +147,16 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]    
 then
    	get ${PLANON_COCKPIT_URL}/FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
-		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt   	
+		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt  	
 	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
+	chmod 400 $${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 fi
 
-#mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs \
-#	-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv \
-#   	CUSTSHARE ${OPENSHIFT_PLN_DIR}/data
+CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt) 
+mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs \
+	-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv \
+   	${CUSTSHARE} ${OPENSHIFT_PLN_DIR}/data
 
 # create symbolic link 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
