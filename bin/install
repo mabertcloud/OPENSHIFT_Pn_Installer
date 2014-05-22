@@ -133,15 +133,26 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
 
 #webdav installation
-showstatus "0" "Accelerator data download started"
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
-	${DOWNLOAD_FILE_WEBDAV}
-showstatus "${?}" "Webdav resource downloaded ended"
+#showstatus "0" "Accelerator data download started"
+#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
+#	${DOWNLOAD_FILE_WEBDAV}
+#showstatus "${?}" "Webdav resource downloaded ended"
 
-unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
-showstatus "${?}" "Webdav resources unzipped"
+#unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
+#showstatus "${?}" "Webdav resources unzipped"
 
-rm ${DOWNLOAD_FILE_WEBDAV}
+#rm ${DOWNLOAD_FILE_WEBDAV}
+
+#Create share for customer
+if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv"]]    
+then
+    CUSTSHARE = get ${PLANON_COCKPIT_URL}//FileServerResource/usr/${OPENSHIFT_APP_DNS}
+	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
+		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
+fi
+
+mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs -o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv //
+   CUSTSHARE ${OPENSHIFT_PLN_DIR}/data
 
 # create symbolic link 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
