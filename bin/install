@@ -123,7 +123,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}/conf/
-cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina               ${TOMCAT}/conf/Catalina
+cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina               ${TOMCAT}/conf/
 
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
