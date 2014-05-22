@@ -113,24 +113,24 @@ showstatus "${?}" "Tomcat unzipped"
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
-cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/logging.properties 		${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}/conf/
-cp -avr ${OPENSHIFT_PLN_DIR}/conf/Catalina              ${TOMCAT}/conf/Catalina
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.properties 			${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/logging.properties 		${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}conf/
+cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina               ${TOMCAT}conf/Catalina
 
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
 
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
+#mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
 
 #webdav installation
 #showstatus "0" "Accelerator data download started"
@@ -144,7 +144,7 @@ mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
 #rm ${DOWNLOAD_FILE_WEBDAV}
 
 #Create share for customer
-if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv"]]    
+if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]    
 then
     CUSTSHARE = get ${PLANON_COCKPIT_URL}//FileServerResource/usr/${OPENSHIFT_APP_DNS}
 	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
