@@ -144,16 +144,16 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 #rm ${DOWNLOAD_FILE_WEBDAV}
 
 #Create share for customer
-if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]    
-then
+#if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]    
+#then
 #    CUSTSHARE << get ${PLANON_COCKPIT_URL}/FileServerResource/usr/${OPENSHIFT_APP_DNS}
 #	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 #		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
-fi
+#fi
 
-mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs \
-	-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv \
-   	CUSTSHARE ${OPENSHIFT_PLN_DIR}/data
+#mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs \
+#	-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv \
+#   	CUSTSHARE ${OPENSHIFT_PLN_DIR}/data
 
 # create symbolic link 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
