@@ -166,8 +166,8 @@ start()
 
 	showstatus "0" "	Starting......."
 
-	#if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"jboss" ) ]]
-	#then
+	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"jboss" ) ]]
+	then
 		# Check if JBoss is running
 		if isrunning ${JBOSSPID}
 		then
@@ -180,11 +180,11 @@ start()
 				-b ${OPENSHIFT_PLN_IP} >/dev/null 2>&1 &
 			echo "${!}" > ${JBOSSPID}
 		fi
-	#fi
+	fi
 
 
-	#if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
-	#then
+	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
+	then
 		# TOMCAT creates its own PID file in ${CATALINA_PID}
 		# We point our ${TOMCATPID} to the same place
 		if isrunning ${TOMCATPID}
@@ -195,7 +195,7 @@ start()
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 			nohup ${TOMCAT}/bin/startup.sh >/dev/null 2>&1 &
 		fi
-	#fi
+	fi
 
 	showstatus "0" "trats"
 }
@@ -206,12 +206,10 @@ stop()
 {
 	progs="${1:-all}"
 
-	typeset -i RC=0
-
 	showstatus "0" "	Stop openshift cartridge runtime"
 
-	#if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
-	#then
+	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
+	then
 		# Check if Tomcat is running
 		if isrunning ${TOMCATPID}
 		then
@@ -219,25 +217,24 @@ stop()
 			${TOMCAT}/bin/shutdown.sh
 		else
 			showstatus "1" "Program Tomcat is already stopped"
-			RC=RC+1
 		fi
 		rm -f ${TOMCATPID}
-	#fi
-	#if [[ ( x"${progs}" = x"all" ) -o ( x"${progs}" = x"tomcat" ) ]]
-	#then
+	fi
+
+	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"jboss" ) ]]
+	then
 		# Check if Jboss is running
 		if isrunning ${JBOSSPID}
 		then
 			showstatus "0" "Program JBoss is running, trying to stop it."
 			pid=$(cat ${JBOSSPID})
-			killtree $pid
+			killtree ${pid}
 		else
 			showstatus "1" "Program JBoss is already stopped"
-			RC=RC+1
 		fi
 		rm -f ${JBOSSPID}
-	#fi
-	return 0 #${RC}
+	fi
+	return 0
 }
 
 
