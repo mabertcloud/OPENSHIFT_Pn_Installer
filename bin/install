@@ -67,7 +67,7 @@ usage()
 	exit 1
 }
 
-# create directory's 
+# create directory's
 mkdir -p ${OPENSHIFT_PLN_DIR}/{run,tmp,conf,logs,data}
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
@@ -123,7 +123,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}/conf/
-cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina               ${TOMCAT}/conf/
+cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT}/conf/
 
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
@@ -144,22 +144,31 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 #rm ${DOWNLOAD_FILE_WEBDAV}
 
 #Create share for customer
-if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]    
+if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]
 then
-   	get ${PLANON_COCKPIT_URL}/FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
-		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt  	
+	get ${PLANON_COCKPIT_URL}/FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
+		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt
 	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 	chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 fi
 
-CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt) 
-mountpoint -q ${OPENSHIFT_PLN_DIR}/data || sshfs \
-	-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv \
-   	${CUSTSHARE} ${OPENSHIFT_PLN_DIR}/data
+#
+# Create data mount for customer
+# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
+#
+CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
+mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||								\
+	sshfs																\
+		-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv		\
+		-o StrictHostKeyChecking=no 									\
+		-o UserKnownHostsFile=/dev/null 								\
+		-o reconnect 													\
+		${CUSTSHARE} 													\
+		${OPENSHIFT_PLN_DIR}/data
 
-# create symbolic link 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/  ${TOMCAT}/webapps/
+# create symbolic link
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
 
 
 #webdav installation
