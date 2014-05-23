@@ -126,14 +126,21 @@ start()
 	# Create data mount for customer
 	# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
 	#
+	# For this to work, make sure the file /etc/fuse.conf
+	# contains:
+	#		user_allow_other
+	#
 	CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
 	mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
 		sshfs															\
+			-o allow_other												\
+			-o workaround=all											\
+			-o idmap=user												\
 			-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-			-o StrictHostKeyChecking=no 								\
-			-o UserKnownHostsFile=/dev/null 							\
-			-o reconnect 												\
-			${CUSTSHARE} 												\
+			-o StrictHostKeyChecking=no									\
+			-o UserKnownHostsFile=/dev/null								\
+			-o reconnect												\
+			${CUSTSHARE}												\
 			${OPENSHIFT_PLN_DIR}/data
 
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
