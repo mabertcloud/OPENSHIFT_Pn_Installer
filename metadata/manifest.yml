@@ -40,13 +40,13 @@ Endpoints:
     Private-Port: 18070
     Public-Port: 443
     Protocols:
-    - http
+    - https
     - ws
     primary: true
     Mappings:
     - Frontend: ''
       Backend: ''
-      Options: 
+      Options: tohttps: ''
     - Frontend:      '/health'
       Backend:       ''
       Options:       
@@ -56,7 +56,7 @@ Endpoints:
     Private-Port: 18080
     Public-Port: 443
     Protocols:
-    - http
+    - https
     - ws
     primary: true
     Mappings:
