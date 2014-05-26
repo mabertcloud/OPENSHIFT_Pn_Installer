@@ -40,14 +40,13 @@ Endpoints:
     Private-Port: 18070
     Public-Port-Name: HTTP_PROXY_PORT
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
     - Frontend: ''
       Backend: ''
       Options: 
-         tohttps: 'invoker'
          websocket: true
     - Frontend:      '/health'
       Backend:       ''
@@ -58,14 +57,13 @@ Endpoints:
     Private-Port: 18080
     Public-Port-Name: HTTP_PROXY_PORT
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
     - Frontend: 'invoker'
       Backend: 'invoker'
       Options: 
-        tohttps: 'invoker'
         websocket: false 
 Additional-Control-Actions:   
 - threaddump
