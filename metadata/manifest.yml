@@ -38,16 +38,15 @@ Endpoints:
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_TOMCAT
     Private-Port: 18070
-    Public-Port-Name: HTTP_PROXY_PORT
+    Public-Port: 443
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
     - Frontend: ''
       Backend: ''
       Options: 
-         websocket: true
     - Frontend:      '/health'
       Backend:       ''
       Options:       
@@ -55,15 +54,14 @@ Endpoints:
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_JBOSS
     Private-Port: 18080
-    Public-Port-Name: HTTP_PROXY_PORT
+    Public-Port: 443
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
     - Frontend: 'invoker'
       Backend: 'invoker'
       Options: 
-        websocket: false 
 Additional-Control-Actions:   
 - threaddump
