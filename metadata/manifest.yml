@@ -38,25 +38,22 @@ Endpoints:
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_TOMCAT
     Private-Port: 18070
-    Public-Port: 443
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
     - Frontend: ''
       Backend: ''
-      Options: 
+      Options: { tohttps: 'test'}
     - Frontend:      '/health'
       Backend:       ''
-      Options:       
-         health: true 
+      Options: { health: true}      
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_JBOSS
     Private-Port: 18080
-    Public-Port: 443
     Protocols:
-    - https
+    - http
     - ws
     primary: true
     Mappings:
