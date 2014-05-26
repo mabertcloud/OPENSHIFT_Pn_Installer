@@ -15,6 +15,7 @@ Vendor: planonsoftware.com
 Categories:
   - web_framework
   - service
+  - planoncloud
 Website: http://planoncloud.com
 Help-Topics:
   "Developer Center": http://planoncloud.com
@@ -25,7 +26,7 @@ Provides:
 Subscribes:
 Scaling:
   Min: 1
-  Max: 1
+  Max: 3
 Version-Overrides:
   '13.17':
     Display-Name: Planon 13.17
@@ -46,6 +47,7 @@ Endpoints:
     - Frontend: ''
       Backend: ''
       Options: 
+         tohttps
          websocket: true
     - Frontend:      '/health'
       Backend:       ''
@@ -63,6 +65,7 @@ Endpoints:
     - Frontend: 'invoker'
       Backend: 'invoker'
       Options: 
-         websocket: false 
+        tohttps
+        websocket: false 
 Additional-Control-Actions:   
 - threaddump
