@@ -47,7 +47,7 @@ Endpoints:
     - Frontend: ''
       Backend: ''
       Options: 
-         tohttps
+         tohttps: 'invoker'
          websocket: true
     - Frontend:      '/health'
       Backend:       ''
@@ -65,7 +65,7 @@ Endpoints:
     - Frontend: 'invoker'
       Backend: 'invoker'
       Options: 
-        tohttps
+        tohttps: 'invoker'
         websocket: false 
 Additional-Control-Actions:   
 - threaddump
