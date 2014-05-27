@@ -216,7 +216,7 @@ stop()
 			showstatus "0" "Program Tomcat is running, trying to stop it."
 			${TOMCAT}/bin/shutdown.sh
 		else
-			showstatus "1" "Program Tomcat is already stopped"
+			showstatus "0" "Program Tomcat is already stopped"
 		fi
 		rm -f ${TOMCATPID}
 	fi
@@ -230,7 +230,7 @@ stop()
 			pid=$(cat ${JBOSSPID})
 			killtree ${pid}
 		else
-			showstatus "1" "Program JBoss is already stopped"
+			showstatus "0" "Program JBoss is already stopped"
 		fi
 		rm -f ${JBOSSPID}
 	fi
