@@ -52,4 +52,6 @@ CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+# ssl bug
+CATALINA_OPTS="${CATALINA_OPTS} -Djsse.enableSNIExtension=false" 
 export CATALINA_OPTS
