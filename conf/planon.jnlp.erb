@@ -184,6 +184,7 @@
     <property name="jnlp.setjava.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" />
     <property name="jnlp.setjava.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
     <property name="jnlp.setjava.java.naming.provider.url" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory" />
+    <property name="jnlp.setjava.jsse.enableSNIExtension" value="false" />
   </resources>
   <application-desc main-class="nl.planon.test.PropertyConvertor" />
 </jnlp>           
