@@ -1,6 +1,35 @@
+# vim:ff=unix ts=4 sw=4 ai expandtab
+---
 locked_files:
+    - README.md
+    - PlanonProCenter/
+    - PlanonProCenter/*
+    - bin/
+    - bin/*
+    - conf/
+    - conf/*
+    - env/
+    - env/*
+    - env/M2_HOME
+    - env/OPENSHIFT_JBOSSEAP_DIR
+    - env/OPENSHIFT_JBOSSEAP_JDK*
+    - hooks/
+    - hooks/*
+    - jboss_cfg_backup/
+    - lib/
+    - lib/*
+    - metadata/
+    - metadata/*
+    - template/
+    - template/*
+    - tools/
+    - tools/*
+    - upgrade/
+    - upgrade/*
+    - versions/
+    - versions/*
 snapshot_exclusions:
 restore_transforms:
 processed_templates:
-- '**/*.erb'
+    - '**/*.erb'
 setup_rewritten:

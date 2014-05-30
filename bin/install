@@ -153,6 +153,10 @@ then
 	chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 fi
 
+exec > ${OPENSHIFT_PLN_DIR} 2>&1
+
+mount 
+set -x
 #
 # Create data mount for customer
 # Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
@@ -177,6 +181,7 @@ mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
 # create symbolic link
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
 
+mount
 
 #webdav installation
 showstatus "0" "Webstart download started"
