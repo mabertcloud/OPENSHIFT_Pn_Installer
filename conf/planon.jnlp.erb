@@ -9,8 +9,8 @@
     <all-permissions/>
   </security>
   <resources>    
- <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m" initial-heap-size="32m" max-heap-size="512m" />
- <j2se version="1.7*" java-vm-args="-da -XX:MaxPermSize=128m" initial-heap-size="32m" max-heap-size="512m" /> 
+ <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="512m" />
+ <j2se version="1.7*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="512m" /> 
 
  <jar href="Apollo.jar"/>       
  <jar href="Aspose.Words.jar"/>       
@@ -184,7 +184,6 @@
     <property name="jnlp.setjava.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" />
     <property name="jnlp.setjava.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
     <property name="jnlp.setjava.java.naming.provider.url" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory" />
-    <property name="jnlp.setjava.jsse.enableSNIExtension" value="false" />
   </resources>
   <application-desc main-class="nl.planon.test.PropertyConvertor" />
 </jnlp>           
