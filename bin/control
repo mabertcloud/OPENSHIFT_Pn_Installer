@@ -148,7 +148,7 @@ start()
 	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
 	then
 		showstatus "0" "	No DB connection string found, give it a new try"
-		get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}	\
+		get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}	\
 			${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 
 		if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]

@@ -74,16 +74,16 @@ cd ${OPENSHIFT_PLN_DIR}
 
 # Get the right DB connections
 showstatus "0" "Request database connect string"
-get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}/${version}	\
+get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
 showstatus "0" "Request webdav account"
-get	${PLANON_COCKPIT_URL}/WebdavResource/${OPENSHIFT_APP_DNS}		\
+get	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
 showstatus "${?}" "JBoss download started"
 
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_JBOSS}						\
+get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
 	${DOWNLOAD_FILE_JBOSS}
 showstatus "${?}" "JBoss downloaded ended"
 
@@ -104,7 +104,7 @@ showstatus "0" "JBoss done!"
 
 # TOMCAT
 showstatus "0" "Tomcat download started"
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_TOMCAT} 					\
+get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_TOMCAT} 					\
 	${DOWNLOAD_FILE_TOMCAT}
 showstatus "${?}" "Tomcat downloaded ended"
 
@@ -146,9 +146,9 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 #Create share for customer
 if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]
 then
-	get ${PLANON_COCKPIT_URL}/FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
+	get ${PLANON_COCKPIT_URL}FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt
-	get ${PLANON_COCKPIT_URL}/FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
+	get ${PLANON_COCKPIT_URL}FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 	chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 fi
@@ -208,7 +208,7 @@ do
 	sleep 5
 
 	echo "  Check if database is ready.($COUNTER)"
-	get ${PLANON_COCKPIT_URL}/Database/${OPENSHIFT_APP_DNS}			\
+	get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}			\
 		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 	showstatus "${?}" "Waiting for database to be ready."
 
