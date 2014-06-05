@@ -172,18 +172,18 @@
     <jar href="xml-apis-ext.jar"/>    
     <jar href="xml-apis.jar"/>
         
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-batik-jviews-tiff.jar.jnlp"/>    
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-chart-all.jar.jnlp"/>    
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-diagrammer-all.jar.jnlp"/>    
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-framework-all.jar.jnlp"/>
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>   
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/testspace.jnlp"/>
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/pss-common.jnlp"/>       
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-batik-jviews-tiff.jar.jnlp"/>    
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-chart-all.jar.jnlp"/>    
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-diagrammer-all.jar.jnlp"/>    
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-framework-all.jar.jnlp"/>
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>   
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/testspace.jnlp"/>
+    <extension href="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/pss-common.jnlp"/>       
       
-    <property name="jnlp.setjava.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
+    <property name="jnlp.setjava.java.security.auth.login.config" value="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.setjava.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" />
     <property name="jnlp.setjava.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
-    <property name="jnlp.setjava.java.naming.provider.url" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory" />
+    <property name="jnlp.setjava.java.naming.provider.url" value="http://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory" />
   </resources>
   <application-desc main-class="nl.planon.test.PropertyConvertor" />
 </jnlp>           

@@ -9,7 +9,7 @@
   <mbean code="org.jboss.invocation.http.server.HttpInvoker"
     name="jboss:service=invoker,type=http">
    <attribute name="UseHostName">true</attribute>
-   <attribute name="InvokerURL">https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/EJBInvokerServlet</attribute>
+   <attribute name="InvokerURL">http://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/EJBInvokerServlet</attribute>
   </mbean>
 
    <!-- Expose the Naming service interface via HTTP -->
@@ -19,7 +19,7 @@
       <attribute name="InvokerName">jboss:service=NamingBeanImpl</attribute>
       <!-- Compose the invoker URL from the cluster node address -->
    <attribute name="UseHostName">true</attribute>
-     <attribute name="InvokerURL">https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JMXInvokerServlet</attribute>
+     <attribute name="InvokerURL">http://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JMXInvokerServlet</attribute>
       <attribute name="ExportedInterface">org.jnp.interfaces.Naming</attribute>
       <attribute name="JndiName"></attribute>
     <attribute name="UseHostName">true</attribute>
@@ -40,7 +40,7 @@
       name="jboss:service=invoker,type=http,target=Naming,readonly=true">
       <attribute name="InvokerName">jboss:service=NamingBeanImpl</attribute>
    <attribute name="UseHostName">true</attribute>
-    <attribute name="InvokerURL">https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/readonly/JMXInvokerServlet</attribute>
+    <attribute name="InvokerURL">http://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/readonly/JMXInvokerServlet</attribute>
       <attribute name="ExportedInterface">org.jnp.interfaces.Naming</attribute>
       <attribute name="JndiName"></attribute>
     <attribute name="UseHostName">true</attribute>
