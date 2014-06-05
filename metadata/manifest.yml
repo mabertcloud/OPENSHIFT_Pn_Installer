@@ -45,10 +45,10 @@ Endpoints:
     Mappings:
     - Frontend: ''
       Backend: ''
-      Options: { tohttps: '' }
+#      Options: { tohttps: '' }
     - Frontend: '/webstart'
       Backend: 'planon.jnlp'
-      Options: { tohttps: '' }
+#      Options: { tohttps: '' }
     - Frontend:      '/health'
       Backend:       ''
       Options: { health: true, tohttps: '' }
@@ -62,6 +62,6 @@ Endpoints:
     Mappings:
     - Frontend: 'invoker'
       Backend: 'invoker'
-      Options: { tohttps: 'invoker' }
+#      Options: { tohttps: 'invoker' }
 Additional-Control-Actions:   
 - threaddump
