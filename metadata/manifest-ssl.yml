@@ -1,0 +1,67 @@
+Name: planon
+Cartridge-Short-Name: PLN
+Source-Url: https://github.com/HenkLaracker/PnEE/archive/master.zip
+Cartridge-Version: 1.0.1
+Compatible-Versions:
+- 0.9
+Cartridge-Vendor: planonsoftware
+Display-Name: Planon 14.3
+Description: "Planon cartridge"
+Version: '14.3'
+Versions:
+- '14.3' 
+- '13.17'
+Vendor: planonsoftware.com
+Categories:
+  - web_framework
+  - service
+  - planoncloud
+Website: http://planoncloud.com
+Help-Topics:
+  "Developer Center": http://planoncloud.com
+Cart-Data:
+Provides:
+- Planon-14.3
+- Planon
+Subscribes:
+Scaling:
+  Min: 1
+  Max: 1
+Version-Overrides:
+  '13.17':
+    Display-Name: Planon 13.17
+    Provides:
+    - Planon-13.17
+    - Planon
+Group-Overrides:
+Endpoints:
+  - Private-IP-Name: IP
+    Private-Port-Name: HTTP_PORT_TOMCAT
+    Private-Port: 18070
+    Protocols:
+    - http
+    - ws
+    primary: true
+    Mappings:
+    - Frontend: ''
+      Backend: ''
+      Options: { tohttps: '' }
+    - Frontend: '/webstart'
+      Backend: 'planon.jnlp'
+      Options: { tohttps: '' }
+    - Frontend:      '/health'
+      Backend:       ''
+      Options: { health: true, tohttps: '' }
+  - Private-IP-Name: IP
+    Private-Port-Name: HTTP_PORT_JBOSS
+    Private-Port: 18080
+    Protocols:
+    - http
+    - ws
+    primary: true
+    Mappings:
+    - Frontend: 'invoker'
+      Backend: 'invoker'
+      Options: { tohttps: 'invoker' }
+Additional-Control-Actions:   
+- threaddump
