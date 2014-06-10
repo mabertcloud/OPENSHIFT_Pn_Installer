@@ -42,16 +42,25 @@ CATALINA_OPTS="${CATALINA_OPTS} -Dorg.jboss.security.SecurityAssociation.ThreadL
 CATALINA_OPTS="${CATALINA_OPTS} -da"
 CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_XX-HeapDumpOnOutOfMemoryError=reserved"
 CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_XX-HeapDumpPath=reserved"
+
+#Webbootstrap configuration dirs
 CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.bundles=${PLANONDIR}/bundles"
+CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
+
+#
 CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_planon.config=reserved"
-CATALINA_OPTS="${CATALINA_OPTS} -DPSSCONFIG=${PLANONDIR}/conf/pss.properties"
-CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
-CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_nl.planon.logging.properties=reserved"
-CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.planon.logging.properties=${PLANONDIR}/conf/planon.logging.properties"
-CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.sdk.logging.properties=${PLANONDIR}/conf/sdk.logging.properties"
-CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.mobile.logging.properties=${PLANONDIR}/conf/mobile.logging.properties"
+
+#
+#CATALINA_OPTS="${CATALINA_OPTS} -DPSSCONFIG=${PLANONDIR}/conf/planon.properties"
+#CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
+
+#CATALINA_OPTS="${CATALINA_OPTS} -DPlanonReserved_nl.planon.logging.properties=reserved"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.planon.logging.properties=${PLANONDIR}/conf/planon.logging.properties"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.sdk.logging.properties=${PLANONDIR}/conf/sdk.logging.properties"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.mobile.logging.properties=${PLANONDIR}/conf/mobile.logging.properties"
+
 CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
-CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+
 export CATALINA_OPTS
