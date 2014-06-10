@@ -9,7 +9,7 @@ log4j.appender.SdkConsoleAppender.layout.ConversionPattern = %5p [%d{dd-MM-yyyy 
 
 ### File appender ###
 log4j.appender.SdkRollingAppender = org.apache.log4j.RollingFileAppender
-log4j.appender.SdkRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>/logs/sdk.log
+log4j.appender.SdkRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs/sdk.log
 log4j.appender.SdkRollingAppender.MaxFileSize = 10MB
 log4j.appender.SdkRollingAppender.MaxBackupIndex = 10
 log4j.appender.SdkRollingAppender.layout = org.apache.log4j.PatternLayout

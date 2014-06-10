@@ -246,7 +246,7 @@ restart()
 	typeset -i RC=0
 
 	stop "${progs}"		|| RC=RC+1
-	sleep 15
+	sleep 5
 	start "${progs}"	|| RC=RC+1
 	return ${RC}
 }

@@ -9,7 +9,7 @@ log4j.appender.MobileConsoleAppender.layout.ConversionPattern = %5p [%d{dd-MM-yy
 
 ### File appender ###
 log4j.appender.MobileRollingAppender = org.apache.log4j.RollingFileAppender
-log4j.appender.MobileRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>/logs/mobile.log
+log4j.appender.MobileRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs/mobile.log
 log4j.appender.MobileRollingAppender.MaxFileSize = 10MB
 log4j.appender.MobileRollingAppender.MaxBackupIndex = 10
 log4j.appender.MobileRollingAppender.layout = org.apache.log4j.PatternLayout
