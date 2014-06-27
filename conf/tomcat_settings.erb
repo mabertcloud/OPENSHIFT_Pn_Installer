@@ -19,7 +19,7 @@ MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
 MAXMXMEM=$(awk -v perc=${MAXMX} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
-PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.47"
+PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.52"
 TOMCATDIR="<%= ENV['OPENSHIFT_TOMCAT_DIR'] %>"
 
 export CATALINA_HOME=${TOMCATDIR}
