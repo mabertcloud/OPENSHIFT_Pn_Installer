@@ -181,8 +181,8 @@ showstatus "${?}" "Webstart resources unzipped"
 rm ${DOWNLOAD_FILE_WEBSTART}
 
 #webstart installation
-mkdir -p ${TOMCAT}/webapps/ROOT/PlanonWebstart
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/
+# mkdir -p ${TOMCAT}/webapps/ROOT/PlanonWebstart
+# cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/
 
 
 showstatus "0" "Waiting for database to be ready."
@@ -211,7 +211,5 @@ else
  	showstatus "0" "    Database is ready."
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS_DEF}/deploy
 fi
-
-touch ${TOMCAT}/webapps/webdav/${OPENSHIFT_APP_DNS}
 
 exit 0
