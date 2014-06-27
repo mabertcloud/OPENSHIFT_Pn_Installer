@@ -115,28 +115,31 @@ killtree() {
 
 share()
 {
-	if [[ ( x"" ) ]]
+	if [[ x"${1}" = x"create" ]]
 	then
-    #
-	# Create data mount for customer
-	# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
-	#
-	# For this to work, make sure the file /etc/fuse.conf
-	# contains:
-	#		user_allow_other
-	#
-	CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-	mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
-		sshfs															\
-			-o allow_other												\
-			-o workaround=all											\
-			-o idmap=user												\
-			-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-			-o StrictHostKeyChecking=no									\
-			-o UserKnownHostsFile=/dev/null								\
-			-o reconnect												\
-			${CUSTSHARE}												\
-			${OPENSHIFT_PLN_DIR}/data	
+	    #
+		# Create data mount for customer
+		# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
+		#
+		# For this to work, make sure the file /etc/fuse.conf
+		# contains:
+		#		user_allow_other
+		#
+		CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
+		mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
+			sshfs															\
+				-o allow_other												\
+				-o workaround=all											\
+				-o idmap=user												\
+				-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
+				-o StrictHostKeyChecking=no									\
+				-o UserKnownHostsFile=/dev/null								\
+				-o reconnect												\
+				${CUSTSHARE}												\
+				${OPENSHIFT_PLN_DIR}/data
+	else
+		fusermount -u ${OPENSHIFT_PLN_DIR}/data
+	fi
 }
 
 # Start all services
@@ -148,26 +151,8 @@ start()
 	showstatus "0" "start"
 	showstatus "0" "	Start planon cartridge runtime"
 
-	#
-	# Create data mount for customer
-	# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
-	#
-	# For this to work, make sure the file /etc/fuse.conf
-	# contains:
-	#		user_allow_other
-	#
-	CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-	mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
-		sshfs															\
-			-o allow_other												\
-			-o workaround=all											\
-			-o idmap=user												\
-			-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-			-o StrictHostKeyChecking=no									\
-			-o UserKnownHostsFile=/dev/null								\
-			-o reconnect												\
-			${CUSTSHARE}												\
-			${OPENSHIFT_PLN_DIR}/data
+	# Create the file share mount
+	share 'create'
 
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
@@ -316,20 +301,20 @@ catchall()
 showstatus "0" "Control Main called"
 case "${1:-}"
 in
-	start)					start   "${2:-all}"	;;
-	stop)					stop    "${2:-all}"	;;
-	restart)				restart	"${2:-all}"	;;
-	status)					status				;;
-    share)                  share    "${2:-create}"  ;; 
-	deploy)					catchall "${1}"		;;
-	reload)					catchall "${1}"		;;
-	tidy)					catchall "${1}"		;;
-	pre-build)				catchall "${1}"		;;
-	build)					catchall "${1}"		;;
-	post-deploy)			catchall "${1}"		;;
-	pre-repo-archive)		catchall "${1}"		;;
-	update-configuration)	catchall "${1}"		;;
-	*)						catchall "Unknown"	;;
+	start)					start   "${2:-all}"		;;
+	stop)					stop    "${2:-all}"		;;
+	restart)				restart	"${2:-all}"		;;
+	status)					status					;;
+    share)                  share    "${2:-create}"	;;
+	deploy)					catchall "${1}"			;;
+	reload)					catchall "${1}"			;;
+	tidy)					catchall "${1}"			;;
+	pre-build)				catchall "${1}"			;;
+	build)					catchall "${1}"			;;
+	post-deploy)			catchall "${1}"			;;
+	pre-repo-archive)		catchall "${1}"			;;
+	update-configuration)	catchall "${1}"			;;
+	*)						catchall "Unknown"		;;
 esac
 
 # Exit. No exit code!! The exit code will be the exit code
