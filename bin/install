@@ -170,15 +170,15 @@ ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
 mount
 
 #webdav installation
-showstatus "0" "Webstart download started"
-get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBSTART} 					\
-	${DOWNLOAD_FILE_WEBSTART}
-showstatus "${?}" "Webstart downloaded ended"
+#showstatus "0" "Webstart download started"
+#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBSTART} 					\
+#	${DOWNLOAD_FILE_WEBSTART}
+#showstatus "${?}" "Webstart downloaded ended"
 
-unzip -q ${DOWNLOAD_FILE_WEBSTART} -d ${TOMCAT}/webapps/ROOT/
-showstatus "${?}" "Webstart resources unzipped"
+#unzip -q ${DOWNLOAD_FILE_WEBSTART} -d ${TOMCAT}/webapps/ROOT/
+#showstatus "${?}" "Webstart resources unzipped"
 
-rm ${DOWNLOAD_FILE_WEBSTART}
+#rm ${DOWNLOAD_FILE_WEBSTART}
 
 #webstart installation
 # mkdir -p ${TOMCAT}/webapps/ROOT/PlanonWebstart
