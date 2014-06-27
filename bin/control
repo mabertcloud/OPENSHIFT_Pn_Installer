@@ -137,6 +137,7 @@ share()
 			-o reconnect												\
 			${CUSTSHARE}												\
 			${OPENSHIFT_PLN_DIR}/data	
+	fi
 }
 
 # Start all services

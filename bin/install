@@ -129,20 +129,6 @@ chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
-
-#mkdir -p ${OPENSHIFT_PLN_DIR}/data/{webdav,secure,eetalk}
-
-#webdav installation
-#showstatus "0" "Accelerator data download started"
-#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBDAV} 					\
-#	${DOWNLOAD_FILE_WEBDAV}
-#showstatus "${?}" "Webdav resource downloaded ended"
-
-#unzip -q ${DOWNLOAD_FILE_WEBDAV} -d data
-#showstatus "${?}" "Webdav resources unzipped"
-
-#rm ${DOWNLOAD_FILE_WEBDAV}
-
 #Create share for customer
 if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]
 then
