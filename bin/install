@@ -114,13 +114,19 @@ showstatus "${?}" "Tomcat unzipped"
 rm ${DOWNLOAD_FILE_TOMCAT}
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
+
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 			${TOMCAT}/conf/
+
 cp ${OPENSHIFT_PLN_DIR}/conf/logging.properties 		${TOMCAT}/conf/
+
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/ticket.logging.properties 	${TOMCAT}/conf/
+
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}/conf/
 cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT}/conf/
