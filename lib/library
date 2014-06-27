@@ -14,7 +14,7 @@ export PATH=/bin/:/usr/bin:${PATH}
 export PLANON="${OPENSHIFT_PLN_DIR}/PlanonProCenter"
 export JBOSS="${PLANON}/jboss-6.1.0.Final"
 export JBOSS_DEF="${JBOSS}/server/default"
-export TOMCAT="${PLANON}/tomcat-7.0.47"
+export TOMCAT="${PLANON}/tomcat-7.0.52"
 export TOMCATPID="${OPENSHIFT_PLN_DIR}/run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}/run/jboss.pid"
 #
