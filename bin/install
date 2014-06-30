@@ -148,34 +148,23 @@ fi
 
 exec > ${OPENSHIFT_PLN_DIR} 2>&1
 
-mount 
-set -x
 #
 # Create data mount for customer
-# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
+# Unmount with: mount drop
 #
 # For this to work, make sure the file /etc/fuse.conf
 # contains:
 #		user_allow_other
 #
-CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
-	sshfs															\
-		-o allow_other												\
-		-o workaround=all											\
-		-o idmap=user												\
-		-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-		-o StrictHostKeyChecking=no									\
-		-o UserKnownHostsFile=/dev/null								\
-		-o reconnect												\
-		${CUSTSHARE}												\
-		${OPENSHIFT_PLN_DIR}/data
+mount create
 
-# create symbolic link
-ln -s ${OPENSHIFT_PLN_DIR}data/live/webdav/ ${TOMCAT}/webapps/
+# create symbolic link for webdav
+ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
+# create symbolic link for webdav
+ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 
 
-mount
 
 #webstart installation
 cp -avr ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/PlanonWebstart
