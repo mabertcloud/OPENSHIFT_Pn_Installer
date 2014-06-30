@@ -167,6 +167,7 @@
           <jar href="waffle-jna-1.5.jar"/>
         
           <jar href="wsdl4j-1.6.2.jar"/>
+          <jar href="nl.planon.pss.common-6.3.1.jar"
         
     <jar href="xbean.jar"/>
     <jar href="xml-apis-ext.jar"/>    
@@ -178,8 +179,7 @@
     <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-framework-all.jar.jnlp"/>
     <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/planon-jviews-gantt-all.jar.jnlp"/>   
     <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/testspace.jnlp"/>
-    <extension href="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/pss-common.jnlp"/>       
-      
+
     <property name="jnlp.setjava.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.setjava.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" />
     <property name="jnlp.setjava.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
