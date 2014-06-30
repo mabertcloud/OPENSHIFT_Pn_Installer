@@ -165,7 +165,6 @@ ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 
 
-
 #webstart installation
 cp -avr ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/PlanonWebstart
 
