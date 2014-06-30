@@ -48,7 +48,7 @@ Endpoints:
       Backend: ''
       Options: { tohttps: '' }
     - Frontend: '/webstart'
-      Backend: 'planon.jnlp'
+      Backend: '/PlanonWebstart/planon.jnlp'
       Options: { tohttps: '' }
     - Frontend:      '/health'
       Backend:       ''
