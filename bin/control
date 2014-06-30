@@ -112,32 +112,9 @@ killtree() {
 	fi
 }
 
-
-share()
+mount()
 {
-	if [[ ( x"" ) ]]
-	then
-    #
-	# Create data mount for customer
-	# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
-	#
-	# For this to work, make sure the file /etc/fuse.conf
-	# contains:
-	#		user_allow_other
-	#
-	CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-	mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
-		sshfs															\
-			-o allow_other												\
-			-o workaround=all											\
-			-o idmap=user												\
-			-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-			-o StrictHostKeyChecking=no									\
-			-o UserKnownHostsFile=/dev/null								\
-			-o reconnect												\
-			${CUSTSHARE}												\
-			${OPENSHIFT_PLN_DIR}/data	
-	fi
+	share $1
 }
 
 # Start all services
@@ -149,26 +126,8 @@ start()
 	showstatus "0" "start"
 	showstatus "0" "	Start planon cartridge runtime"
 
-	#
-	# Create data mount for customer
-	# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/data
-	#
-	# For this to work, make sure the file /etc/fuse.conf
-	# contains:
-	#		user_allow_other
-	#
-	CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-	mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
-		sshfs															\
-			-o allow_other												\
-			-o workaround=all											\
-			-o idmap=user												\
-			-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-			-o StrictHostKeyChecking=no									\
-			-o UserKnownHostsFile=/dev/null								\
-			-o reconnect												\
-			${CUSTSHARE}												\
-			${OPENSHIFT_PLN_DIR}/data
+	# Create the file share mount
+	share 'create'
 
 	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
 	# Copy database XML
@@ -321,7 +280,7 @@ in
 	stop)					stop    "${2:-all}"	;;
 	restart)				restart	"${2:-all}"	;;
 	status)					status				;;
-    share)                  share    "${2:-create}"  ;; 
+    mount)                  mount    "${2:-create}"  ;; 
 	deploy)					catchall "${1}"		;;
 	reload)					catchall "${1}"		;;
 	tidy)					catchall "${1}"		;;
