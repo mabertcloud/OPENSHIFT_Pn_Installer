@@ -68,7 +68,7 @@ usage()
 }
 
 # create directory's
-mkdir -p ${OPENSHIFT_PLN_DIR}/{run,tmp,conf,logs,data}
+mkdir -p ${OPENSHIFT_PLN_DIR}/{run,tmp,conf,logs,data,mount}
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
 
@@ -98,7 +98,8 @@ chmod +x ${JBOSS}/bin/shutdown.sh
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/hornetq-jms.xml 	${JBOSS_DEF}/deploy/hornetq/
-#cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 	${JBOSS_DEF}/deploy
+cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 		${JBOSS_DEF}/deploy
+
 
 showstatus "0" "JBoss done!"
 
@@ -171,51 +172,12 @@ mountpoint -q ${OPENSHIFT_PLN_DIR}/data ||							\
 		${OPENSHIFT_PLN_DIR}/data
 
 # create symbolic link
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
+ln -s ${OPENSHIFT_PLN_DIR}data/live/webdav/ ${TOMCAT}/webapps/
+
 
 mount
 
-#webdav installation
-#showstatus "0" "Webstart download started"
-#get ${DOWNLOAD_LOCATION}/${DOWNLOAD_FILE_WEBSTART} 					\
-#	${DOWNLOAD_FILE_WEBSTART}
-#showstatus "${?}" "Webstart downloaded ended"
-
-#unzip -q ${DOWNLOAD_FILE_WEBSTART} -d ${TOMCAT}/webapps/ROOT/
-#showstatus "${?}" "Webstart resources unzipped"
-
-#rm ${DOWNLOAD_FILE_WEBSTART}
-
 #webstart installation
-# mkdir -p ${TOMCAT}/webapps/ROOT/PlanonWebstart
-# cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/
-
-
-showstatus "0" "Waiting for database to be ready."
-# wait untill the database is ready stop after 60 seconds
-typeset -i COUNTER=0
-while [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
-do
-	COUNTER=COUNTER+1
-	sleep 5
-
-	echo "  Check if database is ready.($COUNTER)"
-	get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}			\
-		${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
-	showstatus "${?}" "Waiting for database to be ready."
-
-	if [[ ${COUNTER} -ge 4 ]]
-	then
-		break
-	fi
-done
-
-if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
-then
-	showstatus "1" "    Database not ready, still taking a shot."
-else
- 	showstatus "0" "    Database is ready."
-	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS_DEF}/deploy
-fi
+cp -avr ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 			${TOMCAT}/webapps/ROOT/PlanonWebstart
 
 exit 0
