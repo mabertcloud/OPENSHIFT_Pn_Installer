@@ -90,7 +90,7 @@ share()
 				-o reconnect												\
 				${CUSTSHARE}												\
 				${OPENSHIFT_PLN_DIR}/mount
-		showstatus "mount : ${1}"		
+		showstatus "0" "mount : ${1}"		
 	else
 		fusermount -u ${OPENSHIFT_PLN_DIR}/mount
 	fi
