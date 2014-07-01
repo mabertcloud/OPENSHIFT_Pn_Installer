@@ -115,6 +115,8 @@ showstatus "${?}" "Tomcat unzipped"
 rm ${DOWNLOAD_FILE_TOMCAT}
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT}/conf/
+
 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT}/conf/
