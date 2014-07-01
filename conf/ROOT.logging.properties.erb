@@ -9,7 +9,7 @@ log4j.appender.MyConsoleAppender.layout.ConversionPattern = %5p [%d{dd-MM-yyyy H
 
 ### File appender ###
 log4j.appender.MyRollingAppender = org.apache.log4j.RollingFileAppender
-log4j.appender.MyRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs/planon.log
+log4j.appender.MyRollingAppender.File = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs/ROOT.log
 log4j.appender.MyRollingAppender.MaxFileSize = 10MB
 log4j.appender.MyRollingAppender.MaxBackupIndex = 10
 log4j.appender.MyRollingAppender.layout = org.apache.log4j.PatternLayout
