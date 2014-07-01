@@ -129,27 +129,6 @@ start()
 	# Create the file share mount
 	share 'create'
 
-	cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
-	# Copy database XML
-	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
-	then
-		showstatus "0" "	No DB connection string found, give it a new try"
-		get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}	\
-			${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
-
-		if [[ -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
-		then
-			cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml ${JBOSS}/server/default/deploy
-		fi
-	fi
-
-	# If the database config file does not exist we cannot continue
-	if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml" ]]
-	then
-		showstatus "1" "	Cannot start, still no DB available"
-		return 0
-	fi
-
 	showstatus "0" "	Starting......."
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"jboss" ) ]]
@@ -168,6 +147,7 @@ start()
 		fi
 	fi
 
+	sleep 15
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
 	then
