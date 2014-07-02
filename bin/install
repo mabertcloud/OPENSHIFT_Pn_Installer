@@ -70,6 +70,9 @@ usage()
 # create directory's
 mkdir -p ${OPENSHIFT_PLN_DIR}/{run,tmp,conf,logs,data,mount}
 mkdir -p ${OPENSHIFT_PLN_DIR}/logs/boot
+touch ${OPENSHIFT_PLN_DIR}/logs/sdk.log
+touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
+
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
 
