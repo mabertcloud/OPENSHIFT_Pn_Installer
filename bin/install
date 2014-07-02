@@ -100,6 +100,8 @@ cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/hornetq-jms.xml 	${JBOSS_DEF}/deploy/hornetq/
 cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 		${JBOSS_DEF}/deploy
+cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS_DEF}/bin/logging.properties
+
 
 
 showstatus "0" "JBoss done!"
@@ -124,7 +126,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}/conf/
 #cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 			${TOMCAT}/conf/
 
-cp ${OPENSHIFT_PLN_DIR}/conf/logging.properties 		${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 		${TOMCAT}/conf/logging.properties
 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT}/conf/
