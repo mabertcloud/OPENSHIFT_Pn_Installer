@@ -101,7 +101,6 @@ chmod +x ${JBOSS}/bin/shutdown.sh
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/hornetq-jms.xml 	${JBOSS_DEF}/deploy/hornetq/
 cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 		${JBOSS_DEF}/deploy
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
