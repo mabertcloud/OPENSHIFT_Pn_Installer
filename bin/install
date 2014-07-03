@@ -88,7 +88,7 @@ get	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
 
 showstatus "0" "Request pmfs cloud key"
-get	${PLANON_COCKPIT_URL}PmfsServerResource/						\
+get	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
