@@ -77,27 +77,22 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 cd ${OPENSHIFT_PLN_DIR}
 
 # Get the right DB connections
-showstatus "0" "Request database connect string"
 get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
-showstatus "0" "Request webdav account"
 get	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
 showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
 
-showstatus "0" "Request pmfs cloud key"
 get	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
 get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
 	${DOWNLOAD_FILE_JBOSS}
-showstatus "${?}" "JBoss downloaded ended"
 
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
-showstatus "${?}" "JBoss unzipped"
 
 rm ${DOWNLOAD_FILE_JBOSS}
 
@@ -112,18 +107,14 @@ cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_DEF}/conf/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
-
-
-showstatus "0" "JBoss done!"
+showstatus "0" "JBoss download, unzipped and configured!"
 
 # TOMCAT
-showstatus "0" "Tomcat download started"
+
 get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_TOMCAT} 					\
 	${DOWNLOAD_FILE_TOMCAT}
-showstatus "${?}" "Tomcat downloaded ended"
 
 unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
-showstatus "${?}" "Tomcat unzipped"
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
@@ -168,6 +159,8 @@ chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
 
+showstatus "0" "Tomcat download, unzipped and configured!"
+
 #Create share for customer
 if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]
 then
@@ -193,11 +186,14 @@ mount create
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
+showstatus "0" "Webdav configured!"
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
+showstatus "0" "Securedocs configured!"
 
 
 #webstart installation
 cp  ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT}/webapps/PlanonWebstart/planon.jnlp
+showstatus "0" "Webstart configured!"
 
 exit 0
