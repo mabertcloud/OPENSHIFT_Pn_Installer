@@ -85,7 +85,12 @@ showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 showstatus "0" "Request webdav account"
 get	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
-showstatus "${?}" "JBoss download started"
+showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
+
+showstatus "0" "Request pmfs cloud key"
+get	${PLANON_COCKPIT_URL}PmfsServerResource/						\
+	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
+showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
 get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
 	${DOWNLOAD_FILE_JBOSS}
@@ -99,9 +104,12 @@ rm ${DOWNLOAD_FILE_JBOSS}
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
 
-cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml	${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
-cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 	${JBOSS_DEF}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 		${JBOSS_DEF}/deploy
+cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_DEF}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEF}/deploy
+cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_DEF}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_DEF}/conf/
+
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
 
