@@ -10,7 +10,6 @@ Description: "Planon cartridge"
 Version: '14.6.1'
 Versions:
 - '14.6.1'
-- '14.3' 
 Vendor: planonsoftware.com
 Categories:
   - web_framework

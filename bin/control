@@ -138,7 +138,7 @@ start()
 		then
 			showstatus "1" "Program JBoss is already running"
 		else
-			showstatus "0" "Program JBoss is not running, trying to start it."
+			showstatus "0" "Program JBoss is not running, starting up."
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 			nohup ${JBOSS}/bin/run.sh				\
 				-H ${OPENSHIFT_PLN_IP}				\
@@ -157,7 +157,7 @@ start()
 		then
 			showstatus "1" "Program Tomcat is already running"
 		else
-			showstatus "0" "Program Tomcat is not running, trying to start it."
+			showstatus "0" "Program Tomcat is not running, starting up."
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 			nohup ${TOMCAT}/bin/startup.sh >/dev/null 2>&1 &
 		fi
@@ -179,7 +179,7 @@ stop()
 		# Check if Tomcat is running
 		if isrunning ${TOMCATPID}
 		then
-			showstatus "0" "Program Tomcat is running, trying to stop it."
+			showstatus "0" "Program Tomcat is running, stop it."
 			${TOMCAT}/bin/shutdown.sh
 		else
 			showstatus "0" "Program Tomcat is already stopped"
@@ -187,12 +187,14 @@ stop()
 		rm -f ${TOMCATPID}
 	fi
 
+	sleep 10
+
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"jboss" ) ]]
 	then
 		# Check if Jboss is running
 		if isrunning ${JBOSSPID}
 		then
-			showstatus "0" "Program JBoss is running, trying to stop it."
+			showstatus "0" "Program JBoss is running, stop it."
 			pid=$(cat ${JBOSSPID})
 			killtree ${pid}
 		else

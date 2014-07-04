@@ -92,6 +92,7 @@ showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
 	${DOWNLOAD_FILE_JBOSS}
 
+
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
 
 rm ${DOWNLOAD_FILE_JBOSS}
@@ -161,17 +162,17 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 
 showstatus "0" "Tomcat download, unzipped and configured!"
 
-#Create share for customer
-if [[ ! -s "${OPENSHIFT_PLN_DIR}/conf/keys/share.priv" ]]
-then
-	get ${PLANON_COCKPIT_URL}FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
-		${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt
-	get ${PLANON_COCKPIT_URL}FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
-		${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
-	chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
-fi
+#Get credentials for share.
+get ${PLANON_COCKPIT_URL}FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
+	${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt
+get ${PLANON_COCKPIT_URL}FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
+	${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
+chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 
 exec > ${OPENSHIFT_PLN_DIR} 2>&1
+
+mount 
+set -x
 
 #
 # Create data mount for customer
@@ -181,7 +182,7 @@ exec > ${OPENSHIFT_PLN_DIR} 2>&1
 # contains:
 #		user_allow_other
 #
-mount create
+share 'create'
 
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
@@ -193,7 +194,7 @@ showstatus "0" "Securedocs configured!"
 
 
 #webstart installation
-cp  ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT}/webapps/PlanonWebstart/planon.jnlp
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT}/webapps/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"
 
 exit 0
