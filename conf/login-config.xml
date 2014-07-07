@@ -23,7 +23,7 @@ The outline of the application-policy is:
   </authentication>
 </application-policy>
 
-$Revision: 1.3 $
+$Revision: 1.5 $
 -->
 
 <policy>
@@ -42,15 +42,27 @@ $Revision: 1.3 $
 		<authentication>
 			<!-- JBoss specific InitModule: Only SYSINIT user is allowed in initialize mode.
 			       This module is marked 'sufficient', it will only succeed in initialize mode, only allowing user SYSINIT, skipping the remaining modules
+			       The Init user login module is required to load and start the Planon Bundles.
 			-->
-				<login-module code="nl.planon.artemis.server.jboss.JBossInitUserLoginModule" flag="sufficient"/>
+			<login-module code="nl.planon.artemis.server.jboss.JBossInitUserLoginModule" flag="sufficient"/>
 				
-			<!-- JBoss specific UpgradeModule: SYSUPGRADE user is allowed in upgrade mode.
-				This module is marked 'sufficient', it will only succeed in upgrademode, only allowing user SYSUPGRADE, skipping the remaining modules.
-	    		You will NEED this module in order to run an upgrade.
-    			-->
-			<login-module code="nl.planon.artemis.server.jboss.JBossUpgradeUserLoginModule" flag="sufficient"/>
+			<login-module code="nl.planon.artemis.server.TrustedServiceServerLoginModule" flag="sufficient" />
 
+      <login-module code="nl.planon.artemis.server.jboss.JBossUpgradeUserLoginModule" flag="sufficient"/>
+
+			<!-- JBoss specific ServerLoginModule: Planon default user authentication -->
+	    		<login-module code="nl.planon.artemis.server.jboss.JBossServerLoginModule" flag="optional"/>
+
+    			<!-- this loginmodule will grant the Planon role. More roles can be added if needed by 
+				extending the list using a comma as separator -->
+    			<login-module code="nl.planon.artemis.server.CommitPlanonUserLoginModule" flag="required">
+				<module-option name="roles">Planon</module-option>
+				<!-- for auditing, these are the default values -->
+				<module-option name="enableAuditing">true</module-option>
+				<module-option name="failedLoginDelay">1</module-option>
+				<module-option name="failedLoginThreshold">3</module-option>
+				<module-option name="loginUnlockDelay">300</module-option>
+			</login-module>
 
 		</authentication>
 	</application-policy>
@@ -58,21 +70,6 @@ $Revision: 1.3 $
 	<!-- Used by clients within the application server VM such as
 	    mbeans and servlets that access EJBs.
 	-->
-
-<!-- The next 'PlanonDBSecDomStart' and 'PlanonDBSecDomEnd' marker lines are currently still required since the suitedbupgrade tool searches for them to remove them
-     and thereby effectively 'uncomment' the 'PlanonDBSecDom' section below. However the section is already 'active' (uncommented) since this login-config.xml file is 
-     specifically for the suitedbupgrade tool (only). -->
-<!-- [PlanonDBSecDomStart] -->
-     <!-- [PlanonDBSecDomEnd] -->
-    <application-policy name="PlanonDBSecDom">
-        <authentication>
-		<login-module code="org.jboss.resource.security.PlanonSecureIdentityLoginModule" flag="required">
-		<module-option name="username">user</module-option>
-                <module-option name="password">676E</module-option>
-                <module-option name="managedConnectionFactoryName">jboss.jca:name=PlanonDS,service=LocalTxCM</module-option>
-            </login-module>
-        </authentication>
-    </application-policy>
 	
 	<!-- Used by Planon5 webclient -->
 	<application-policy name="PlanonWebclientLogin">
@@ -82,7 +79,27 @@ $Revision: 1.3 $
 		</authentication>
 	</application-policy>
 
+	<!-- ExchangeLink client (setup as trusted service) -->
+	<application-policy name="ExchangeClientLoginConfiguration">
+		<authentication>
+			<login-module code="nl.planon.hades.client.authentication.jboss.TrustedServiceClientLoginModule" flag="required">
+				<!-- Designate the required keystore (relative path to 'bin' location) -->
+				<module-option name="keystore">${jboss.server.home.dir}/exchangeKeystore.jks</module-option>
+				<module-option name="alias">EXCHANGE</module-option>
+				<module-option name="debug">false</module-option>
+			</login-module>
+		</authentication>
+	</application-policy>
 
+	<application-policy name="SchedulerEngineClientLoginConfiguration">
+		<authentication>
+			<login-module code="nl.planon.hades.client.authentication.jboss.TrustedServiceClientLoginModule" flag="required">
+				<module-option name="keystore">${jboss.server.home.dir}/schedulerKeystore.jks</module-option>
+				<module-option name="alias">SCHEDULER</module-option>
+				<module-option name="debug">false</module-option>
+			</login-module>
+		</authentication>
+	</application-policy>
 				
 	<application-policy name="auth-planon-client">
 	    <authentication>
