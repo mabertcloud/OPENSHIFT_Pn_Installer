@@ -152,6 +152,8 @@ cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMC
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT}/webapps/sdk/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT}/webapps/sdk/WEB-INF/bundles
 
+cp $OPENSHIFT_PLN_DIR/conf/axis2.xml ${TOMCAT}/webapps/nyx/WEB-INF/conf/
+
 
 #webdav users
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
