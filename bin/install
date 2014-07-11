@@ -198,6 +198,21 @@ ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/secur
 showstatus "0" "Securedocs configured!"
 
 
+# Add cloud software
+
+get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
+	${DOWNLOAD_FILE_CLOUD}
+
+unzip -q ${DOWNLOAD_FILE_CLOUD} -d ${OPENSHIFT_PLN_DIR}/bundles
+
+cp ${OPENSHIFT_PLN_DIR}/bundles/jboss/ ${JBOSS_DEF}/bundles/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/bundles/tomcat/ ${TOMCAT}/bundles/ROOT
+
+
+#rm ${DOWNLOAD_FILE_CLOUD}
+#rm bundles ${OPENSHIFT_PLN_DIR}/bundles
+
+
 #webstart installation
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT}/webapps/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"

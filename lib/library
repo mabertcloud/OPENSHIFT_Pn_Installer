@@ -29,6 +29,7 @@ then
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_WEBDAV="${version}-webdav.zip"
 	export DOWNLOAD_FILE_WEBSTART="${version}-webstart.zip"
+	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
 fi
 #
 export DOWNLOAD_LOCATION="${PLANON_FILESERVER_URL}"
