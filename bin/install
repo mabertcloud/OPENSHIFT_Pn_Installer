@@ -203,14 +203,14 @@ showstatus "0" "Securedocs configured!"
 get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
 	${DOWNLOAD_FILE_CLOUD}
 
-unzip -q ${DOWNLOAD_FILE_CLOUD} -d ${OPENSHIFT_PLN_DIR}/bundles
+unzip -q ${DOWNLOAD_FILE_CLOUD}
 
-cp ${OPENSHIFT_PLN_DIR}/bundles/jboss/ ${JBOSS_DEF}/bundles/planon/ 
-cp ${OPENSHIFT_PLN_DIR}/bundles/tomcat/ ${TOMCAT}/bundles/ROOT
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/ ${JBOSS_DEF}/bundles/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/ ${TOMCAT}/bundles/ROOT
 
 
-#rm ${DOWNLOAD_FILE_CLOUD}
-#rm bundles ${OPENSHIFT_PLN_DIR}/bundles
+rm ${DOWNLOAD_FILE_CLOUD}
+rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation
