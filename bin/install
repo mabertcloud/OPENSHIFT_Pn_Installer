@@ -208,8 +208,8 @@ unzip -q ${DOWNLOAD_FILE_CLOUD}
 
 rm ${DOWNLOAD_FILE_CLOUD}
 
-cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/ ${JBOSS_DEF}/bundles/planon/ 
-cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/ ${TOMCAT}/bundles/ROOT
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_DEF}/bundles/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT}/bundles/ROOT/
 
 
 #rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
