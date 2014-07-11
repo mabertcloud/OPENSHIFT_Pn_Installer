@@ -205,12 +205,13 @@ get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
 
 unzip -q ${DOWNLOAD_FILE_CLOUD}
 
+rm ${DOWNLOAD_FILE_CLOUD}
+
 cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/ ${JBOSS_DEF}/bundles/planon/ 
 cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/ ${TOMCAT}/bundles/ROOT
 
 
-rm ${DOWNLOAD_FILE_CLOUD}
-rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
+#rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation
