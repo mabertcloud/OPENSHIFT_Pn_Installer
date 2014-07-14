@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+ <bean name="InitialContext" class="javax.naming.InitialContext"/>
+ <bean name="JMXConnector" class="org.jboss.system.server.jmx.JMXConnector">
+     <property name="hostname">
+        <value-factory bean="ServiceBindingManager" method="getStringBinding" 
+           parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmi"/>
+     </property>
+         <property name="rmiRegistryPort" class="int">
+         <value-factory bean="ServiceBindingManager" method="getIntBinding" 
+         parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmi"/>
+      </property>
+     <property name="rmiServerPort" class="int">
+     <value-factory bean="ServiceBindingManager" method="getIntBinding"
+     parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmiServer"/>
+     </property>
+     <property name="mbeanServer" class="javax.management.MBeanServer"><inject bean="JMXKernel" property="mbeanServer" /></property>
+     <property name="context" class="javax.naming.InitialContext"><inject bean="InitialContext"/></property>
+ </bean>
+</deployment>
