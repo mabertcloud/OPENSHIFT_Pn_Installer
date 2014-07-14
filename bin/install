@@ -108,7 +108,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_DEF}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_DEF}/conf/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/login.config.xml 				${JBOSS_DEF}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/jmx-jboss-beans.xml			${JBOSS_DEF}/deploy/
+#cp ${OPENSHIFT_PLN_DIR}/conf/jmx-jboss-beans.xml			${JBOSS_DEF}/deploy/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
