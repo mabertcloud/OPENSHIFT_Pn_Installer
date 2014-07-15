@@ -147,7 +147,7 @@ start()
 		fi
 	fi
 
-	sleep 60
+	sleep 45
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
 	then
