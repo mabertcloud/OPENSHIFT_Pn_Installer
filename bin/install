@@ -177,10 +177,10 @@ chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 
 
 #Get credentials for PCIS USER 
-get ${PLANON_COCKPIT_URL}PcisPlanonServerResource/Functional/${OPENSHIFT_APP_DNS} 	\
+get ${PLANON_COCKPIT_URL}PcisLoginResource/Functional/${OPENSHIFT_APP_DNS} 	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/Functional.credentials
 
-get ${PLANON_COCKPIT_URL}PcisPlanonServerResource/Purchaser/${OPENSHIFT_APP_DNS} 	\
+get ${PLANON_COCKPIT_URL}PcisLoginResource/Purchaser/${OPENSHIFT_APP_DNS} 	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/Purchaser.credentials
 
 #get ${PLANON_COCKPIT_URL}PcisPlanonServerResource/Cockpit/${OPENSHIFT_APP_DNS} 	\
