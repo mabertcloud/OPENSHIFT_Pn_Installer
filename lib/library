@@ -137,7 +137,7 @@ getartifact()
 	DST="${2}"
 
 	wget --output-document="${DST}" 	\
-	 	 "${DOWNLOAD_LOCATION}/${version/${SRC}"
+	 	 "${DOWNLOAD_LOCATION}/${version}/${SRC}"
 
 	RC=${?}
 
