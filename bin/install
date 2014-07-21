@@ -89,8 +89,7 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
-getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
-	${DOWNLOAD_FILE_JBOSS}
+getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
 
 
 unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
@@ -116,8 +115,7 @@ showstatus "0" "JBoss download, unzipped and configured!"
 
 # TOMCAT
 
-getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_TOMCAT} 					\
-	${DOWNLOAD_FILE_TOMCAT}
+getartifact ${DOWNLOAD_FILE_TOMCAT} ${DOWNLOAD_FILE_TOMCAT}
 
 unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
 
