@@ -116,7 +116,7 @@ showstatus "0" "JBoss download, unzipped and configured!"
 
 # TOMCAT
 
-get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_TOMCAT} 					\
+getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_TOMCAT} 					\
 	${DOWNLOAD_FILE_TOMCAT}
 
 unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
@@ -169,18 +169,18 @@ chmod +x ${TOMCAT}/bin/shutdown.sh
 showstatus "0" "Tomcat download, unzipped and configured!"
 
 #Get credentials for share.
-get ${PLANON_COCKPIT_URL}FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
+getcockpit ${PLANON_COCKPIT_URL}FileServerResource/usr/${OPENSHIFT_APP_DNS} 	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt
-get ${PLANON_COCKPIT_URL}FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
+getcockpit ${PLANON_COCKPIT_URL}FileServerResource/rsa/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 chmod 400 ${OPENSHIFT_PLN_DIR}/conf/keys/share.priv
 
 
 #Get credentials for PCIS USER 
-get ${PLANON_COCKPIT_URL}PcisLoginResource/Functional/${OPENSHIFT_APP_DNS} 	\
+getcockpit ${PLANON_COCKPIT_URL}PcisLoginResource/Functional/${OPENSHIFT_APP_DNS} 	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/Functional.credentials
 
-get ${PLANON_COCKPIT_URL}PcisLoginResource/Purchaser/${OPENSHIFT_APP_DNS} 	\
+getcockpit ${PLANON_COCKPIT_URL}PcisLoginResource/Purchaser/${OPENSHIFT_APP_DNS} 	\
 	${OPENSHIFT_PLN_DIR}/conf/keys/Purchaser.credentials
 
 #get ${PLANON_COCKPIT_URL}PcisPlanonServerResource/Cockpit/${OPENSHIFT_APP_DNS} 	\
@@ -212,7 +212,7 @@ showstatus "0" "Securedocs configured!"
 
 # Add cloud software
 
-get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
+getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
 	${DOWNLOAD_FILE_CLOUD}
 
 unzip -q ${DOWNLOAD_FILE_CLOUD}

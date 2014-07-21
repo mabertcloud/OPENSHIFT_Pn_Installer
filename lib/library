@@ -136,7 +136,7 @@ getartifact()
 	SRC="${1}"
 	DST="${2}"
 
-	wget -q --output-document="${DST}" 	\
+	wget --output-document="${DST}" 	\
 	 	 "${version}/${SRC}"
 
 	RC=${?}
