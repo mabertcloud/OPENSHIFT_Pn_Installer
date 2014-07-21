@@ -37,7 +37,7 @@ LIBRARY="${LIBDIR}/library"
 [[ ! -r ${LIBRARY} ]] && { echo "${LIBRARY} not found"; exit 1; }
 . ${LIBRARY} || { echo "Error reading ${LIBRARY}"; exit 1; }
 
-call cockpit to remove database.
-curl -u cockpit:test1234 -i -H "Accept: application/json" -X DELETE $PLANON_FILESERVER_URL/Database/${OPENSHIFT_APP_DNS}
+#call cockpit to remove database.
+#curl -u cockpit:test1234 -i -H "Accept: application/json" -X DELETE $PLANON_FILESERVER_URL/Database/${OPENSHIFT_APP_DNS}
 
 client_result "Teardown called Main"

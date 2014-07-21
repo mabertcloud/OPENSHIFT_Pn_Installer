@@ -98,7 +98,7 @@ share()
 }
 
 # Get a file from the web
-get()
+getcockpit()
 {
 	SRC="${1}"
 	DST="${2}"
@@ -106,9 +106,40 @@ get()
 	wget -q --http-user=cockpit 		\
 		--http-password=test1234 		\
 		--output-document="${DST}" 		\
-	 	 "${version}/${SRC}"
+	 	 "${SRC}"
 
 	 RC=${?}
+
+	 # Check the wget exitcode. If it's 0, return to the calling
+	 # program/function. If it's NOT 0, there is some kind of error
+	 # and we cannot continue. Just exit!!
+	 case ${RC}
+	 in
+	 	0)	return 0								;;
+	 	1)	MSG="Generic error code"				;;
+	 	2)	MSG="Parse error"						;;
+	 	3)	MSG="File I/O error"					;;
+	 	4)	MSG="Network failure"					;;
+	 	5)	MSG="SSL verification failure"			;;
+	 	6)	MSG="Authentication failure"			;;
+	 	7)	MSG="Protocol error"					;;
+	 	8)	MSG="Server issued an error response"	;;
+	 	*)	MSG="Unknown error response"			;;
+	 esac
+
+	showstatus "${RC}" "wget: ${MSG}"
+	exit ${RC}
+}
+
+getartifact()
+{
+	SRC="${1}"
+	DST="${2}"
+
+	wget -q --output-document="${DST}" 	\
+	 	 "${version}/${SRC}"
+
+	RC=${?}
 
 	 # Check the wget exitcode. If it's 0, return to the calling
 	 # program/function. If it's NOT 0, there is some kind of error

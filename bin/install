@@ -77,19 +77,19 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 cd ${OPENSHIFT_PLN_DIR}
 
 # Get the right DB connections
-get ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
+getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
-get	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
 showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
 
-get	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
+getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
-get ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
+getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_JBOSS}						\
 	${DOWNLOAD_FILE_JBOSS}
 
 
