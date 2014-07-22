@@ -136,7 +136,7 @@ getartifact()
 	SRC="${1}"
 	DST="${2}"
 
-	wget --output-document="${DST}" 	\
+	wget -q --output-document="${DST}" 	\
 	 	 "${DOWNLOAD_LOCATION}${version}/${SRC}"
 
 	RC=${?}
