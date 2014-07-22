@@ -106,7 +106,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEF}/deploy
 cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_DEF}/conf/
 cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_DEF}/conf/
 
-cp ${OPENSHIFT_PLN_DIR}/conf/login.config.xml 				${JBOSS_DEF}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_DEF}/conf/
 
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
@@ -184,7 +184,7 @@ getcockpit ${PLANON_COCKPIT_URL}PcisLoginResource/Purchaser/${OPENSHIFT_APP_DNS}
 #get ${PLANON_COCKPIT_URL}PcisPlanonServerResource/Cockpit/${OPENSHIFT_APP_DNS} 	\
 #	${OPENSHIFT_PLN_DIR}/conf/keys/Cockpit.credentials
 
-exec > ${OPENSHIFT_PLN_DIR} 2>&1
+#exec > ${OPENSHIFT_PLN_DIR} 2>&1
 
 mount 
 set -x
@@ -210,8 +210,7 @@ showstatus "0" "Securedocs configured!"
 
 # Add cloud software
 
-getartifact ${DOWNLOAD_LOCATION}${DOWNLOAD_FILE_CLOUD} 					\
-	${DOWNLOAD_FILE_CLOUD}
+getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
 
 unzip -q ${DOWNLOAD_FILE_CLOUD}
 
