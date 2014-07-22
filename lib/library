@@ -32,7 +32,7 @@ then
 	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
 fi
 #
-export DOWNLOAD_LOCATION="${PLANON_FILESERVER_URL}"
+export DOWNLOAD_LOCATION="${PLANON_ARTIFACT_URL}"
 
 
 # Return date/time in standard format
