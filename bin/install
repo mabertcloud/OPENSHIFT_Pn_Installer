@@ -99,14 +99,13 @@ rm ${DOWNLOAD_FILE_JBOSS}
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
 
-cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEF}/deploy/http-invoker.sar/META-INF/
-cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_DEF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_DEF}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEF}/deploy
-cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_DEF}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_DEF}/conf/
-
-cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_DEF}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEPLOY}/
+cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
@@ -121,44 +120,44 @@ unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
-cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
 
 
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
 #cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 			${TOMCAT}/conf/
 
-cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 		${TOMCAT}/conf/logging.properties
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT}/conf/logging.properties
 
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT}/conf/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
 #cp ${OPENSHIFT_PLN_DIR}/conf/ticket.logging.properties 	${TOMCAT}/conf/
 
 #osgi setting 
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.osgi.properties 	${TOMCAT}/webapps/mobile/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.osgi.properties 		${TOMCAT}/webapps/ROOT/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.osgi.properties 		${TOMCAT}/webapps/sdk/WEB-INF/framework.properties
+cp ${OPENSHIFT_PLN_DIR}/conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.osgi.properties 		${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
+cp ${OPENSHIFT_PLN_DIR}/conf/sdk.osgi.properties 		${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
 
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT}/webapps/mobile/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT}/webapps/mobile/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
 
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT}/webapps/ROOT/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT}/webapps/ROOT/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
 
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT}/webapps/sdk/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT}/webapps/sdk/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
 
-cp $OPENSHIFT_PLN_DIR/conf/axis2.xml ${TOMCAT}/webapps/nyx/WEB-INF/conf/
+cp $OPENSHIFT_PLN_DIR/conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
 
 
 #webdav users
-cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT}/conf/
-cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT_CONF}/
+cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT_CONF}/
 
-cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT}/conf/
+cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT_CONF}/
 
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
@@ -201,7 +200,7 @@ share 'create'
 
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT}/webapps/
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
@@ -216,15 +215,15 @@ unzip -q ${DOWNLOAD_FILE_CLOUD}
 
 rm ${DOWNLOAD_FILE_CLOUD}
 
-cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_DEF}/bundles/planon/ 
-cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT}/bundles/ROOT/
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 
 
 #rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation
-cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT}/webapps/PlanonWebstart/planon.jnlp
+cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"
 
 exit 0
