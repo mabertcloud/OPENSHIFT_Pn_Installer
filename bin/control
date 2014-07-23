@@ -249,7 +249,7 @@ status()
 
 catchall()
 {
-	showstatus "1" "	${1:-}: not yet implemented"
+	showstatus "0" "	${1:-}: not yet implemented"
 
 	return 0
 }
