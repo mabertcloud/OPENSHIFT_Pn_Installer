@@ -45,7 +45,7 @@ Endpoints:
     Mappings:
     - Frontend: ''
       Backend: ''
-      Options: { tohttps: '' }
+      Options: { tohttps: '' }      
     - Frontend: '/webstart'
       Backend: '/PlanonWebstart/planon.jnlp'
       Options: { tohttps: '' }

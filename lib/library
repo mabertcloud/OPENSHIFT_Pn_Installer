@@ -12,9 +12,19 @@ export PATH=/bin/:/usr/bin:${PATH}
 
 # Constants
 export PLANON="${OPENSHIFT_PLN_DIR}/PlanonProCenter"
+
 export JBOSS="${PLANON}/jboss-6.1.0.Final"
-export JBOSS_DEF="${JBOSS}/server/default"
+export JBOSS_DEPLOY="${JBOSS}/server/default/deploy"
+export JBOSS_CONF="${JBOSS}/server/default/conf"
+export JBOSS_BUNDLES="${JBOSS}/server/default/bundles"
+
+
 export TOMCAT="${PLANON}/tomcat-7.0.52"
+export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
+export TOMCAT_CONF="${TOMCAT}/conf"
+export TOMCAT_BUNDLES="${TOMCAT}/bundles"
+
+
 export TOMCATPID="${OPENSHIFT_PLN_DIR}/run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}/run/jboss.pid"
 #
@@ -29,9 +39,10 @@ then
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_WEBDAV="${version}-webdav.zip"
 	export DOWNLOAD_FILE_WEBSTART="${version}-webstart.zip"
+	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
 fi
 #
-export DOWNLOAD_LOCATION="${PLANON_FILESERVER_URL}"
+export DOWNLOAD_LOCATION="${PLANON_ARTIFACT_URL}"
 
 
 # Return date/time in standard format
@@ -97,7 +108,7 @@ share()
 }
 
 # Get a file from the web
-get()
+getcockpit()
 {
 	SRC="${1}"
 	DST="${2}"
@@ -105,7 +116,7 @@ get()
 	wget -q --http-user=cockpit 		\
 		--http-password=test1234 		\
 		--output-document="${DST}" 		\
-	 	"${SRC}"
+	 	 "${SRC}"
 
 	 RC=${?}
 
@@ -126,6 +137,47 @@ get()
 	 	*)	MSG="Unknown error response"			;;
 	 esac
 
-	showstatus "${RC}" "wget: ${MSG}"
+     case ${RC}
+	 in
+	    0)	return 0								;;
+        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+	 esac
+	
+	exit ${RC}
+}
+
+getartifact()
+{
+	SRC="${1}"
+	DST="${2}"
+
+	wget -q --output-document="${DST}" 	\
+	 	 "${DOWNLOAD_LOCATION}${version}/${SRC}"
+
+	RC=${?}
+
+	 # Check the wget exitcode. If it's 0, return to the calling
+	 # program/function. If it's NOT 0, there is some kind of error
+	 # and we cannot continue. Just exit!!
+	 case ${RC}
+	 in
+	 	0)	return 0								;;
+	 	1)	MSG="Generic error code"				;;
+	 	2)	MSG="Parse error"						;;
+	 	3)	MSG="File I/O error"					;;
+	 	4)	MSG="Network failure"					;;
+	 	5)	MSG="SSL verification failure"			;;
+	 	6)	MSG="Authentication failure"			;;
+	 	7)	MSG="Protocol error"					;;
+	 	8)	MSG="Server issued an error response"	;;
+	 	*)	MSG="Unknown error response"			;;
+	 esac
+
+     case ${RC}
+	 in
+	    0)	return 0								;;
+        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+	 esac
+
 	exit ${RC}
 }

@@ -50,10 +50,16 @@ CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
 CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.sdk.logging.properties=${PLANONDIR}/conf/sdk.logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.mobile.logging.properties=${PLANONDIR}/conf/mobile.logging.properties"
 
-CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}conf/pss-login.css"
+CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
 
 CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+
+#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.ip=<%= ENV['OPENSHIFT_PLN_IP'] %>"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.port=1666"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
+#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
 
 export CATALINA_OPTS
