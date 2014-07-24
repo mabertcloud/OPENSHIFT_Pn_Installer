@@ -1,12 +1,12 @@
 Name: planon
 Cartridge-Short-Name: PLN
-Source-Url: https://github.com/planonsoftware/OPENSHIFT_Pn_Installer/archive/master.zip
+Source-Url: https://github.com/planonsoftware/OPENSHIFT_Pn_Installer/archive/R14Sp6.1.zip
 Cartridge-Version: 1.1
 Compatible-Versions:
 - 0.9
 Cartridge-Vendor: planonsoftware
 Display-Name: Planon 14.6.1
-Description: "Planon cartridge"
+Description: "Planon"
 Version: '14.6.1'
 Versions:
 - '14.6.1'
