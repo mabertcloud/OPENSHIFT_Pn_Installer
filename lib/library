@@ -13,13 +13,14 @@ export PATH=/bin/:/usr/bin:${PATH}
 # Constants
 export PLANON="${OPENSHIFT_PLN_DIR}/PlanonProCenter"
 
-export JBOSS="${PLANON}/jboss-6.1.0.Final"
+export JBOSS_VERSION="jboss-6.1.0"
+export JBOSS="${PLANON}/${JBOSS_VERSION}.Final"
 export JBOSS_DEPLOY="${JBOSS}/server/default/deploy"
 export JBOSS_CONF="${JBOSS}/server/default/conf"
 export JBOSS_BUNDLES="${JBOSS}/server/default/bundles"
 
-
-export TOMCAT="${PLANON}/tomcat-7.0.52"
+export TOMCAT_VERSION="tomcat-7.0.52"
+export TOMCAT="${PLANON}/${TOMCAT_VERSION}"
 export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
 export TOMCAT_BUNDLES="${TOMCAT}/bundles"
@@ -140,7 +141,7 @@ getcockpit()
      case ${RC}
 	 in
 	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+        *)	showstatus "${RC}" "wget: ${MSG} Cockpit ${1}"		;;
 	 esac
 	
 	exit ${RC}
@@ -176,7 +177,7 @@ getartifact()
      case ${RC}
 	 in
 	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+        *)	showstatus "${RC}" "wget: ${MSG} Artifact ${1}"		;;
 	 esac
 
 	exit ${RC}
