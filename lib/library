@@ -152,9 +152,6 @@ getartifact()
 	SRC="${1}"
 	DST="${2}"
 
-    client_result "Artifact SRC: ${1}"
-	printf "\n"
-
 	wget -q --output-document="${DST}" 	\
 	 	 "${DOWNLOAD_LOCATION}${version}/${SRC}"
 
@@ -180,7 +177,7 @@ getartifact()
      case ${RC}
 	 in
 	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+        *)	showstatus "${RC}" "wget: ${MSG} Artifact ${1}"		;;
 	 esac
 
 	exit ${RC}
