@@ -141,7 +141,7 @@ getcockpit()
      case ${RC}
 	 in
 	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG}"		;;
+        *)	showstatus "${RC}" "wget: ${MSG} Cockpit ${1}"		;;
 	 esac
 	
 	exit ${RC}
