@@ -43,7 +43,9 @@ LIBRARY="${LIBDIR}/library"
 [[ ! -d ${OPENSHIFT_PLN_DIR}/run ]] && mkdir -p ${OPENSHIFT_PLN_DIR}/run
 [[ ! -d ${OPENSHIFT_PLN_DIR}/lib ]] && mkdir -p ${OPENSHIFT_PLN_DIR}/lib
 
-cat /dev/urandom | head -c${1:-32} | sha256sum | base64 | head -c 70 > env/PLN_NYX_PASSWORD
+#Get NYX Admin password and put it into a variable for erb processing.
+getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
+	${OPENSHIFT_PLN_DIR}env/PLN_NYX_PASSWORD
 
 #cp -r $OPENSHIFT_PLN_DIR/versions/$version/* $OPENSHIFT_PLN_DIR/
 
