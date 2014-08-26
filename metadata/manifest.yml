@@ -21,12 +21,18 @@ Help-Topics:
 Cart-Data:
 Provides:
 - Planon-14.6.1
+- Planon-14.3
 - Planon
 Subscribes:
 Scaling:
   Min: 1
   Max: 1
 Version-Overrides:
+  '14.3':
+    Display-Name: Planon 14.3
+    Provides:
+    - Planon-14.3
+    - Planon
 Group-Overrides:
 Endpoints:
   - Private-IP-Name: IP
@@ -58,3 +64,4 @@ Endpoints:
       Backend: 'invoker'
       Options: { tohttps: 'invoker' }
 Additional-Control-Actions:   
+- threaddump
