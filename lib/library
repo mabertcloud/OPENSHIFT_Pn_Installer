@@ -177,7 +177,7 @@ getartifact()
      case ${RC}
 	 in
 	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG} Artifact ${1}"		;;
+        *)	showstatus "${RC}" "wget: ${MSG} Artifact ${DOWNLOAD_LOCATION}${version}/${SRC}"		;;
 	 esac
 
 	exit ${RC}
