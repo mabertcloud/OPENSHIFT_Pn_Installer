@@ -7,9 +7,9 @@ Compatible-Versions:
 Cartridge-Vendor: planonsoftware
 Display-Name: Planon 14.6.1
 Description: "Planon"
-Version: '14.6.1'
+Version: '14.8.0'
 Versions:
-- '14.6.1'
+- '14.8.0'
 Vendor: planonsoftware.com
 Categories:
   - web_framework
