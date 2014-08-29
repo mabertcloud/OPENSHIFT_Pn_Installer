@@ -5,7 +5,7 @@ Cartridge-Version: 1.1
 Compatible-Versions:
 - 0.9
 Cartridge-Vendor: planonsoftware
-Display-Name: Planon 14.6.1
+Display-Name: Planon 14.8.0
 Description: "Planon"
 Version: '14.8.0'
 Versions:
@@ -20,19 +20,12 @@ Help-Topics:
   "Developer Center": http://planoncloud.com
 Cart-Data:
 Provides:
-- Planon-14.6.1
-- Planon-14.3
+- Planon-14.8.0
 - Planon
 Subscribes:
 Scaling:
   Min: 1
   Max: 1
-Version-Overrides:
-  '14.3':
-    Display-Name: Planon 14.3
-    Provides:
-    - Planon-14.3
-    - Planon
 Group-Overrides:
 Endpoints:
   - Private-IP-Name: IP

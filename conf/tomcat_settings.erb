@@ -19,12 +19,12 @@ MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
 MAXMXMEM=$(awk -v perc=${MAXMX} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
-PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.52"
-#TOMCATDIR="<%= ENV['OPENSHIFT_TOMCAT_DIR'] %>"
+PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.54"
+TOMCATDIR="<%= ENV['OPENSHIFT_TOMCAT_DIR'] %>"
 
-#export CATALINA_HOME=${TOMCATDIR}
-#export CATALINA_BASE=${TOMCATDIR}
-#export CATALINA_TMPDIR=${TOMCATDIR}/tmp
+export CATALINA_HOME=${TOMCATDIR}
+export CATALINA_BASE=${TOMCATDIR}
+export CATALINA_TMPDIR=${TOMCATDIR}/tmp
 
 CATALINA_OPTS=""
 CATALINA_OPTS="${CATALINA_OPTS} -server"
@@ -50,16 +50,17 @@ CATALINA_OPTS="${CATALINA_OPTS} -Dplanon.config=${PLANONDIR}/conf"
 CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.sdk.logging.properties=${PLANONDIR}/conf/sdk.logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Dnl.planon.mobile.logging.properties=${PLANONDIR}/conf/mobile.logging.properties"
 
-CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
+CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}conf/pss-login.css"
 
 CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 
-#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote"
-#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.ip=<%= ENV['OPENSHIFT_PLN_IP'] %>"
-#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.port=1666"
-#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
-#CATALINA_OPTS="${CATALINA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
+
+
+
+
+
+
 
 export CATALINA_OPTS
