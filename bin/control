@@ -142,7 +142,7 @@ start()
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 			nohup ${JBOSS}/bin/run.sh				\
 				-H ${OPENSHIFT_PLN_IP}				\
-				-b ${OPENSHIFT_PLN_IP} >/dev/null 2>&1 &
+				-b ${OPENSHIFT_PLN_IP} >${OPENSHIFT_PLN_DIR/log/jboss_startup.log} 2>&1 &
 			echo "${!}" > ${JBOSSPID}
 		fi
 	fi
@@ -159,7 +159,7 @@ start()
 		else
 			showstatus "0" "Program Tomcat is not running, starting up."
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
-			nohup ${TOMCAT}/bin/startup.sh >/dev/null 2>&1 &
+			nohup ${TOMCAT}/bin/startup.sh >${OPENSHIFT_PLN_DIR/log/tomcat_startup.log} 2>&1 &
 		fi
 	fi
 
