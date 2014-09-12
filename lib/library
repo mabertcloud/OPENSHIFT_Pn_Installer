@@ -24,7 +24,6 @@ export TOMCAT="${PLANON}/${TOMCAT_VERSION}"
 export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
 export TOMCAT_BUNDLES="${TOMCAT}/bundles"
-export JBOSS_MODE=""
 
 export TOMCATPID="${OPENSHIFT_PLN_DIR}/run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}/run/jboss.pid"
