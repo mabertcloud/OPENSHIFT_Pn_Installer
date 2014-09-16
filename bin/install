@@ -155,7 +155,7 @@ cp $OPENSHIFT_PLN_DIR/conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
 
 #webdav users
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT_CONF}/
-cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT_CONF}/
+cp -avr ${OPENSHIFT_PLN_DIR}/conf/Catalina				${TOMCAT_CONF}/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT_CONF}/
 
@@ -199,27 +199,27 @@ set -x
 share 'create'
 
 # create symbolic link for webdav
-ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT_WEBAPPS}
+ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
 # create symbolic link for webdav
-ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
+ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
 
 
-# Add cloud software
+#Add cloud software
 
-#getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
+getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
 
-#unzip -q ${DOWNLOAD_FILE_CLOUD}
+unzip -q ${DOWNLOAD_FILE_CLOUD}
 
-#rm ${DOWNLOAD_FILE_CLOUD}
+rm ${DOWNLOAD_FILE_CLOUD}
 
-#cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
-#cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 
 
-#rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
+rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation

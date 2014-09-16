@@ -46,7 +46,7 @@ handler.FILE=org.jboss.logmanager.handlers.FileHandler
 handler.FILE.level=${jboss.boot.server.log.file.level:DEBUG}
 handler.FILE.properties=autoFlush,fileName
 handler.FILE.autoFlush=true
-handler.FILE.fileName=<%= ENV['OPENSHIFT_PLN_DIR'] %>logs/jboss-boot.log
+handler.FILE.fileName=<%= ENV['OPENSHIFT_PLN_DIR'] %>logs/boot/jboss-boot.log
 handler.FILE.formatter=PATTERN
 
 # Server log file handler configuration
