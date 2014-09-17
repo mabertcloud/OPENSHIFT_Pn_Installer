@@ -9,7 +9,7 @@ Display-Name: Planon 14.9.0
 Description: "Planon"
 Version: '14.9.0'
 Versions:
-- '14.8.0'
+- '14.9.0'
 Vendor: planonsoftware.com
 Categories:
   - web_framework

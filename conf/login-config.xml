@@ -48,8 +48,7 @@ $Revision: 1.5 $
 				
 			<login-module code="nl.planon.artemis.server.TrustedServiceServerLoginModule" flag="sufficient" />
 
-      <login-module code="nl.planon.artemis.server.jboss.JBossUpgradeUserLoginModule" flag="sufficient"/>
-
+      
 			<!-- JBoss specific ServerLoginModule: Planon default user authentication -->
 	    		<login-module code="nl.planon.artemis.server.jboss.JBossServerLoginModule" flag="optional"/>
 
