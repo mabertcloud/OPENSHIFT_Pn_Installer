@@ -89,10 +89,11 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
+#JBoss
+
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
 
-
-unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
+extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
 
 rm ${DOWNLOAD_FILE_JBOSS}
 
@@ -106,11 +107,12 @@ cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEPLOY}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
-
-
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
-showstatus "0" "JBoss download, unzipped and configured!"
+# Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
+sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" {JBOSS_DEPLOY}/transaction-jboss-beans.xml
+
+showstatus "0" "JBoss download, exctracted and configured!"
 
 # TOMCAT
 
@@ -122,12 +124,10 @@ rm ${DOWNLOAD_FILE_TOMCAT}
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
-
-
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
-#cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 			${TOMCAT}/conf/
+#cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 		${TOMCAT}/conf/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT}/conf/logging.properties
 
