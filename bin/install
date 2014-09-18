@@ -110,7 +110,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
-sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" {JBOSS_DEPLOY}/transaction-jboss-beans.xml
+sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
 
 showstatus "0" "JBoss download, exctracted and configured!"
 
