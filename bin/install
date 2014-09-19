@@ -205,7 +205,7 @@ showstatus "0" "Securedocs configured!"
 
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
 
-extract ${DOWNLOAD_FILE_CLOUD}
+extract ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
 
 rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
 
