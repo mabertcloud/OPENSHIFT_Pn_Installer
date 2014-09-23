@@ -209,14 +209,14 @@ showstatus "0" "Securedocs configured!"
 
 #Add cloud software
 
-#getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
+getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
 
-#unzip -q ${DOWNLOAD_FILE_CLOUD}
+unzip -q ${DOWNLOAD_FILE_CLOUD}
 
-#rm ${DOWNLOAD_FILE_CLOUD}
+rm ${DOWNLOAD_FILE_CLOUD}
 
-#cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
-#cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
+cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 
 
 #rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
