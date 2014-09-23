@@ -89,10 +89,10 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
+#JBoss
+
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
-
-
-unzip -q $DOWNLOAD_FILE_JBOSS -d PlanonProCenter
+extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
 
 rm ${DOWNLOAD_FILE_JBOSS}
 
@@ -110,13 +110,16 @@ cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 
-showstatus "0" "JBoss download, unzipped and configured!"
+# Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
+sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
+
+showstatus "0" "JBoss download, exctracted and configured!"
 
 # TOMCAT
 
 getartifact ${DOWNLOAD_FILE_TOMCAT} ${DOWNLOAD_FILE_TOMCAT}
 
-unzip -q ${DOWNLOAD_FILE_TOMCAT} -d PlanonProCenter
+extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
@@ -127,14 +130,13 @@ cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
-#cp ${OPENSHIFT_PLN_DIR}/conf/ticket.properties 			${TOMCAT}/conf/
 
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT}/conf/logging.properties
 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
-#cp ${OPENSHIFT_PLN_DIR}/conf/ticket.logging.properties 	${TOMCAT}/conf/
+
 
 #osgi setting 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
@@ -183,7 +185,6 @@ getcockpit ${PLANON_COCKPIT_URL}PcisLoginResource/Purchaser/${OPENSHIFT_APP_DNS}
 getcockpit ${PLANON_COCKPIT_URL}PcisLoginResource/Cockpit/${OPENSHIFT_APP_DNS} 	    \
 	${OPENSHIFT_PLN_DIR}/conf/keys/Cockpit.credentials
 
-#exec > ${OPENSHIFT_PLN_DIR} 2>&1
 
 mount 
 set -x
@@ -211,15 +212,15 @@ showstatus "0" "Securedocs configured!"
 
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
 
-unzip -q ${DOWNLOAD_FILE_CLOUD}
+extract ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
 
-rm ${DOWNLOAD_FILE_CLOUD}
+rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
 
 cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
 cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 
 
-#rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
+rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation
