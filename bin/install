@@ -123,6 +123,12 @@ extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 
 rm ${DOWNLOAD_FILE_TOMCAT}
 
+#removal of the original webdav and resourceplanner folder
+rm -rf ${TOMCAT_WEBAPPS}/webdav
+rm -rf ${TOMCAT_WEBAPPS}/ResourcePlanner
+
+
+
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
 
@@ -203,7 +209,7 @@ share 'create'
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
-# create symbolic link for webdav
+# create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
 
