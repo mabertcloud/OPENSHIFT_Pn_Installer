@@ -99,6 +99,7 @@ share()
 				-o StrictHostKeyChecking=no									\
 				-o UserKnownHostsFile=/dev/null								\
 				-o reconnect												\
+				-o delay_connect											\
 				${CUSTSHARE}												\
 				${OPENSHIFT_PLN_DIR}/mount
 		showstatus "0" "mount : ${1}"		
