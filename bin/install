@@ -127,7 +127,8 @@ rm ${DOWNLOAD_FILE_TOMCAT}
 rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/ResourcePlanner
 
-
+#removal of the original nyx webservices services folder
+rm -rf ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
@@ -208,6 +209,12 @@ share 'create'
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
+
+#Create Static/webservices folder if not exist and create symbolic link
+mkdir -p {OPENSHIFT_PLN_DIR}/data/webdav/Static
+mkdir -p {OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+
 showstatus "0" "Webdav configured!"
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
