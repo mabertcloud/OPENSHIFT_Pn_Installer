@@ -89,16 +89,12 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
-#JBoss
-
+# JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
 extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
-
 rm ${DOWNLOAD_FILE_JBOSS}
-
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
-
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_CONF}/
@@ -106,72 +102,47 @@ cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEPLOY}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
-
-
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
-
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
 sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
-
 showstatus "0" "JBoss download, exctracted and configured!"
 
-# TOMCAT
-
+# TOMCAT Installation
 getartifact ${DOWNLOAD_FILE_TOMCAT} ${DOWNLOAD_FILE_TOMCAT}
-
 extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
-
 rm ${DOWNLOAD_FILE_TOMCAT}
-
 #removal of the original webdav and resourceplanner folder
 rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/ResourcePlanner
-
-#removal of the original nyx webservices services folder
+#removal of the original nyx webservices services folder, content will come from symlink folder on FS
 rm -rf ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
-
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
-
-
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
-
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT}/conf/logging.properties
-
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
-
-
 #osgi setting 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.osgi.properties 		${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.osgi.properties 		${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
-
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
-
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
-
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}/resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
-
 cp $OPENSHIFT_PLN_DIR/conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
-
-
 #webdav users
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml 			${TOMCAT_CONF}/
 cp -avr ${OPENSHIFT_PLN_DIR}/conf/Catalina				${TOMCAT_CONF}/
-
 cp ${OPENSHIFT_PLN_DIR}/conf/server.xml		 			${TOMCAT_CONF}/
-
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
-
 showstatus "0" "Tomcat download, unzipped and configured!"
 
 #Get credentials for share.
@@ -211,30 +182,26 @@ ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 
 #Create Static/webservices folder if not exist and create symbolic link
-mkdir -p {OPENSHIFT_PLN_DIR}/data/webdav/Static
-mkdir -p {OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
-
 showstatus "0" "Webdav configured!"
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
 
-
 #Add cloud software
-
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
-
 extract ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
-
 rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
-
 cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
 cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
-
-
 rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
+#Copy background login image from tomcat to static symlink if file not allready present
+cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
 
 #webstart installation
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
