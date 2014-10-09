@@ -180,15 +180,24 @@ share 'create'
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
-
-#Create Static/webservices folder if not exist and create symbolic link
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
-ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 showstatus "0" "Webdav configured!"
+
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
+
+#Create Symlink for nyx/webservices to webdav folder 
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+showstatus "0" "Webservices symlink configured!"
+
+#Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
+showstatus "0" "Login background image symlink configured!"
+
 
 #Add cloud software
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
@@ -198,10 +207,6 @@ cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/
 cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
-#Copy background login image from tomcat to static symlink if file not allready present
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
-rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
-ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
 
 #webstart installation
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
