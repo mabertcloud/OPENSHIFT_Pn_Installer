@@ -91,14 +91,17 @@ showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
 # JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
+showstatus "0" "JBoss download"
 extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
 rm ${DOWNLOAD_FILE_JBOSS}
+showstatus "0" "JBoss extracted"
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
 #cleanup unnecessary components for cloud from default installset
 rm -f ${JBOSS_DEPLOY}/planon-ds.xml
 rm -f ${JBOSS}/server/default/jndi.properties
 rm -rf ${JBOSS}/tanuki
+showstatus "0" "JBoss cleaned"
 #add environment/pcc specific config files
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
@@ -110,12 +113,14 @@ cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
 sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
-showstatus "0" "JBoss download, exctracted and configured!"
+showstatus "0" "JBoss configured!"
 
 # TOMCAT Installation
 getartifact ${DOWNLOAD_FILE_TOMCAT} ${DOWNLOAD_FILE_TOMCAT}
+showstatus "0" "Tomcat download"
 extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 rm ${DOWNLOAD_FILE_TOMCAT}
+showstatus "0" "Tomcat exctracted"
 #cleanup unnecessary components for cloud from default installset
 rm -rf ${TOMCAT}/tanuki ;rc=$? ; if [[ $rc != 0 ]] ; then exit $rc; fi
 rm -f ${TOMCAT_WEBAPPS}/nyx.war ;rc=$? ; if [[ $rc != 0 ]] ; then exit $rc; fi
