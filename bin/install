@@ -143,13 +143,13 @@ extract ${TOMCAT_WEBAPPS}/webclient.war ${TOMCAT_WEBAPPS}/webclient
 rm -rf ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
-cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
+#cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
 #osgi setting 
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.osgi.properties 		${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
