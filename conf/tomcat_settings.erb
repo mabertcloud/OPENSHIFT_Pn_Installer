@@ -1,22 +1,14 @@
 #!/bin/bash
 #
 # Calculate the memory alotted to Tomcat
-# 128m -> ms
-# 10%  -> MaxPermSize
-# 50%  -> mx
-#
 
-MEMPERC=50		# Percentage of total memory for Tomcat
-MAXPERM=20		# Percentage of memory for MaxPermSize (% of MEMPERC)
-MAXMX=60		# Percentage of memory for Xmx (% of MEMPERC)
 
-TOTMEM=$(awk -v perc=${MEMPERC} -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
-	BEGIN { print int(tot * perc / 100) }')
+MEMPERC=40		# Percentage of total memory for Tomcat
 
-MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
-	BEGIN { print int(tot * perc / 100) }')
+TOTMEM=$(awk -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
+	BEGIN { print int(tot - 512) }')
 
-MAXMXMEM=$(awk -v perc=${MAXMX} -v tot=${TOTMEM} '
+MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
 PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.54"
@@ -29,7 +21,7 @@ CATALINA_OPTS=""
 CATALINA_OPTS="${CATALINA_OPTS} -server"
 CATALINA_OPTS="${CATALINA_OPTS} -Xms256m"
 CATALINA_OPTS="${CATALINA_OPTS} -Xmx${MAXMXMEM}m"
-CATALINA_OPTS="${CATALINA_OPTS} -XX:MaxPermSize=${MAXPERMSIZE}m"
+CATALINA_OPTS="${CATALINA_OPTS} -XX:MaxPermSize=256m"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.endorsed.dirs=${PLANONDIR}/endorsed"
 CATALINA_OPTS="${CATALINA_OPTS} -Dcatalina.base=${PLANONDIR}/"
 CATALINA_OPTS="${CATALINA_OPTS} -Dcatalina.home=${PLANONDIR}/"
