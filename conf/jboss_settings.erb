@@ -1,24 +1,14 @@
 #!/bin/bash
 
-# Calculate the memory alotted to JBOSS
-# OPENSHIFT_GEAR_MEMORY_MB=4096
-# 128m -> ms
-# 10%  -> MaxPermSize
-# 50%  -> mx
-#
+# Calculate the memory alotted to JBOSS 40% of the (gearsize - 512)
 
 MEMPERC=40		# Percentage of total memory for JBOSS
-# MAXPERM=30		# Percentage of memory for MaxPermSize (% of MEMPERC)
-# MAXMX=60		# Percentage of memory for Xmx (% of MEMPERC)
 
-TOTMEM=$(awk -v perc=${MEMPERC} -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
-	BEGIN { print int(tot * perc / 100) }')
-
-# MAXPERMSIZE=$(awk -v perc=${MAXPERM} -v tot=${TOTMEM} '
-#	BEGIN { print int(tot * perc / 100) }')
-
-MAXMXMEM=$(awk  -v tot=${TOTMEM} '
+TOTMEM=$(awk -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
 	BEGIN { print int(tot - 512) }')
+
+MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
+	BEGIN { print int(tot * perc / 100) }')
 
 JAVA_OPTS=""
 JAVA_OPTS="${JAVA_OPTS} -server -Xms256m -Xmx${MAXMXMEM}m -XX:MaxPermSize=384m"
