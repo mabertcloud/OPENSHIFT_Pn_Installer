@@ -11,7 +11,7 @@ MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
 JAVA_OPTS=""
-JAVA_OPTS="${JAVA_OPTS} -server -Xms256m -Xmx${MAXMXMEM}m -XX:MaxPermSize=384m"
+JAVA_OPTS="${JAVA_OPTS} -server -Xms1024m -Xmx${MAXMXMEM}m -XX:MaxPermSize=384m"
 JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.resolver.warning=true"
 JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000"
 JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.server.gcInterval=3600000"
