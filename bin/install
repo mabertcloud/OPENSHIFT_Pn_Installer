@@ -95,6 +95,17 @@ extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
 rm ${DOWNLOAD_FILE_JBOSS}
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
+
+#remove of planon application files. These will be placed by the services cartridge
+rm -rf ${JBOSS_DEPLOY}/planon-telesto.ear
+rm -rf ${JBOSS_DEPLOY}/planonbackgroundactionjobs.ear
+rm -rf ${JBOSS_DEPLOY}/planonexchangelink.ear
+rm -rf ${JBOSS_DEPLOY}/planonschedulerengine.ear
+
+rm -rf ${JBOSS_DEPLOY}/planon-ds.xml
+rm -rf ${JBOSS}/server/default/jndi.properties
+rm -rf ${JBOSS}/tanuki
+
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_CONF}/
