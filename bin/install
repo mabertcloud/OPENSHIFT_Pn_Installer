@@ -135,6 +135,8 @@ rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
 rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war
 rm -rf ${TOMCAT_WEBAPPS}/webdav
+rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
+
 showstatus "0" "Tomcat cleaned"
 #extract war files 
 extract ${TOMCAT_WEBAPPS}/mobile.war ${TOMCAT_WEBAPPS}/mobile
