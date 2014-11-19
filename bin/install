@@ -91,8 +91,10 @@ showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
 
 # JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
+showstatus "0" "JBoss download"
 extract $DOWNLOAD_FILE_JBOSS PlanonProCenter
 rm ${DOWNLOAD_FILE_JBOSS}
+showstatus "0" "JBoss extracted"
 chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
 
@@ -106,6 +108,9 @@ rm -rf ${JBOSS_DEPLOY}/planon-ds.xml
 rm -rf ${JBOSS}/server/default/jndi.properties
 rm -rf ${JBOSS}/tanuki
 
+showstatus "0" "JBoss cleaned"
+#add environment/pcc specific config files
+
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_CONF}/
@@ -116,15 +121,31 @@ cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
 sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
-showstatus "0" "JBoss download, exctracted and configured!"
+showstatus "0" "JBoss configured!"
 
 # TOMCAT Installation
 getartifact ${DOWNLOAD_FILE_TOMCAT} ${DOWNLOAD_FILE_TOMCAT}
+showstatus "0" "Tomcat download"
 extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 rm ${DOWNLOAD_FILE_TOMCAT}
-#removal of the original webdav and resourceplanner folder
+showstatus "0" "Tomcat exctracted"
+#cleanup unnecessary components for cloud from default installset
+rm -rf ${TOMCAT}/tanuki 
+rm -f ${TOMCAT_WEBAPPS}/nyx.war
+rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
+rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war
 rm -rf ${TOMCAT_WEBAPPS}/webdav
-rm -rf ${TOMCAT_WEBAPPS}/ResourcePlanner
+showstatus "0" "Tomcat cleaned"
+#extract war files 
+extract ${TOMCAT_WEBAPPS}/mobile.war ${TOMCAT_WEBAPPS}/mobile
+extract ${TOMCAT_WEBAPPS}/pesc.war ${TOMCAT_WEBAPPS}/pesc
+extract ${TOMCAT_WEBAPPS}/ROOT.war ${TOMCAT_WEBAPPS}/ROOT
+extract ${TOMCAT_WEBAPPS}/sdk.war ${TOMCAT_WEBAPPS}/sdk
+extract ${TOMCAT_WEBAPPS}/static.war ${TOMCAT_WEBAPPS}/static
+extract ${TOMCAT_WEBAPPS}/ticket.war ${TOMCAT_WEBAPPS}/ticket
+extract ${TOMCAT_WEBAPPS}/webclient.war ${TOMCAT_WEBAPPS}/webclient
+#remove exctracted war files
+rm -f ${TOMCAT_WEBAPPS}/*.war
 #removal of the original nyx webservices services folder, content will come from symlink folder on FS
 rm -rf ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 			${TOMCAT_CONF}/
@@ -132,7 +153,7 @@ cp ${OPENSHIFT_PLN_DIR}/conf/jaas.config 				${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT}/conf/logging.properties
+cp ${OPENSHIFT_PLN_DIR}/conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
 cp ${OPENSHIFT_PLN_DIR}/conf/mobile.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ROOT.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/sdk.logging.properties 	${TOMCAT_CONF}/
@@ -191,15 +212,24 @@ share 'create'
 # create symbolic link for webdav
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
-
-#Create Static/webservices folder if not exist and create symbolic link
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
-ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 showstatus "0" "Webdav configured!"
+
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
+
+#Create Symlink for nyx/webservices to webdav folder 
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+showstatus "0" "Webservices symlink configured!"
+
+#Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
+showstatus "0" "Login background image symlink configured!"
+
 
 #Add cloud software
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
@@ -209,10 +239,6 @@ cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/
 cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
-#Copy background login image from tomcat to static symlink if file not allready present
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
-rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
-ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
 
 #webstart installation
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
