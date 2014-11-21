@@ -10,7 +10,7 @@ TOTMEM=$(awk -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
 MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
-PLANONDIR="<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.54"
+PLANONDIR="<%= ENV['TOMCAT'] %>"
 
 export CATALINA_HOME=${PLANONDIR}
 export CATALINA_BASE=${PLANONDIR}

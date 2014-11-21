@@ -65,7 +65,8 @@
                port="<%= ENV['OPENSHIFT_PLN_HTTP_PORT_TOMCAT'] %>"
                protocol="HTTP/1.1"
                maxHttpHeaderSize="16384"
-               connectionTimeout="20000"/>
+               connectionTimeout="20000"
+               server="webserver"/>
 
     <!-- A "Connector" using the shared thread pool-->
     <!--
