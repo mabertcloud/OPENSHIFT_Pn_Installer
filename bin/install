@@ -99,11 +99,12 @@ chmod +x ${JBOSS}/bin/run.sh
 chmod +x ${JBOSS}/bin/shutdown.sh
 
 #remove of planon application files. These will be placed by the services cartridge
-rm -rf ${JBOSS_DEPLOY}/planon-telesto.ear
-rm -rf ${JBOSS_DEPLOY}/planonbackgroundactionjobs.ear
-rm -rf ${JBOSS_DEPLOY}/planonexchangelink.ear
-rm -rf ${JBOSS_DEPLOY}/planonschedulerengine.ear
-
+mkdir ${JBOSS}/initmode
+mv ${JBOSS_DEPLOY}/planon-telesto.ear ${JBOSS}/initmode/
+mv ${JBOSS_DEPLOY}/planonbackgroundactionjobs.ear ${JBOSS}/initmode/
+mv ${JBOSS_DEPLOY}/planonexchangelink.ear ${JBOSS}/initmode/
+mv ${JBOSS_DEPLOY}/planonschedulerengine.ear ${JBOSS}/initmode/
+#delete unwanted files from installation
 rm -rf ${JBOSS_DEPLOY}/planon-ds.xml
 rm -rf ${JBOSS}/server/default/jndi.properties
 rm -rf ${JBOSS}/tanuki
