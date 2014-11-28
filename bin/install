@@ -146,6 +146,7 @@ extract ${TOMCAT_WEBAPPS}/ROOT.war ${TOMCAT_WEBAPPS}/ROOT
 extract ${TOMCAT_WEBAPPS}/sdk.war ${TOMCAT_WEBAPPS}/sdk
 extract ${TOMCAT_WEBAPPS}/static.war ${TOMCAT_WEBAPPS}/static
 extract ${TOMCAT_WEBAPPS}/ticket.war ${TOMCAT_WEBAPPS}/ticket
+extract ${TOMCAT_WEBAPPS}/TMS.war ${TOMCAT_WEBAPPS}/TMS
 extract ${TOMCAT_WEBAPPS}/webclient.war ${TOMCAT_WEBAPPS}/webclient
 #remove exctracted war files
 rm -f ${TOMCAT_WEBAPPS}/*.war
