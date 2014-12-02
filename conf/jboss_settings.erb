@@ -21,12 +21,12 @@ JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:<%= ENV['OPENSHIFT_PLN_DIR'
 JAVA_OPTS="${JAVA_OPTS} -Dnl.planon.mail.esmtp=true"
 JAVA_OPTS="${JAVA_OPTS} -da"
 #JAVA_OPTS="${JAVA_OPTS} <%= ENV['JBOSS_MODE'] %>"
-JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=true
-JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode.description="Martijn test" 
+JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=true"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode.description="Martijn test"" 
 JAVA_OPTS="${JAVA_OPTS} -DPMFSSetting=<%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/jboss-6.1.0.Final/server/default/conf/"
-#JAVA_OPTS="${JAVA_OPTS} -DPMFS_CloudUrl=https://pmfs.planonsoftware.com/MovilizerDistributionService/
-#JAVA_OPTS="${JAVA_OPTS} -DPMFS_SystemID=<%= ENV['PLN_PMFS_ID'>
-#JAVA_OPTS="${JAVA_OPTS} -DPMFS_Password=<%= ENV['PLN_PMFS_PASSWORD'>
+#JAVA_OPTS="${JAVA_OPTS} -DPMFS_CloudUrl=https://pmfs.planonsoftware.com/MovilizerDistributionService/"
+#JAVA_OPTS="${JAVA_OPTS} -DPMFS_SystemID=<%= ENV['PLN_PMFS_ID'>"
+#JAVA_OPTS="${JAVA_OPTS} -DPMFS_Password=<%= ENV['PLN_PMFS_PASSWORD'>"
 
 export JAVA_OPTS
 
