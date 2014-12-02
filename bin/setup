@@ -57,7 +57,8 @@ getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
 
 
 #get environement_type
-case "${OPENSHIFT_NAMESPACE}" in
+case ${OPENSHIFT_NAMESPACE} 
+in
 	testdev)
 		export JBOSS_MODE=" -Dcom.planonsoftware.notproductionmode=true"
 	devdev)
