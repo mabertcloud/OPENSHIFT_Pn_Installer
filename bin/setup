@@ -55,6 +55,17 @@ getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
 #getcockpit	${PLANON_COCKPIT_URL}PMFSPASSWORD/${OPENSHIFT_APP_DNS}		\
 #	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD		
 
+
+#get environement_type
+case "${OPENSHIFT_NAMESPACE}" in
+	testdev)
+		export JBOSS_MODE" -Dcom.planonsoftware.notproductionmode=true"
+	devdev)
+		Jexport JBOSS_MODE=" -Dcom.planonsoftware.notproductionmode=true"
+	*)
+		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=false"
+esac
+
 #get environement_type
 #if [[ ( x"${OPENSHIFT_NAMESPACE}" = x"prod" ) || ( x"${OPENSHIFT_NAMESPACE}" = x"proddev" ) ]]
 #then
