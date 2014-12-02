@@ -24,13 +24,13 @@ JAVA_OPTS="${JAVA_OPTS} -da"
 #get environement_type
 case "${OPENSHIFT_NAMESPACE}" in
 	testdev)
-		export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=true"
 		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode.description="testdev"
 	devdev)
-		export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=true"
 		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode.description="devdev"
 	*)
-		export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+		JAVA_OPTS="${JAVA_OPTS} -Dcom.planonsoftware.notproductionmode=false"
 esac
 
 #JAVA_OPTS="${JAVA_OPTS} <%= ENV['JBOSS_MODE'] %>"
