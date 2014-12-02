@@ -53,9 +53,9 @@ else
 fi
 
 # Set Production - non production
-if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] )
+if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testdev" ]] )
 then
-	showstatus "0" "devdev - accdev"
+	showstatus "0" "devdev - accdev - testdev"
 else
 	showstatus "0" "nondevdev"
 fi
