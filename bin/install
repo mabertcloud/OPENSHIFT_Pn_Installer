@@ -52,6 +52,14 @@ else
 	showstatus "0" "Install called with version ${version}"
 fi
 
+# Set Production - non production
+if [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]]
+then
+	showstatus "0" "devdev"
+else
+	showstatus "0" "nondevdev"
+fi
+
 
 # Program usage
 usage()
