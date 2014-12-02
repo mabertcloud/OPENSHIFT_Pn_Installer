@@ -57,15 +57,11 @@ getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
 
 
 #get environement_type
-case ${OPENSHIFT_NAMESPACE} 
-in
-	testdev)
-		export JBOSS_MODE=" -Dcom.planonsoftware.notproductionmode=true"
-	devdev)
-		export JBOSS_MODE=" -Dcom.planonsoftware.notproductionmode=true"
-	*)
-		export JBOSS_MODE=" -Dcom.planonsoftware.notproductionmode=false"
-esac
+if [[ ( x"${OPENSHIFT_NAMESPACE}" = x"dev" ) || ( x"${OPENSHIFT_NAMESPACE}" = x"devdev" ) ]]
+	export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+else
+	export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+fi
 
 #get environement_type
 #if [[ ( x"${OPENSHIFT_NAMESPACE}" = x"prod" ) || ( x"${OPENSHIFT_NAMESPACE}" = x"proddev" ) ]]
