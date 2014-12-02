@@ -59,14 +59,14 @@ if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPAC
 else
 	if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ]] ) then
 		showstatus "0" "ACCEPTANCE Infrastructure Environment"
-		export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+		${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
 	else
 		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
 			showstatus "0" "DEVELOPMENT Infrastructure Environment"
-			export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+			${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
 		else
 			showstatus "0" "INCORRECT INFRASTRUCTURE ENVIRONMENT"
-			export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+			${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 		fi
 	fi
 fi

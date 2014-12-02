@@ -55,25 +55,4 @@ getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
 #getcockpit	${PLANON_COCKPIT_URL}PMFSPASSWORD/${OPENSHIFT_APP_DNS}		\
 #	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD		
 
-#showstatus "0" "Begin if statement"
-#get environement_type
-#if [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]]
-#showstatus "0" "1"
-	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
-#else
-#showstatus "0" "2"
-	##export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
-#fi
-#showstatus "0" "end if statement"
-
-#get environement_type
-#if [[ ( x"${OPENSHIFT_NAMESPACE}" = x"prod" ) || ( x"${OPENSHIFT_NAMESPACE}" = x"proddev" ) ]]
-#then
-#	 export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
-#	 showstatus "0" "JBoss installed as Production mode"
-#else
-#	export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true -Dcom.planonsoftware.notproductionmode.description=\"${OPENSHIFT_NAMESPACE} Environment\""
-#	showstatus "0" "JBoss installed as Non-Production mode"
-#fi
-
 exit 0
