@@ -63,7 +63,8 @@ else
 	else
 		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
 			showstatus "0" "DEVELOPMENT Infrastructure Environment"
-			${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+			echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/JBOSS_MODE
+			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
 		else
 			showstatus "0" "INCORRECT INFRASTRUCTURE ENVIRONMENT"
 			${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
