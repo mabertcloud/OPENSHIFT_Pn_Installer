@@ -62,9 +62,9 @@ fi
 
 case "${OPENSHIFT_NAMESPACE}"  
 in
-	testdev)
+	"testdev")
 		showstatus "0" "testdev"
-	devdev)
+	"devdev")
 		showstatus "0" "devdev"
 esac
 
