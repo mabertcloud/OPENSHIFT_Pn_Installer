@@ -66,8 +66,6 @@ in
 		showstatus "0" "testdev"
 	devdev)
 		showstatus "0" "devdev"
-	*)
-		showstatus "0" "nondevtest"
 esac
 
 
