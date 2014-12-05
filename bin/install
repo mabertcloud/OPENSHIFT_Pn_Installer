@@ -281,4 +281,8 @@ rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"
 
+#write environmentsettings to file in setup
+env >${OPENSHIFT_PLN_DIR}env/setupinstall.txt
+
+
 exit 0
