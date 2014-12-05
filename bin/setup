@@ -56,6 +56,26 @@ getcockpit	${PLANON_COCKPIT_URL}>PmfsResource/password/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD		
 
 #write environmentsettings to file in setup
-env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
+#env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
+
+# Set Production - non production
+if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"acc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"test" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"dev" ]] ) then
+	showstatus "0" "PRODUCTION Infrastructure Environment"
+	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+else
+	if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ]] ) then
+		showstatus "0" "ACCEPTANCE Infrastructure Environment"
+		#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+	else
+		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"testdev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
+			showstatus "0" "DEVELOPMENT Infrastructure Environment"
+			#echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/JBOSS_MODE
+			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
+		else
+			showstatus "0" "INCORRECT INFRASTRUCTURE ENVIRONMENT"
+			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+		fi
+	fi
+fi
 
 exit 0
