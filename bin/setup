@@ -56,6 +56,6 @@ getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
 #	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD		
 
 #write environmentsettings to file in setup
-#env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
+env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
 
 exit 0
