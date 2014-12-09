@@ -59,6 +59,7 @@ if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPAC
 else
 	if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"acc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) then
 		showstatus "0" "ACCEPTANCE Environment"
+		echo "-Dcom.planonsoftware.notproductionmode=true" > #${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
 #		#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
 	else
 		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"dev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
