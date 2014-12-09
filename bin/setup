@@ -44,7 +44,8 @@ LIBRARY="${LIBDIR}/library"
 [[ ! -d ${OPENSHIFT_PLN_DIR}/lib ]] && mkdir -p ${OPENSHIFT_PLN_DIR}/lib
 
 # Set Production - non production
-if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ); then
+#if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ); then
+if [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]]; then
 	#showstatus "0" "PRODUCTION Environment"
 	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 else
