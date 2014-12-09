@@ -46,7 +46,8 @@ LIBRARY="${LIBDIR}/library"
 
 # Set Production - non production
 #if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ); then
-if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ] ; then
+
+if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]; then
 	#showstatus "0" "PRODUCTION Environment"
 	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 else
