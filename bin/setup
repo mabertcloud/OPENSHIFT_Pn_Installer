@@ -50,6 +50,7 @@ LIBRARY="${LIBDIR}/library"
 if 
 [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ];
 then
+	echo hallo
 	#showstatus "0" "PRODUCTION Environment"
 	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 elif
