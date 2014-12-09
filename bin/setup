@@ -48,19 +48,29 @@ LIBRARY="${LIBDIR}/library"
 if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ] 
 then
 	showstatus "0" "PRODUCTION Environment"
-	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+	#echo "-Dcom.planonsoftware.notproductionmode=false" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
+	#echo "-Dcom.planonsoftware.notproductionmode.description="PRODUCTION" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODETEXT
 else
 	if [ x"${OPENSHIFT_NAMESPACE}" == x"acc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ] 
 	then
 		showstatus "0" "ACCEPTANCE Environment"
-		#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+		echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
+		echo "-Dcom.planonsoftware.notproductionmode.description="ACCEPTANCE" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODETEXT
 	else
-		if [ x"${OPENSHIFT_NAMESPACE}" == x"dev" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ] 
+		if [ x"${OPENSHIFT_NAMESPACE}" == x"test" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"testacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"testdev" ] 
 		then
-			showstatus "0" "DEV Environment"
-			#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+			showstatus "0" "TEST Environment"
+			echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
+			echo "-Dcom.planonsoftware.notproductionmode.description="TEST" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODETEXT
 		else
-			showstatus "0" "INCORRECT Environment"
+			if [ x"${OPENSHIFT_NAMESPACE}" == x"dev" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ] 
+			then
+				showstatus "0" "DEV Environment"
+				echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
+				echo "-Dcom.planonsoftware.notproductionmode.description="DEVELOPMENT" > ${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODETEXT
+			else
+				showstatus "0" "INCORRECT Environment"
+			fi
 		fi	
 	fi	
 fi	
