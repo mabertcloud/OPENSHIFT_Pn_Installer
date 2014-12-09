@@ -53,24 +53,24 @@ else
 fi
 
 # Set Production - non production
-#if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ) then
-#	showstatus "0" "PRODUCTION Environment"
+if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ) then
+	showstatus "0" "PRODUCTION Environment"
 #	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
-#else
-#	if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"acc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) then
-#		showstatus "0" "ACCEPTANCE Environment"
+else
+	if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"acc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ) then
+		showstatus "0" "ACCEPTANCE Environment"
 #		#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
-#	else
-#		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"dev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
-#			showstatus "0" "DEVELOPMENT Environment"
+	else
+		if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"dev" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"devdev" ]] ) then
+			showstatus "0" "DEVELOPMENT Environment"
 #			#echo "-Dcom.planonsoftware.notproductionmode=true" > ${OPENSHIFT_PLN_DIR}env/JBOSS_MODE
 #			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=true"
-#		else
-#			showstatus "0" "INCORRECT INFRASTRUCTURE ENVIRONMENT"
+		else
+			showstatus "0" "INCORRECT INFRASTRUCTURE ENVIRONMENT"
 #			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
-#		fi
-#	fi
-#fi
+		fi
+	fi
+fi
 
 # Program usage
 usage()
