@@ -45,15 +45,32 @@ LIBRARY="${LIBDIR}/library"
 
 
 # Set Production - non production
-#if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ]] ); then
-
-if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ] 
+if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ] 
 then
 	echo "if"
 	#showstatus "0" "PRODUCTION Environment"
 	#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 else
 	echo "else"
+	if [ x"${OPENSHIFT_NAMESPACE}" == x"acc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ] 
+	then
+		echo "if"
+		#showstatus "0" "PRODUCTION Environment"
+		#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+	else
+		echo "else"
+		if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"prodacc" ] || [ x"${OPENSHIFT_NAMESPACE}" == x"proddev" ] 
+		then
+			echo "if"
+			#showstatus "0" "PRODUCTION Environment"
+			#export JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
+		else
+			echo "else"
+		fi	
+	fi	
+fi	
+	
+	
 	#if ( [[ x"${OPENSHIFT_NAMESPACE}" == x"acc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accacc" ]] ) || ( [[ x"${OPENSHIFT_NAMESPACE}" == x"accdev" ]] ); then
 		#showstatus "0" "ACCEPTANCE Environment"
 		#echo "-Dcom.planonsoftware.notproductionmode=true" > #${OPENSHIFT_PLN_DIR}env/PLN_JBOSS_MODE
@@ -68,7 +85,7 @@ else
 			#${OPENSHIFT_PLN_DIR}env/JBOSS_MODE="-Dcom.planonsoftware.notproductionmode=false"
 		#fi
 	#fi
-fi
+
 
 #Get NYX Admin password and put it into a variable for erb processing.
 getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS}		\
