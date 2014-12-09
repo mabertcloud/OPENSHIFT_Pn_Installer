@@ -246,6 +246,10 @@ ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAP
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/favicon.default.ico ${TOMCAT_WEBAPPS}/static/favicon.default.ico
 showstatus "0" "Login background image + favicon symlink configured!"
 
+#Create link to catalina.out
+cp -n ${TOMCAT}/logs/catalina.out ${OPENSHIFT_PLN_DIR}/logs/catalina.out
+rm -f ${TOMCAT}/logs/catalina.out
+ln -s ${OPENSHIFT_PLN_DIR}/logs/catalina.out ${TOMCAT}/logs/catalina.out
 
 #Add cloud software
 getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
