@@ -52,8 +52,8 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsResource/sysid/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_ID	
 	
 #Get PMFS PASSWORD and put it into a variable for erb processing.
-getcockpit	${PLANON_COCKPIT_URL}>PmfsResource/password/${OPENSHIFT_APP_DNS}		\
-	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD		
+getcockpit	${PLANON_COCKPIT_URL}PmfsResource/password/${OPENSHIFT_APP_DNS}		\
+	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD
 
 #write environmentsettings to file in setup
 #env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
