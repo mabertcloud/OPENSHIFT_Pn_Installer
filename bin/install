@@ -80,10 +80,12 @@ getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
 showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
 
+#get Webdav credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
 showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
 
+#get PMFS cloud keys 
 getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
 showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
