@@ -1,0 +1,113 @@
+<?xml version='1.0'?>
+<!DOCTYPE policy PUBLIC
+      "-//JBoss//DTD JBOSS Security Config 3.0//EN"
+      "http://www.jboss.org/j2ee/dtd/security_config.dtd">
+<policy>
+        <application-policy name="PlanonSecurityDomain">
+                <!-- Used by Planon.
+                -->
+                <!--
+
+                The following section contains the planon login modules. The JBossUpgradeUserLoginModule just checks for
+                UpgradeMode and Upgrade user; it fails in UpgradeMode UNLESS the user is SYSUPGRADE or DEVUPGRADE.
+                If it succeeds, control will return to the application. If it fails, authentication will continue
+                applying the next configured (required) module, which typically is authentication against some
+                store (LDAP, PLANUSER table, etc etc)
+
+        -->
+           	<authentication>
+                        <!-- JBoss specific InitModule: Only SYSINIT user is allowed in initialize mode.
+                               This module is marked 'sufficient', it will only succeed in initialize mode, only allowing user SYSINIT, skipping the re$
+                               The Init user login module is required to load and start the Planon Bundles.
+                        -->
+                        <login-module code="nl.planon.artemis.server.jboss.JBossUpgradeUserLoginModule" flag="sufficient"/>
+                        <login-module code="nl.planon.artemis.server.jboss.JBossInitUserLoginModule" flag="sufficient"/>
+                                                <login-module code="nl.planon.artemis.server.jboss.JBossInitUserLoginModule" flag="sufficient"/>
+
+                        <login-module code="nl.planon.artemis.server.TrustedServiceServerLoginModule" flag="sufficient" />
+
+
+                        <!-- JBoss specific ServerLoginModule: Planon default user authentication -->
+                        <login-module code="nl.planon.artemis.server.jboss.JBossServerLoginModule" flag="optional"/>
+
+                        <!-- this loginmodule will grant the Planon role. More roles can be added if needed by
+                                extending the list using a comma as separator -->
+                        <login-module code="nl.planon.artemis.server.CommitPlanonUserLoginModule" flag="required">
+                                <module-option name="roles">Planon</module-option>
+                                <!-- for auditing, these are the default values -->
+                                <module-option name="enableAuditing">true</module-option>
+                                <module-option name="failedLoginDelay">1</module-option>
+                                <module-option name="failedLoginThreshold">3</module-option>
+                                <module-option name="loginUnlockDelay">300</module-option>
+                        </login-module>
+
+                </authentication>
+        </application-policy>
+
+        <!-- Used by clients within the application server VM such as
+            mbeans and servlets that access EJBs.
+        -->
+
+        <!-- Used by Planon5 webclient -->
+        <application-policy name="PlanonWebclientLogin">
+                <authentication>
+                        <login-module code="org.jboss.security.ClientLoginModule" flag="required">
+                        </login-module>
+                </authentication>
+                        </login-module>
+                </authentication>
+        </application-policy>
+
+        <!-- ExchangeLink client (setup as trusted service) -->
+        <application-policy name="ExchangeClientLoginConfiguration">
+                <authentication>
+                        <login-module code="nl.planon.hades.client.authentication.jboss.TrustedServiceClientLoginModule" flag="required">
+                                <!-- Designate the required keystore (relative path to 'bin' location) -->
+                                <module-option name="keystore">${jboss.server.home.dir}/exchangeKeystore.jks</module-option>
+                                <module-option name="alias">EXCHANGE</module-option>
+                                <module-option name="debug">false</module-option>
+                        </login-module>
+                </authentication>
+        </application-policy>
+
+        <application-policy name="SchedulerEngineClientLoginConfiguration">
+                <authentication>
+                        <login-module code="nl.planon.hades.client.authentication.jboss.TrustedServiceClientLoginModule" flag="required">
+                                <module-option name="keystore">${jboss.server.home.dir}/schedulerKeystore.jks</module-option>
+                                <module-option name="alias">SCHEDULER</module-option>
+                                <module-option name="debug">false</module-option>
+                        </login-module>
+                </authentication>
+        </application-policy>
+
+        <application-policy name="auth-planon-client">
+            <authentication>
+                 <login-module code="nl.planon.hades.client.authentication.jboss.JBossClientLoginModule" flag="sufficient"/>
+            </authentication>
+        </application-policy>
+                <authentication>
+                        <login-module code="nl.planon.hades.client.authentication.jboss.TrustedServiceClientLoginModule" flag="required">
+                                <module-option name="keystore">${jboss.server.home.dir}/schedulerKeystore.jks</module-option>
+                                <module-option name="alias">SCHEDULER</module-option>
+                                <module-option name="debug">false</module-option>
+                        </login-module>
+                </authentication>
+        </application-policy>
+
+        <application-policy name="auth-planon-client">
+            <authentication>
+                 <login-module code="nl.planon.hades.client.authentication.jboss.JBossClientLoginModule" flag="sufficient"/>
+            </authentication>
+        </application-policy>
+
+
+                        <application-policy name="client-login">
+       <authentication>
+          <login-module code = "org.jboss.security.ClientLoginModule"
+             flag = "required">
+             <!-- Any existing security context will be restored on logout -->
+             <module-option name="restore-login-identity">true</module-option>
+          </login-module>
+       </authentication>
+    </application-policy>
+</policy>
