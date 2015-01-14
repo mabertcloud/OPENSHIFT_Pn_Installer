@@ -258,12 +258,12 @@ rm -f ${TOMCAT}/logs/catalina.out
 ln -s ${OPENSHIFT_PLN_DIR}/logs/catalina.out ${TOMCAT}/logs/catalina.out
 
 #Add cloud software
-#getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
-#extract ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
-#rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
-#cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
-#cp ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
-#rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
+getartifact ${DOWNLOAD_FILE_CLOUD} 	${DOWNLOAD_FILE_CLOUD}
+extract ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
+rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
+cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
+cp -f ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
+rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
 
 
 #webstart installation
