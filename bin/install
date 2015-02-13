@@ -138,19 +138,20 @@ rm -rf ${TOMCAT}/tanuki
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
 rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war
+rm -f ${TOMCAT_WEBAPPS}/ticket.war
 rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
-
+rm -f ${TOMCAT}/conf/ticket.logging.properties
+rm -f ${TOMCAT}/conf/ticket.properties
+rm -f ${TOMCAT}/conf/Catalina/localhost/ticket.xml
 showstatus "0" "Tomcat cleaned"
+
 #extract war files 
 extract ${TOMCAT_WEBAPPS}/mobile.war ${TOMCAT_WEBAPPS}/mobile
 extract ${TOMCAT_WEBAPPS}/pesc.war ${TOMCAT_WEBAPPS}/pesc
 extract ${TOMCAT_WEBAPPS}/ROOT.war ${TOMCAT_WEBAPPS}/ROOT
 extract ${TOMCAT_WEBAPPS}/sdk.war ${TOMCAT_WEBAPPS}/sdk
 extract ${TOMCAT_WEBAPPS}/static.war ${TOMCAT_WEBAPPS}/static
-#not supported for now
-#extract ${TOMCAT_WEBAPPS}/ticket.war ${TOMCAT_WEBAPPS}/ticket
-extract ${TOMCAT_WEBAPPS}/TMS.war ${TOMCAT_WEBAPPS}/TMS
 extract ${TOMCAT_WEBAPPS}/webclient.war ${TOMCAT_WEBAPPS}/webclient
 #remove exctracted war files
 rm -f ${TOMCAT_WEBAPPS}/*.war
@@ -230,8 +231,13 @@ showstatus "0" "Securedocs configured!"
 #Create Symlink for nyx/webservices to webdav folder 
 mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
 mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 showstatus "0" "Webservices symlink configured!"
+
+#Copy PC4A in webdav
+cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon/"Planon Connect for AutoCAD Setup.exe"
+showstatus "0" "PC4A copied!"
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
 cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
@@ -264,7 +270,6 @@ rm ${DOWNLOAD_FILE_CLOUD} ${OPENSHIFT_PLN_DIR}
 cp ${OPENSHIFT_PLN_DIR}/cloud/jboss/* ${JBOSS_BUNDLES}/planon/ 
 cp -f ${OPENSHIFT_PLN_DIR}/cloud/tomcat/* ${TOMCAT_BUNDLES}/ROOT/
 rm bundles ${OPENSHIFT_PLN_DIR}/cloud -rf
-
 
 #webstart installation
 cp ${OPENSHIFT_PLN_DIR}/conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
