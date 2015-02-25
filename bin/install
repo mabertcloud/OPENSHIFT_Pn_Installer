@@ -240,22 +240,33 @@ ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
 
 # create symbolic link for tms
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/WEB-INF
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/status
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/upload
+cp-n ${OPENSHIFT_PLN_DIR}/resources/TMSweb.xml ${OPENSHIFT_PLN_DIR}/data/tms/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/tms/ ${OPENSHIFT_PLN_DIR}/data/tms
 ln -s ${OPENSHIFT_PLN_DIR}/data/tms/ ${TOMCAT_WEBAPPS}
 showstatus "0" "TMS configured!"
 
 # create symbolic link for peet
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/WEB-INF
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/inbound
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/outbound
+cp-n ${OPENSHIFT_PLN_DIR}/resources/PEETweb.xml ${OPENSHIFT_PLN_DIR}/data/peet/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/peet/ ${OPENSHIFT_PLN_DIR}/data/peet
 ln -s ${OPENSHIFT_PLN_DIR}/data/peet/ ${TOMCAT_WEBAPPS}
 showstatus "0" "peet configured!"
+
+#Create Symlink for nyx/webservices to webservices folder 
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webservices/WEB-INF
+cp-n ${OPENSHIFT_PLN_DIR}/resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}/data/webservices/WEB-INF/web.xml
+ln -s ${OPENSHIFT_PLN_DIR}/data/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+showstatus "0" "Webservices symlink configured!"
 
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
 
-#Create Symlink for nyx/webservices to webdav folder 
-ln -s ${OPENSHIFT_PLN_DIR}/data/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
-showstatus "0" "Webservices symlink configured!"
 
 #Copy PC4A in webdav
 mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon
