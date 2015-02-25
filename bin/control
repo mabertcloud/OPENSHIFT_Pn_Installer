@@ -247,6 +247,41 @@ status()
 }
 
 
+# Link Method, creates symlinks per file in a specific directory
+link()
+{
+  TMS_FROM_DIR=${OPENSHIFT_PLN_DIR}data/tms/upload/$1/*
+  TMS_TO_DIR=$2
+  echo "# Beginning links for $1 to $TMS_TO_DIR" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
+
+  #Loop over all files
+  for f in $TMS_FROM_DIR
+  do
+    echo "Processing $f file..."
+    if [ -f "$f" ] ; then
+          # Get file name from the file
+      FILE_NAME=`echo "$f"| rev | cut -d"/" -f1 | rev`
+      # echo the sdk
+      echo "$1:$FILE_NAME" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
+      ln -s "$f" "$TMS_TO_DIR/$FILE_NAME"
+    fi
+  done
+  echo "#### end $1 ####" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
+  echo "" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
+}
+
+# Procedure to link TMS
+tms()
+{
+        NOW=$(date +"%T %d-%m-%Y")
+        echo "# This file is reserved for TMS entries - Last updated $NOW" > "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
+
+        link "sdk" "${TOMCAT}/bundles/sdk"
+        link "jboss-web" "${JBOSS_BUNDLES}/planon/web"
+        link "jboss" "${JBOSS_BUNDLES}/planon"
+        link "scheduler" "${JBOSS_BUNDLES}/planon"
+}
+
 catchall()
 {
 	showstatus "0" "	${1:-}: not yet implemented"

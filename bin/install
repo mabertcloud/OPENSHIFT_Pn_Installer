@@ -78,17 +78,32 @@ cd ${OPENSHIFT_PLN_DIR}
 # Get the right DB connections
 getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
-showstatus "${?}" "Request database executed name : ${OPENSHIFT_APP_DNS}"
+showstatus "${?}" "Request database executed name: ${OPENSHIFT_APP_DNS}"
 
 #get Webdav credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
-showstatus "${?}" "Request webdav account executed name : ${OPENSHIFT_APP_DNS}"
+showstatus "${?}" "Request webdav account executed name: ${OPENSHIFT_APP_DNS}"
+
+#get TMS credentials
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms		\
+	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-TMS.xml
+showstatus "${?}" "Request TMS account executed name: ${OPENSHIFT_APP_DNS}/tms"
+
+#get PEET credentials
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet		\
+	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-PEET.xml
+showstatus "${?}" "Request webdav account executed name: ${OPENSHIFT_APP_DNS}/peet"
+
+#get webservices credentials
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices		\
+	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-NYX.xml
+showstatus "${?}" "Request TMS account executed name: ${OPENSHIFT_APP_DNS}/webservices"
 
 #get PMFS cloud keys 
 getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
 	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
-showstatus "${?}" "Request pmfs cloud key executed name : ${OPENSHIFT_APP_DNS}"
+showstatus "${?}" "Request pmfs cloud key executed name: ${OPENSHIFT_APP_DNS}"
 
 # JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
@@ -224,22 +239,31 @@ ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webdav/ ${OPENSHIFT_PLN_DIR}/data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
 
+# create symbolic link for tms
+ln -s ${OPENSHIFT_PLN_DIR}/mount/live/tms/ ${OPENSHIFT_PLN_DIR}/data/tms
+ln -s ${OPENSHIFT_PLN_DIR}/data/tms/ ${TOMCAT_WEBAPPS}
+showstatus "0" "TMS configured!"
+
+# create symbolic link for peet
+ln -s ${OPENSHIFT_PLN_DIR}/mount/live/peet/ ${OPENSHIFT_PLN_DIR}/data/peet
+ln -s ${OPENSHIFT_PLN_DIR}/data/peet/ ${TOMCAT_WEBAPPS}
+showstatus "0" "peet configured!"
+
 # create symbolic link for secure documents
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}/data/securedocs
 showstatus "0" "Securedocs configured!"
 
 #Create Symlink for nyx/webservices to webdav folder 
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon
-ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/Static/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+ln -s ${OPENSHIFT_PLN_DIR}/data/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 showstatus "0" "Webservices symlink configured!"
 
 #Copy PC4A in webdav
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon
 cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}/data/webdav/Static/addon/"Planon Connect for AutoCAD Setup.exe"
 showstatus "0" "PC4A copied!"
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
+mkdir -p ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content
 cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.jpg
 cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}/data/webdav/Static/content/login_background.default.jpg
 
