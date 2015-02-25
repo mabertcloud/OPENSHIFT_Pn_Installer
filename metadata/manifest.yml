@@ -5,11 +5,11 @@ Cartridge-Version: 1.6.1
 Compatible-Versions:
 - 0.9
 Cartridge-Vendor: planonsoftware
-Display-Name: Planon 14.14.1
+Display-Name: Planon 14.14.0
 Description: "Planon"
-Version: '14.14.1'
+Version: '14.14.0'
 Versions:
-- '14.14.1'
+- '14.14.0'
 Vendor: planonsoftware.com
 Categories:
   - web_framework
