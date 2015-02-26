@@ -91,28 +91,28 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsResource/password/${OPENSHIFT_APP_DNS}		\
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_USERNAME
 #get Webdav password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user		\
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/pass		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_PASSWORD
 
 #get TMS username
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_TMS_USERNAME
 #get TMS  password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user		\
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/pass		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_TMS_PASSWORD
 
 #get PEET credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_PEET_USERNAME
 #get PEET password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user		\
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/pass		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_PEET_PASSWORD
 
 #get webservices credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_USERNAME
 #get PEET password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user		\
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/pass		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_PASSWORD
 
 exit 0
