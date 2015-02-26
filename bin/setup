@@ -87,7 +87,36 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsResource/sysid/${OPENSHIFT_APP_DNS}		\
 getcockpit	${PLANON_COCKPIT_URL}PmfsResource/password/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD
 
-#write environmentsettings to file in setup
-#env >${OPENSHIFT_PLN_DIR}env/setupenv.txt
+# Get the right DB connections
+getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
+	${OPENSHIFT_PLN_DIR}env/planon-ds.xml
+
+#get Webdav username
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_USERNAME
+#get Webdav password
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_PASSWORD
+
+#get TMS username
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_TMS_USERNAME
+#get TMS  password
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_TMS_PASSWORD
+
+#get PEET credentials
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_PEET_USERNAME
+#get PEET password
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_PEET_PASSWORD
+
+#get webservices credentials
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_USERNAME
+#get PEET password
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user		\
+	${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_PASSWORD
 
 exit 0

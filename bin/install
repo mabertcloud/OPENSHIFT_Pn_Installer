@@ -75,36 +75,6 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
 
-# Get the right DB connections
-getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
-	${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml
-showstatus "${?}" "Request database executed name: ${OPENSHIFT_APP_DNS}"
-
-#get Webdav credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}		\
-	${OPENSHIFT_PLN_DIR}/conf/tomcat-users.xml
-showstatus "${?}" "Request webdav account executed name: ${OPENSHIFT_APP_DNS}"
-
-#get TMS credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms		\
-	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-TMS.xml
-showstatus "${?}" "Request TMS account executed name: ${OPENSHIFT_APP_DNS}/tms"
-
-#get PEET credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet		\
-	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-PEET.xml
-showstatus "${?}" "Request PEET account executed name: ${OPENSHIFT_APP_DNS}/peet"
-
-#get webservices credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices		\
-	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-NYX.xml
-showstatus "${?}" "Request WEBSERVICES account executed name: ${OPENSHIFT_APP_DNS}/webservices"
-
-#get PMFS cloud keys 
-getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
-	${OPENSHIFT_PLN_DIR}/conf/cloud.properties
-showstatus "${?}" "Request pmfs cloud key executed name: ${OPENSHIFT_APP_DNS}"
-
 # JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
 showstatus "0" "JBoss download"
