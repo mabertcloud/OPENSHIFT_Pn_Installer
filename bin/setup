@@ -87,10 +87,6 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsResource/sysid/${OPENSHIFT_APP_DNS}		\
 getcockpit	${PLANON_COCKPIT_URL}PmfsResource/password/${OPENSHIFT_APP_DNS}		\
 	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD
 
-# Get the right DB connections
-getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
-	${OPENSHIFT_PLN_DIR}env/planon-ds.xml
-
 #get Webdav username
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user		\
 	${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_USERNAME

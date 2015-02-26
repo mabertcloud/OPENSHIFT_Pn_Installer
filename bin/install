@@ -75,6 +75,10 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
 
+# Get the right DB connections
+getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
+	${OPENSHIFT_PLN_DIR}conf/planon-ds.xml
+
 # JBoss Installation
 getartifact ${DOWNLOAD_FILE_JBOSS} ${DOWNLOAD_FILE_JBOSS}
 showstatus "0" "JBoss download"
