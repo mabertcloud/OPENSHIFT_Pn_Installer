@@ -107,7 +107,6 @@ cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}/conf/jndi.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/planon-ds.xml 					${JBOSS_DEPLOY}/
 cp ${OPENSHIFT_PLN_DIR}/conf/ApplicationMapping.properties 	${JBOSS_CONF}/
-cp ${OPENSHIFT_PLN_DIR}/conf/cloud.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 
 #no change in erb file cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
