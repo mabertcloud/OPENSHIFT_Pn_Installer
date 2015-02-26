@@ -93,12 +93,12 @@ showstatus "${?}" "Request TMS account executed name: ${OPENSHIFT_APP_DNS}/tms"
 #get PEET credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-PEET.xml
-showstatus "${?}" "Request webdav account executed name: ${OPENSHIFT_APP_DNS}/peet"
+showstatus "${?}" "Request PEET account executed name: ${OPENSHIFT_APP_DNS}/peet"
 
 #get webservices credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices		\
 	${OPENSHIFT_PLN_DIR}/conf/tomcat-users-NYX.xml
-showstatus "${?}" "Request TMS account executed name: ${OPENSHIFT_APP_DNS}/webservices"
+showstatus "${?}" "Request WEBSERVICES account executed name: ${OPENSHIFT_APP_DNS}/webservices"
 
 #get PMFS cloud keys 
 getcockpit	${PLANON_COCKPIT_URL}PmfsServerResource/${OPENSHIFT_APP_DNS}	\
@@ -240,26 +240,26 @@ ln -s ${OPENSHIFT_PLN_DIR}/data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
 
 # create symbolic link for tms
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/WEB-INF
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/status
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/tms/upload
-cp-n ${OPENSHIFT_PLN_DIR}/resources/TMSweb.xml ${OPENSHIFT_PLN_DIR}/data/tms/WEB-INF/web.xml
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/tms/WEB-INF
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/tms/status
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/tms/upload
+cp-n ${OPENSHIFT_PLN_DIR}/resources/TMSweb.xml ${OPENSHIFT_PLN_DIR}/mount/live/tms/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/tms/ ${OPENSHIFT_PLN_DIR}/data/tms
 ln -s ${OPENSHIFT_PLN_DIR}/data/tms/ ${TOMCAT_WEBAPPS}
 showstatus "0" "TMS configured!"
 
 # create symbolic link for peet
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/WEB-INF
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/inbound
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/peet/outbound
-cp-n ${OPENSHIFT_PLN_DIR}/resources/PEETweb.xml ${OPENSHIFT_PLN_DIR}/data/peet/WEB-INF/web.xml
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/peet/WEB-INF
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/peet/inbound
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/peet/outbound
+cp-n ${OPENSHIFT_PLN_DIR}/resources/PEETweb.xml ${OPENSHIFT_PLN_DIR}/mount/live/peet/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/peet/ ${OPENSHIFT_PLN_DIR}/data/peet
 ln -s ${OPENSHIFT_PLN_DIR}/data/peet/ ${TOMCAT_WEBAPPS}
 showstatus "0" "peet configured!"
 
 #Create Symlink for nyx/webservices to webservices folder 
-mkdir -p ${OPENSHIFT_PLN_DIR}/data/webservices/WEB-INF
-cp-n ${OPENSHIFT_PLN_DIR}/resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}/data/webservices/WEB-INF/web.xml
+mkdir -p ${OPENSHIFT_PLN_DIR}/mount/live/webservices/WEB-INF
+cp-n ${OPENSHIFT_PLN_DIR}/resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}/mount/live/webservices/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}/mount/live/webservices/ ${OPENSHIFT_PLN_DIR}/data/webservices
 #!!!!!!!!!!!!!!!TO DO: check if old nyx locations contains data, than move to new location and remove old location
 ln -s ${OPENSHIFT_PLN_DIR}/data/webservices ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
