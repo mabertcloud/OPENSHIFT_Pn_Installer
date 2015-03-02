@@ -74,6 +74,8 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 
 # We assume this directory exists
 cd ${OPENSHIFT_PLN_DIR}
+mkdir -p ${OPENSHIFT_PLN_DIR}PlanonProCenter
+
 
 # Get the right DB connections
 getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
@@ -83,7 +85,7 @@ getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
 tar -xf jdk-7u71-linux-x64.gz
-mv jdk1.7.0_71 jdk
+mv jdk1.7.0_71 ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
 rm -f jdk-7u71-linux-x64.gz
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
