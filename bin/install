@@ -82,7 +82,6 @@ getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
 #Download and install correct JDK
 getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
-extract ${DOWNLOAD_FILE_JDK} PlanonProCenter
 tar -xf jdk-7u71-linux-x64.gz
 mv jdk1.7.0_71 jdk
 rm -f jdk-7u71-linux-x64.gz
