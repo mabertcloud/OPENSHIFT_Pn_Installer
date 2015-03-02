@@ -11,7 +11,9 @@ export LANG=C
 export PATH=/bin/:/usr/bin:${PATH}
 
 # Constants
-export PLANON="${OPENSHIFT_PLN_DIR}/PlanonProCenter"
+export PLANON="${OPENSHIFT_PLN_DIR}PlanonProCenter"
+
+export JAVA_HOME="${PLANON}/jdk"
 
 export JBOSS_VERSION="jboss-6.1.0"
 export JBOSS="${PLANON}/${JBOSS_VERSION}.Final"
@@ -25,8 +27,8 @@ export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
 export TOMCAT_BUNDLES="${TOMCAT}/bundles"
 
-export TOMCATPID="${OPENSHIFT_PLN_DIR}/run/tomcat.pid"
-export JBOSSPID="${OPENSHIFT_PLN_DIR}/run/jboss.pid"
+export TOMCATPID="${OPENSHIFT_PLN_DIR}run/tomcat.pid"
+export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
 #
 # Needed for Tomcat, but called CATALINA
 #
@@ -35,6 +37,7 @@ export CATALINA_PID="${TOMCATPID}"
 
 if [[ x"${version:-}" != x"" ]]
 then
+	export DOWNLOAD_FILE_JDK="jdk-7u71-linux-x64.gz"
 	export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_WEBDAV="${version}-webdav.zip"
@@ -83,39 +86,39 @@ share()
         then
             #
                 # Create data mount for customer
-                # Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/mount
+                # Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}mount
                 #
                 # For this to work, make sure the file /etc/fuse.conf
                 # contains:
                 #               user_allow_other
                 #
-                CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
+                CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}conf/keys/share.mnt)
 	                sshfs                                                               \
     	                -o allow_other                                                  \
         	            -o workaround=all                                               \
             	        -o idmap=user                                                   \
-                	    -o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv       \
+                	    -o IdentityFile=${OPENSHIFT_PLN_DIR}conf/keys/share.priv       \
                     	-o StrictHostKeyChecking=no                                     \
                         -o UserKnownHostsFile=/dev/null                                 \
                         -o reconnect                                                    \
                         -o delay_connect                                                \
                         ${CUSTSHARE}                                                    \
-                        ${OPENSHIFT_PLN_DIR}/mount
-                    fusermount -uz ${OPENSHIFT_PLN_DIR}/mount
+                        ${OPENSHIFT_PLN_DIR}mount
+                    fusermount -uz ${OPENSHIFT_PLN_DIR}mount
                     sshfs                                                               \
                         -o allow_other                                                  \
                         -o workaround=all                                               \
                         -o idmap=user                                                   \
-                        -o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv       \
+                        -o IdentityFile=${OPENSHIFT_PLN_DIR}conf/keys/share.priv       \
                         -o StrictHostKeyChecking=no                                     \
                         -o UserKnownHostsFile=/dev/null                                 \
                         -o reconnect                                                    \
                         -o delay_connect                                                \
                         ${CUSTSHARE}                                                    \
-                        ${OPENSHIFT_PLN_DIR}/mount
+                        ${OPENSHIFT_PLN_DIR}mount
                 showstatus "0" "mount : ${1}"
         else
-                fusermount -u ${OPENSHIFT_PLN_DIR}/mount
+                fusermount -u ${OPENSHIFT_PLN_DIR}mount
         fi
 }
 extract()

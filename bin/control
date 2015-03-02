@@ -293,20 +293,21 @@ catchall()
 showstatus "0" "Control Main called"
 case "${1:-}"
 in
-	start)					start   "${2:-all}"	;;
-	stop)					stop    "${2:-all}"	;;
-	restart)				restart	"${2:-all}"	;;
-	status)					status				;;
+	start)					start   "${2:-all}"	     ;;
+	stop)					stop    "${2:-all}"	     ;;
+	restart)				restart	"${2:-all}"	     ;;
+	status)					status				     ;;
     mount)                  mount    "${2:-create}"  ;; 
-	deploy)					catchall "${1}"		;;
-	reload)					catchall "${1}"		;;
-	tidy)					catchall "${1}"		;;
-	pre-build)				catchall "${1}"		;;
-	build)					catchall "${1}"		;;
-	post-deploy)			catchall "${1}"		;;
-	pre-repo-archive)		catchall "${1}"		;;
-	update-configuration)	catchall "${1}"		;;
-	*)						catchall "Unknown"	;;
+	tms)					tms                      ;;
+	deploy)					catchall "${1}"		     ;;
+	reload)					catchall "${1}"	         ;;
+	tidy)					catchall "${1}"	         ;;
+	pre-build)				catchall "${1}"	         ;;
+	build)					catchall "${1}"	         ;;
+	post-deploy)			catchall "${1}"	         ;;
+	pre-repo-archive)		catchall "${1}"	         ;;
+	update-configuration)	catchall "${1}"	         ;;
+	*)						catchall "Unknown"       ;;
 esac
 
 # Exit. No exit code!! The exit code will be the exit code

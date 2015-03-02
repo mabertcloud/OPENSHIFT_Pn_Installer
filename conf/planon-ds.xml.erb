@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<datasources>
+<local-tx-datasource>
+<!-- ======================================< instance ${OPENSHIFT_APP_DNS}=========================================================================== -->
+<!-- MSSQL -->
+<!-- ================================================================================================================= -->
+    <jndi-name>PlanonDS</jndi-name> <!--DS-TYPE=MSSQL-->
+    <connection-url>jdbc://<%= ENV['PLN_DB_SERVER'] %></connection-url>
+    <driver-class>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver-class>      
+   
+    <user-name><%= ENV['PLN_DB_USERNAME'] %></user-name>
+    <password><%= ENV['PLN_DB_PASSWORD'] %></password>
+
+    <min-pool-size>10</min-pool-size> <!-- [MINIMUM CONNECTION POOL SIZE] -->
+    <max-pool-size>30</max-pool-size> <!-- [MAXIMUM CONNECTION POOL SIZE] -->
+
+    <new-connection-sql>PLN_SET_P5_SESSION</new-connection-sql>
+    <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+
+    <prepared-statement-cache-size>100</prepared-statement-cache-size>
+    <shared-prepared-statements>true</shared-prepared-statements>	
+
+	<!-- Automatic reconnection parameters -->
+    <autoReconnect>true</autoReconnect>
+    <check-valid-connection-sql>select 1</check-valid-connection-sql>
+    <failOverReadOnly>false</failOverReadOnly>
+    <maxReconnects>120</maxReconnects>
+    <initialTimeout>30</initialTimeout>
+
+  </local-tx-datasource>
+</datasources>
