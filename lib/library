@@ -79,33 +79,44 @@ showstatus()
 
 share()
 {
-	if [[ x"${1}" = x"create" ]]
-	then
-	    #
-		# Create data mount for customer
-		# Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}/mount
-		#
-		# For this to work, make sure the file /etc/fuse.conf
-		# contains:
-		#		user_allow_other
-		#
-		CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}/conf/keys/share.mnt)
-		mountpoint -q ${OPENSHIFT_PLN_DIR}/mount ||							\
-			sshfs															\
-				-o allow_other												\
-				-o workaround=all											\
-				-o idmap=user												\
-				-o IdentityFile=${OPENSHIFT_PLN_DIR}/conf/keys/share.priv	\
-				-o StrictHostKeyChecking=no									\
-				-o UserKnownHostsFile=/dev/null								\
-				-o reconnect												\
-				-o delay_connect											\
-				${CUSTSHARE}												\
-				${OPENSHIFT_PLN_DIR}/mount
-		showstatus "0" "mount : ${1}"		
-	else
-		fusermount -u ${OPENSHIFT_PLN_DIR}/mount
-	fi
+        if [[ x"${1}" = x"create" ]]
+        then
+            #
+                # Create data mount for customer
+                # Unmount with: fusermount -u ${OPENSHIFT_PLN_DIR}mount
+                #
+                # For this to work, make sure the file /etc/fuse.conf
+                # contains:
+                #               user_allow_other
+                #
+                CUSTSHARE=$(cat ${OPENSHIFT_PLN_DIR}conf/keys/share.mnt)
+	                sshfs                                                               \
+    	                -o allow_other                                                  \
+        	            -o workaround=all                                               \
+            	        -o idmap=user                                                   \
+                	    -o IdentityFile=${OPENSHIFT_PLN_DIR}conf/keys/share.priv       \
+                    	-o StrictHostKeyChecking=no                                     \
+                        -o UserKnownHostsFile=/dev/null                                 \
+                        -o reconnect                                                    \
+                        -o delay_connect                                                \
+                        ${CUSTSHARE}                                                    \
+                        ${OPENSHIFT_PLN_DIR}mount
+                    fusermount -uz ${OPENSHIFT_PLN_DIR}mount
+                    sshfs                                                               \
+                        -o allow_other                                                  \
+                        -o workaround=all                                               \
+                        -o idmap=user                                                   \
+                        -o IdentityFile=${OPENSHIFT_PLN_DIR}conf/keys/share.priv       \
+                        -o StrictHostKeyChecking=no                                     \
+                        -o UserKnownHostsFile=/dev/null                                 \
+                        -o reconnect                                                    \
+                        -o delay_connect                                                \
+                        ${CUSTSHARE}                                                    \
+                        ${OPENSHIFT_PLN_DIR}mount
+                showstatus "0" "mount : ${1}"
+        else
+                fusermount -u ${OPENSHIFT_PLN_DIR}mount
+        fi
 }
 
 extract()
