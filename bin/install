@@ -232,6 +232,8 @@ mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/tms/upload/jboss
 mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/tms/upload/scheduler
 cp -u ${OPENSHIFT_PLN_DIR}resources/TMSweb.xml ${OPENSHIFT_PLN_DIR}mount/live/tms/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/tms/ ${OPENSHIFT_PLN_DIR}data/tms
+touch ${OPENSHIFT_PLN_DIR}mount/live/tms/status/TMS-deployed.out
+ln -s ${OPENSHIFT_PLN_DIR}mount/live/tms/status/TMS-deployed.out ${OPENSHIFT_PLN_DIR}/logs/TMS-deployed.out
 ln -s ${OPENSHIFT_PLN_DIR}data/tms/ ${TOMCAT_WEBAPPS}
 showstatus "0" "TMS configured!"
 
@@ -249,7 +251,7 @@ mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF
 cp -u ${OPENSHIFT_PLN_DIR}resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webservices/ ${OPENSHIFT_PLN_DIR}data/webservices
 #!!!!!!!!!!!!!!!TO DO: check if old nyx locations contains data, than move to new location and remove old location
-ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
+ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}/nyx/services
 ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webservices symlink configured!"
 
