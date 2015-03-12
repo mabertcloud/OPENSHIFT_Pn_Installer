@@ -10,8 +10,8 @@
   </security>
   <resources>
 <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
-<j2se version="1.7*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" /> 
-
+<j2se version="1.7*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
+ 
           <jar href="Apollo.jar"/>
         
           <jar href="Aspose.Words.jar"/>
@@ -170,7 +170,7 @@
         
           <jar href="org.osgi.compendium-4.2.0.jar"/>
         
-          <jar href="orviewer50-14.0.0.34.jar"/>
+          <jar href="orviewer50-14.0.0.36.jar"/>
         
           <jar href="planon-jboss-extensions-1.1.0.jar"/>
         
@@ -206,8 +206,8 @@
         
           <jar href="xml-apis.jar"/>
         
-          <jar href="nl.planon.pss.common-6.4.5.jar"/>
-           
+          <jar href="nl.planon.pss.common-6.4.6.jar"/>
+
    <property name="jnlp.systemproperty.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.systemproperty.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" /> 
     <property name="jnlp.systemproperty.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
