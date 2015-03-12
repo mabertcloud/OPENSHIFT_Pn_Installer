@@ -251,7 +251,7 @@ mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF
 cp -u ${OPENSHIFT_PLN_DIR}resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webservices/ ${OPENSHIFT_PLN_DIR}data/webservices
 #!!!!!!!!!!!!!!!TO DO: check if old nyx locations contains data, than move to new location and remove old location
-ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}/nyx/services
+ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
 ln -s ${OPENSHIFT_PLN_DIR}data/webservices/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webservices symlink configured!"
 
