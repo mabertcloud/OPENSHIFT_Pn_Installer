@@ -163,6 +163,9 @@ start()
 		fi
 	fi
 
+	#Link TMS folder
+	${OPENSHIFT_PLN_DIR}/bin/control tms
+
 	showstatus "0" "trats"
 }
 

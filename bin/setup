@@ -79,6 +79,9 @@ getcockpit	${PLANON_COCKPIT_URL}DatabasePlane/${OPENSHIFT_APP_DNS}/server ${OPEN
 getcockpit	${PLANON_COCKPIT_URL}DatabasePlane/${OPENSHIFT_APP_DNS}/username ${OPENSHIFT_PLN_DIR}env/PLN_DB_USERNAME
 getcockpit	${PLANON_COCKPIT_URL}DatabasePlane/${OPENSHIFT_APP_DNS}/password ${OPENSHIFT_PLN_DIR}env/PLN_DB_PASSWORD
 
+#Get license.lic and store in conf folder.
+getcockpit	${PLANON_COCKPIT_URL}PlanonLicenseResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}conf/license.lic
+
 #Get NYX Admin password and put it into a variable for erb processing.
 getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}env/PLN_NYX_PASSWORD
 	
