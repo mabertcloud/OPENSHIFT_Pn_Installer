@@ -1,15 +1,15 @@
 Name: planon
 Cartridge-Short-Name: PLN
-Source-Url: https://github.com/planonsoftware/OPENSHIFT_Pn_Installer/archive/master.zip
-Cartridge-Version: 1.8.0
+Source-Url: https://github.com/planonsoftware/OPENSHIFT_Pn_Installer/archive/R14SP16.0.zip
+Cartridge-Version: 1.9.0
 Compatible-Versions:
 - 0.9
 Cartridge-Vendor: planonsoftware
-Display-Name: Planon 14.15.0
+Display-Name: Planon 14.16.0
 Description: "Planon"
-Version: '14.15.0'
+Version: '14.16.0'
 Versions:
-- '14.15.0'
+- '14.16.0'
 Vendor: planonsoftware.com
 Categories:
   - web_framework
@@ -20,7 +20,7 @@ Help-Topics:
   "Developer Center": http://planoncloud.com
 Cart-Data:
 Provides:
-- Planon-14.15.0
+- Planon-14.16.0
 - Planon
 Subscribes:
 Scaling:
