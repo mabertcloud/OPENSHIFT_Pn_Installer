@@ -136,8 +136,8 @@ showstatus "0" "Tomcat exctracted"
 rm -rf ${TOMCAT}/tanuki 
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
-rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war
 rm -f ${TOMCAT_WEBAPPS}/ticket.war
+rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war 
 rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 rm -f ${TOMCAT}/conf/ticket.logging.properties
@@ -160,11 +160,11 @@ cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/jaas.config 				${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/ROOT.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/sdk.properties 			${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}conf/sdk.properties 				${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
 cp ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/ROOT.logging.properties 	${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 	${TOMCAT_CONF}/
+cp ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
 
 #osgi setting 
 cp ${OPENSHIFT_PLN_DIR}conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
