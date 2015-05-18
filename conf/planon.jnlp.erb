@@ -10,7 +10,6 @@
   </security>
   <resources>
 <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
-<j2se version="1.7*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
  
           <jar href="Apollo.jar"/>
         
@@ -102,6 +101,10 @@
         
           <jar href="dom4j-1.6.1.jar"/>
         
+          <jar href="ecj-4.4.1.jar"/>
+        
+          <jar href="esapi-2.1.0.jar"/>
+        
           <jar href="htmlcleaner2_0.jar"/>
         
           <jar href="httpcore-4.0.jar"/>
@@ -140,8 +143,6 @@
         
           <jar href="jdom-1.0.jar"/>
         
-          <jar href="jdt-compiler-3.1.1.jar"/>
-        
           <jar href="jfreechart-1.0.12.jar"/>
         
           <jar href="jna-3.5.0.jar"/>
@@ -163,6 +164,8 @@
           <jar href="mail.jar"/>
         
           <jar href="neethi-3.0.1.jar"/>
+        
+          <jar href="nl.planon.jasper.fontextension.jar"/>
         
           <jar href="org.apache.felix.dependencymanager-3.0.0.jar"/>
         
@@ -206,9 +209,9 @@
         
           <jar href="xml-apis.jar"/>
         
-          <jar href="nl.planon.pss.common-6.4.7.jar"/>
+          <jar href="nl.planon.pss.common-6.4.8.jar"/>
 
-   <property name="jnlp.systemproperty.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
+    <property name="jnlp.systemproperty.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.systemproperty.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" /> 
     <property name="jnlp.systemproperty.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
     <property name="jnlp.systemproperty.java.naming.provider.url" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/invoker/JNDIFactory"/>

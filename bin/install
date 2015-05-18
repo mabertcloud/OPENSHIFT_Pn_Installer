@@ -76,17 +76,12 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 cd ${OPENSHIFT_PLN_DIR}
 mkdir -p ${OPENSHIFT_PLN_DIR}PlanonProCenter
 
-
-# Get the right DB connections
-getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
-	${OPENSHIFT_PLN_DIR}conf/planon-ds.xml
-
 #Download and install correct JDK
 getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
-tar -xf jdk-7u71-linux-x64.gz
-mv jdk1.7.0_71 ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
-rm -f jdk-7u71-linux-x64.gz
+tar -xf jdk-8u31-linux-x64.gz
+mv jdk1.8.0_31 ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
+rm -f jdk-8u31-linux-x64.gz
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
 # JBoss Installation
@@ -110,20 +105,20 @@ rm -rf ${JBOSS}/server/default/jndi.properties
 rm -rf ${JBOSS}/tanuki
 
 showstatus "0" "JBoss cleaned"
-#add environment/pcc specific config files
 
+#add environment/pcc specific config files
 cp ${OPENSHIFT_PLN_DIR}conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 					${JBOSS_DEPLOY}/
-cp ${OPENSHIFT_PLN_DIR}conf/ApplicationMapping.properties 	${JBOSS_CONF}/
+#Can be removed as of sp14? 
+#cp ${OPENSHIFT_PLN_DIR}conf/ApplicationMapping.properties 	${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/license.lic 					${JBOSS_CONF}/
-
-#no change in erb file cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
 sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
+
 showstatus "0" "JBoss configured!"
 
 # TOMCAT Installation
@@ -137,7 +132,6 @@ rm -rf ${TOMCAT}/tanuki
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
 rm -f ${TOMCAT_WEBAPPS}/ticket.war
-rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war 
 rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 rm -f ${TOMCAT}/conf/ticket.logging.properties
