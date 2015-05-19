@@ -330,7 +330,6 @@ cp -f ${OPENSHIFT_PLN_DIR}/conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/
 cp -f ${OPENSHIFT_PLN_DIR}/data/webdav/keycloak/ROOT/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file from webdav."
 cp -f ${OPENSHIFT_PLN_DIR}/data/webdav/keycloak/webclient/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file from webdav."
 
-else
 fi
 
 
