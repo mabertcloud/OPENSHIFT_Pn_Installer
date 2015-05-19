@@ -111,4 +111,7 @@ getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/
 #get PEET password
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/pass ${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_PASSWORD
 
+#get SSO-status
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED
+
 exit 0
