@@ -1,0 +1,8 @@
+<Context antiJARLocking="true" antiResourceLocking="true" reloadable="false">
+        <Realm className="nl.planon.tomcat.PnMessageJaasRealm"
+                appName="PlanonRealmLogin"
+                userClassNames="nl.planon.cerebeus.PnUser"
+                roleClassNames="nl.planon.cerebeus.PnRole"
+            allRolesMode="authOnly"/>
+        <Valve className="org.keycloak.adapters.tomcat.KeycloakAuthenticatorValve"/>
+</Context>
