@@ -167,7 +167,7 @@ cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAP
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
 #osgi setting SDK
 sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
-sed -i 's/9191/9292/g' ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+sed -i 's/9191/9292/g' ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
 #osgi setting Mobile
