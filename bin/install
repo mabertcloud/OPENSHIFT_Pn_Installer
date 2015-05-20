@@ -166,11 +166,13 @@ cp -f ${OPENSHIFT_PLN_DIR}resources/twowayauth.xml 			${TOMCAT_CONF}/Catalina/lo
 cp -f ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/jaas.config 					${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/twowayauth.properties
 cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.properties 				${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.properties 				${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.properties			${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
 cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/twowayauth.logging.properties
 cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
