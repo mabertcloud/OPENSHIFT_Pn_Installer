@@ -49,7 +49,8 @@ $Revision: 1.5 $
 				
 			<login-module code="nl.planon.artemis.server.TrustedServiceServerLoginModule" flag="sufficient" />
 
-      
+      <login-module code="nl.planon.telesto.mobility.server.authentication.TrustedServiceLoginModuleCheck" flag="optional" />
+
 			<!-- JBoss specific ServerLoginModule: Planon default user authentication -->
 	    		<login-module code="nl.planon.artemis.server.jboss.JBossServerLoginModule" flag="optional"/>
 

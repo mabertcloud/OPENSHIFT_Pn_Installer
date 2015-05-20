@@ -1,0 +1,15 @@
+<Context>
+	<!-- Authenticate against PlanonRealmLogin (JAAS) -->
+	<!--   allRolesMode=authOnly" means that no role is needed for '*' requirement -->
+	<Realm appName="PlanonMobileTicketLogin"
+                    className="org.apache.catalina.realm.JAASRealm"
+                    userClassNames="nl.planon.cerebeus.PnUser" 
+                    roleClassNames="nl.planon.cerebeus.PnRole"
+                    allRolesMode="authOnly"/>
+					
+	<Manager pathname="" />
+	<!-- Windows Phone Authentication fix -->
+	<Valve className="nl.planon.tomcat.PnMessageFormAuthenticator" changeSessionIdOnAuthentication="true"  landingPage="/"  exceptionAttributeName="PnLoginException" characterEncoding="utf-8"/>
+
+</Context>
+
