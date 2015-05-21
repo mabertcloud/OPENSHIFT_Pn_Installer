@@ -95,7 +95,6 @@ chmod +x ${JBOSS}/bin/shutdown.sh
 
 #remove of planon application files. These will be placed by the services cartridge
 mkdir ${JBOSS}/initmode
-mv ${JBOSS_DEPLOY}/planon-telesto.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonbackgroundactionjobs.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonexchangelink.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonschedulerengine.ear ${JBOSS}/initmode/
