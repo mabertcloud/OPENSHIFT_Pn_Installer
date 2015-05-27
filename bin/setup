@@ -114,4 +114,7 @@ getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/
 #get SSO-status
 getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED
 
+#get SSO-client_settings
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloakjson ${OPENSHIFT_PLN_DIR}/env/keycloak.json
+
 exit 0
