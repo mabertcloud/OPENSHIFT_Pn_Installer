@@ -82,6 +82,12 @@ getcockpit	${PLANON_COCKPIT_URL}DatabasePlane/${OPENSHIFT_APP_DNS}/password ${OP
 #Get license.lic and store in conf folder.
 getcockpit	${PLANON_COCKPIT_URL}PlanonLicenseResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}conf/license.lic
 
+#get SSO-status
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}/conf/PLN_SSO_ENABLED
+
+#get SSO-client_settings
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloakjson ${OPENSHIFT_PLN_DIR}/conf/keycloak.json
+
 #Get NYX Admin password and put it into a variable for erb processing.
 getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}env/PLN_NYX_PASSWORD
 	
@@ -111,10 +117,7 @@ getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/
 #get PEET password
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/pass ${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_PASSWORD
 
-#get SSO-status
-getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED
-
-#get SSO-client_settings
-getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloakjson ${OPENSHIFT_PLN_DIR}/env/keycloak.json
+#set embedded jdk path for upgrade module
+echo ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk >>${OPENSHIFT_PLN_DIR}/env/PLN_JDK
 
 exit 0
