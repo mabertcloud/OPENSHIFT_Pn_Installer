@@ -352,6 +352,9 @@ cp -f ${OPENSHIFT_PLN_DIR}/conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/
 cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
 cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
 
+mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
+cp -f ${OPENSHIFT_PLN_DIR}/conf/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
+
 showstatus "0" "Keycloak client installed"
 
 fi
