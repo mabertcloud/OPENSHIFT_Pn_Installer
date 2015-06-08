@@ -130,12 +130,10 @@ showstatus "0" "Tomcat exctracted"
 rm -rf ${TOMCAT}/tanuki 
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
-rm -rf ${TOMCAT_WEBAPPS}/webdav
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
-#rm -f ${TOMCAT_WEBAPPS}/ticket.war
-#rm -f ${TOMCAT}/conf/ticket.logging.properties
-#rm -f ${TOMCAT}/conf/ticket.properties
-#rm -f ${TOMCAT}/conf/Catalina/localhost/ticket.xml
+rm -f ${TOMCAT_CONF}/tomcat-users.xml
+rm -f ${TOMCAT_CONF}/conf/Catalina/webdav.xml
+
 showstatus "0" "Tomcat cleaned"
 
 #install TwoFactorAuthenticationForMobile
