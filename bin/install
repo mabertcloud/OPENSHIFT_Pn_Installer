@@ -131,10 +131,10 @@ showstatus "0" "Tomcat exctracted"
 rm -rf ${TOMCAT}/tanuki 
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
-rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
+rm -f ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 rm -f ${TOMCAT_CONF}/tomcat-users.xml
-rm -f ${TOMCAT_CONF}/conf/Catalina/localhost/webdav.xml
-rm -f ${TOMCAT_CONF}/conf/Catalina/localhost/customization.xml
+rm -f ${TOMCAT_CONF}/Catalina/localhost/webdav.xml
+rm -f ${TOMCAT_CONF}/Catalina/localhost/customization.xml
 
 showstatus "0" "Tomcat cleaned"
 
