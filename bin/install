@@ -126,6 +126,7 @@ showstatus "0" "Tomcat download"
 extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 rm ${DOWNLOAD_FILE_TOMCAT}
 showstatus "0" "Tomcat exctracted"
+
 #cleanup unnecessary components for cloud from default installset
 rm -rf ${TOMCAT}/tanuki 
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
@@ -133,6 +134,7 @@ rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 rm -f ${TOMCAT_CONF}/tomcat-users.xml
 rm -f ${TOMCAT_CONF}/conf/Catalina/webdav.xml
+rm -f ${TOMCAT_CONF}/conf/Catalina/customization.xml
 
 showstatus "0" "Tomcat cleaned"
 
