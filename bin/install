@@ -236,6 +236,8 @@ set -x
 share 'create'
 
 # create symbolic link for webdav
+mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF
+cp -u ${OPENSHIFT_PLN_DIR}resources/WEBDAVweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT_WEBAPPS}
 showstatus "0" "Webdav configured!"
