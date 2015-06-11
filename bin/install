@@ -133,8 +133,8 @@ rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
 rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 rm -f ${TOMCAT_CONF}/tomcat-users.xml
-rm -f ${TOMCAT_CONF}/conf/Catalina/webdav.xml
-rm -f ${TOMCAT_CONF}/conf/Catalina/customization.xml
+rm -f ${TOMCAT_CONF}/conf/Catalina/localhost/webdav.xml
+rm -f ${TOMCAT_CONF}/conf/Catalina/localhost/customization.xml
 
 showstatus "0" "Tomcat cleaned"
 
