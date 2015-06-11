@@ -256,7 +256,8 @@ link()
   TMS_FROM_DIR=${OPENSHIFT_PLN_DIR}data/tms/upload/$1/*
   TMS_TO_DIR=$2
   echo "# Beginning links for $1 to $TMS_TO_DIR" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
-
+  #Remove broken links
+  find -L "$TMS_TO_DIR" -type l -exec rm -f {} +
   #Loop over all files
   for f in $TMS_FROM_DIR
   do
