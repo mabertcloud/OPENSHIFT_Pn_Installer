@@ -37,7 +37,7 @@ export CATALINA_PID="${TOMCATPID}"
 
 if [[ x"${version:-}" != x"" ]]
 then
-	export DOWNLOAD_FILE_JDK="jdk-8u31-linux-x64.gz"
+	export DOWNLOAD_FILE_JDK="jdk-8u45-linux-x64.gz"
 	export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
