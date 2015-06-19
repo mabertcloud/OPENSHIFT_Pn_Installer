@@ -35,9 +35,12 @@ export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
 export CATALINA_PID="${TOMCATPID}"
 
 
+export JDK_MAJOR='8'
+export JDK_MINOR='45'
+
 if [[ x"${version:-}" != x"" ]]
 then
-	export DOWNLOAD_FILE_JDK="jdk-8u45-linux-x64.gz"
+	export DOWNLOAD_FILE_JDK="jdk-${JDK_MAJOR}u${JDK_MINOR}-linux-x64.gz"
 	export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
