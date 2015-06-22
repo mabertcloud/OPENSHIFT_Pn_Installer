@@ -81,7 +81,7 @@ getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
 tar -xf ${DOWNLOAD_FILE_JDK}
 mv jdk1.${JDK_MAJOR}.0_${JDK_MINOR} ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
-rm -f jdk-8u45-linux-x64.gz
+rm -f ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
 # JBoss Installation
