@@ -10,23 +10,26 @@ export LANG=C
 # Set the PATH
 export PATH=/bin/:/usr/bin:${PATH}
 
-# Constants
-export PLANON="${OPENSHIFT_PLN_DIR}PlanonProCenter"
-
-export JAVA_HOME="${PLANON}/jdk"
+#Version numbers components:
+export JDK_MAJOR='8'
+export JDK_MINOR='45'
 
 export JBOSS_VERSION="jboss-6.1.0"
+
+export TOMCAT_VERSION="tomcat-7.0.57"
+
+
+# Constants
+export PLANON="${OPENSHIFT_PLN_DIR}PlanonProCenter"
+export JAVA_HOME="${PLANON}/jdk"
 export JBOSS="${PLANON}/${JBOSS_VERSION}.Final"
 export JBOSS_DEPLOY="${JBOSS}/server/default/deploy"
 export JBOSS_CONF="${JBOSS}/server/default/conf"
 export JBOSS_BUNDLES="${JBOSS}/server/default/bundles"
-
-export TOMCAT_VERSION="tomcat-7.0.57"
 export TOMCAT="${PLANON}/${TOMCAT_VERSION}"
 export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
 export TOMCAT_BUNDLES="${TOMCAT}/bundles"
-
 export TOMCATPID="${OPENSHIFT_PLN_DIR}run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
 #
@@ -34,14 +37,14 @@ export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
 #
 export CATALINA_PID="${TOMCATPID}"
 
-
 if [[ x"${version:-}" != x"" ]]
 then
-	export DOWNLOAD_FILE_JDK="jdk-8u31-linux-x64.gz"
+	export DOWNLOAD_FILE_JDK="jdk-${JDK_MAJOR}u${JDK_MINOR}-linux-x64.gz"
 	export DOWNLOAD_FILE_JBOSS="${version}-jboss.zip"
 	export DOWNLOAD_FILE_TOMCAT="${version}-tomcat.zip"
 	export DOWNLOAD_FILE_CLOUD="${version}-cloud.zip"
 fi
+
 #
 export DOWNLOAD_LOCATION="${PLANON_ARTIFACT_URL}"
 

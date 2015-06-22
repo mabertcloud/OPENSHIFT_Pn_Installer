@@ -79,9 +79,9 @@ mkdir -p ${OPENSHIFT_PLN_DIR}PlanonProCenter
 #Download and install correct JDK
 getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
-tar -xf jdk-8u31-linux-x64.gz
-mv jdk1.8.0_31 ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
-rm -f jdk-8u31-linux-x64.gz
+tar -xf ${DOWNLOAD_FILE_JDK}
+mv jdk1.${JDK_MAJOR}.0_${JDK_MINOR} ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
+rm -f ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
 # JBoss Installation
