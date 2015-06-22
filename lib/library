@@ -10,18 +10,24 @@ export LANG=C
 # Set the PATH
 export PATH=/bin/:/usr/bin:${PATH}
 
+#Version numbers components:
+export JDK_MAJOR='8'
+export JDK_MINOR='45'
+
+export JBOSS_VERSION="jboss-6.1.0"
+
+export TOMCAT_VERSION="tomcat-7.0.57"
+
 # Constants
 export PLANON="${OPENSHIFT_PLN_DIR}PlanonProCenter"
 
 export JAVA_HOME="${PLANON}/jdk"
 
-export JBOSS_VERSION="jboss-6.1.0"
 export JBOSS="${PLANON}/${JBOSS_VERSION}.Final"
 export JBOSS_DEPLOY="${JBOSS}/server/default/deploy"
 export JBOSS_CONF="${JBOSS}/server/default/conf"
 export JBOSS_BUNDLES="${JBOSS}/server/default/bundles"
 
-export TOMCAT_VERSION="tomcat-7.0.57"
 export TOMCAT="${PLANON}/${TOMCAT_VERSION}"
 export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
@@ -33,10 +39,6 @@ export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
 # Needed for Tomcat, but called CATALINA
 #
 export CATALINA_PID="${TOMCATPID}"
-
-
-export JDK_MAJOR='8'
-export JDK_MINOR='45'
 
 if [[ x"${version:-}" != x"" ]]
 then
