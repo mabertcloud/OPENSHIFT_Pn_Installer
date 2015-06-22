@@ -328,37 +328,44 @@ showstatus "0" "Webstart configured!"
 
 SSO_ENABLED=`cat ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED`
 if [[ x"${SSO_ENABLED}" == x"y" ]]
-then
-
-#download keycloakclient 
-mkdir keycloakclient
-cd keycloakclient
-
-wget -q --output-document="keycloakclient.tar.gz" 	"${PLANON_ARTIFACT_URL}keycloak/client/keycloakclient.tar.gz"
-showstatus "0" "Keycloak downloaded"
-
-tar -xf keycloakclient.tar.gz
-rm -f keycloakclient.tar.gz
-
-#install keycloakclient adapter in tomcat
-mv *  ${TOMCAT}/lib
-cd ..
-rm -rf keycloakclient
-
-mv ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml ${OPENSHIFT_PLN_DIR}conf/ROOT.xml.init || showstatus %1 "store init ROOT.xml"
-cp -f ${OPENSHIFT_PLN_DIR}/conf/ROOT.xml ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml || showstatus %1 "copy keyclocked ROOT.xml"
-
-mv ${TOMCAT_CONF}/Catalina/localhost/webclient.xml ${OPENSHIFT_PLN_DIR}env/webclient.xml.init || showstatus %1 "store init webclient.xml"
-cp -f ${OPENSHIFT_PLN_DIR}/conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/webclient.xml || showstatus %1 "copy keyclocked webclient.xml"
-
-cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
-cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
-
-mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
-cp -f ${OPENSHIFT_PLN_DIR}/resources/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
-
-showstatus "0" "Keycloak client installed"
-
+  then
+  
+  #download keycloakclient 
+  mkdir keycloakclient
+  cd keycloakclient
+  
+  wget -q --output-document="keycloakclient.tar.gz" 	"${PLANON_ARTIFACT_URL}keycloak/client/keycloakclient.tar.gz"
+  showstatus "0" "Keycloak downloaded"
+  
+  tar -xf keycloakclient.tar.gz
+  rm -f keycloakclient.tar.gz
+  
+  #install keycloakclient adapter in tomcat
+  mv *  ${TOMCAT}/lib
+  cd ..
+  rm -rf keycloakclient
+  
+  mv ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml ${OPENSHIFT_PLN_DIR}conf/ROOT.xml.init || showstatus %1 "store init ROOT.xml"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/ROOT.xml ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml || showstatus %1 "copy keyclocked ROOT.xml"
+  
+  mv ${TOMCAT_CONF}/Catalina/localhost/webclient.xml ${OPENSHIFT_PLN_DIR}env/webclient.xml.init || showstatus %1 "store init webclient.xml"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/webclient.xml || showstatus %1 "copy keyclocked webclient.xml"
+  
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
+  
+  mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
+  cp -f ${OPENSHIFT_PLN_DIR}/resources/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
+  
+  if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]
+    then
+	  showstatus "0" "PRODUCTION Environment."
+    else
+      cp -f ${OPENSHIFT_PLN_DIR}/resources/info.jsp ${TOMCAT}/webapps/ROOT/info.jsp
+      showstatus "0" "NON-PRODUCTION Environment, added info.jsp"
+  fi
+  
+  showstatus "0" "Keycloak client installed"
 fi
 
 
