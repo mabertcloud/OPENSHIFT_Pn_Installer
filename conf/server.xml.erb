@@ -140,7 +140,13 @@
            remoteIpProxiesHeader="x-forwarded-by"
            protocolHeader="x-forwarded-proto"
     />
+<!-- CLOUD ADD-ON HL: IP Blocking
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" 
+        requestAttributesEnabled="true" 
+        allow="133.133.133.133|127.d+.d+.d+|::1|0:0:0:0:0:0:0:1"/>   
 
+http://stackoverflow.com/questions/17518200/tomcat-server-ip-address-restriction-methods         
+-->
       </Host>
     </Engine>
   </Service>
