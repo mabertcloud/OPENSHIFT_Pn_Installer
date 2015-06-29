@@ -124,7 +124,7 @@ start()
 
 	typeset -i RC=0
 	showstatus "0" "start"
-	showstatus "0" "	Start planon cartridge runtime"
+	showstatus "0" "Start planon cartridge runtime"
 
 	# Create the file share mount
 	share 'create'
@@ -146,8 +146,11 @@ start()
 			echo "${!}" > ${JBOSSPID}
 		fi
 	fi
-
-	sleep 30
+   
+    if [ ( x"${progs}" = x"all" ) ]
+    then
+        sleep 30
+    fi
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
 	then
@@ -164,7 +167,7 @@ start()
 	fi
 
 	#Link TMS folder
-	${OPENSHIFT_PLN_DIR}/bin/control tms
+	#${OPENSHIFT_PLN_DIR}/bin/control tms
 
 	showstatus "0" "trats"
 }
