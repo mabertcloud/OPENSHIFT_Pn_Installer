@@ -1,7 +1,7 @@
 Name: planon
 Cartridge-Short-Name: PLN
 Source-Url: https://github.com/planonsoftware/OPENSHIFT_Pn_Installer/archive/R15SP4.0.zip
-Cartridge-Version: 1.16.0
+Cartridge-Version: 1.16.1
 Compatible-Versions:
 - 0.9
 Cartridge-Vendor: planonsoftware
@@ -25,7 +25,7 @@ Provides:
 Subscribes:
 Scaling:
   Min: 1
-  Max: 1
+  Max: 3
 Group-Overrides:
 Endpoints:
   - Private-IP-Name: IP
