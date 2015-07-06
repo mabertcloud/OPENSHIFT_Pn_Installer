@@ -324,7 +324,7 @@ mv  ${JBOSS}/initmode/cockpit/nl.planon.cloud.cloudextendedqueries.jar ${JBOSS_B
 cp ${OPENSHIFT_PLN_DIR}conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"
 
-SSO_ENABLED=`cat ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED`
+SSO_ENABLED=`cat ${OPENSHIFT_PLN_DIR}conf/PLN_SSO_ENABLED`
 if [[ x"${SSO_ENABLED}" == x"y" ]]
   then
   

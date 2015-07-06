@@ -83,10 +83,10 @@ getcockpit	${PLANON_COCKPIT_URL}DatabasePlane/${OPENSHIFT_APP_DNS}/password ${OP
 getcockpit	${PLANON_COCKPIT_URL}PlanonLicenseResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}conf/license.lic
 
 #get SSO-status
-getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}/conf/PLN_SSO_ENABLED
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloak ${OPENSHIFT_PLN_DIR}conf/PLN_SSO_ENABLED
 
 #get SSO-client_settings
-getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloakjson ${OPENSHIFT_PLN_DIR}/conf/keycloak.json
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/keycloakjson ${OPENSHIFT_PLN_DIR}conf/keycloak.json
 
 #Get NYX Admin password and put it into a variable for erb processing.
 getcockpit	${PLANON_COCKPIT_URL}NyxResource/${OPENSHIFT_APP_DNS} ${OPENSHIFT_PLN_DIR}env/PLN_NYX_PASSWORD
@@ -98,26 +98,26 @@ getcockpit	${PLANON_COCKPIT_URL}PmfsResource/sysid/${OPENSHIFT_APP_DNS} ${OPENSH
 getcockpit	${PLANON_COCKPIT_URL}PmfsResource/password/${OPENSHIFT_APP_DNS}	${OPENSHIFT_PLN_DIR}env/PLN_PMFS_PASSWORD
 
 #get Webdav username
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user ${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_USERNAME
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/user ${OPENSHIFT_PLN_DIR}env/PLN_WEBDAV_USERNAME
 #get Webdav password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/pass ${OPENSHIFT_PLN_DIR}/env/PLN_WEBDAV_PASSWORD
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webdav/pass ${OPENSHIFT_PLN_DIR}env/PLN_WEBDAV_PASSWORD
 
 #get TMS username
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user ${OPENSHIFT_PLN_DIR}/env/PLN_TMS_USERNAME
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/user ${OPENSHIFT_PLN_DIR}env/PLN_TMS_USERNAME
 #get TMS  password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/pass ${OPENSHIFT_PLN_DIR}/env/PLN_TMS_PASSWORD
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/tms/pass ${OPENSHIFT_PLN_DIR}env/PLN_TMS_PASSWORD
 
 #get PEET credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user ${OPENSHIFT_PLN_DIR}/env/PLN_PEET_USERNAME
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user ${OPENSHIFT_PLN_DIR}env/PLN_PEET_USERNAME
 #get PEET password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/pass ${OPENSHIFT_PLN_DIR}/env/PLN_PEET_PASSWORD
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/pass ${OPENSHIFT_PLN_DIR}env/PLN_PEET_PASSWORD
 
 #get webservices credentials
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user ${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_USERNAME
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user ${OPENSHIFT_PLN_DIR}env/PLN_WEBSERVICES_USERNAME
 #get PEET password
-getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/pass ${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_PASSWORD
+getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/pass ${OPENSHIFT_PLN_DIR}env/PLN_WEBSERVICES_PASSWORD
 
 #set embedded jdk path for upgrade module
-echo ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk >>${OPENSHIFT_PLN_DIR}/env/PLN_JDK
+echo ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk >>${OPENSHIFT_PLN_DIR}env/PLN_JDK
 
 exit 0
