@@ -346,15 +346,14 @@ if [[ x"${SSO_ENABLED}" == x"y" ]]
   mv ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml ${OPENSHIFT_PLN_DIR}conf/ROOT.xml.init || showstatus %1 "store init ROOT.xml"
   cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.xml ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml || showstatus %1 "copy keyclocked ROOT.xml"
   
-  cp -f ${OPENSHIFT_PLN_DIR}conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
-  cp -f ${OPENSHIFT_PLN_DIR}conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
- 
-  mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
-  cp -f ${OPENSHIFT_PLN_DIR}resources/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
-
   mv ${TOMCAT_CONF}/Catalina/localhost/webclient.xml ${OPENSHIFT_PLN_DIR}env/webclient.xml.init || showstatus %1 "store init webclient.xml"
   cp -f ${OPENSHIFT_PLN_DIR}conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/webclient.xml || showstatus %1 "copy keyclocked webclient.xml"
-
+  
+  cp -f ${OPENSHIFT_PLN_DIR}conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
+  cp -f ${OPENSHIFT_PLN_DIR}conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
+  
+  mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
+  cp -f ${OPENSHIFT_PLN_DIR}resources/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
   
   if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]
     then
