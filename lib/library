@@ -14,7 +14,7 @@ export PATH=/bin/:/usr/bin:${PATH}
 export JDK_MAJOR='8'
 export JDK_MINOR='45'
 
-export JBOSS_VERSION="'jboss-6.1.0"
+export JBOSS_VERSION="jboss-6.1.0"
 
 export TOMCAT_VERSION="tomcat-7.0.63"
 
