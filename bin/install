@@ -294,18 +294,27 @@ showstatus "0" "PC4A copied!"
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
 mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
+#KJ changed since release 15.6.0 to device depended images
+#cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
+#cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
 
 cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico
 cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico
 
-rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+#KJ changed since release 15.6.0 to device depended images
+#rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/favicon.ico
 rm -f ${TOMCAT_WEBAPPS}/static/images/favicon.ico
 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg 
+#KJ changed since release 15.6.0 to device depended images
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.default.jpg
+#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg
+#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/favicon.ico 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon.ico 
