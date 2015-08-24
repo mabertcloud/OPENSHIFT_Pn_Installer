@@ -318,9 +318,8 @@ ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMC
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-768.jpg
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-480.jpg
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.default.jpg
-#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
-#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg
-#ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg
 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/favicon.ico 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon.ico 
