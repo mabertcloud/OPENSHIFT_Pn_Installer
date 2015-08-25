@@ -200,6 +200,8 @@ cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${JBOSS
 
 #nyx config
 cp ${OPENSHIFT_PLN_DIR}conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
+cp ${TOMCAT}/bundles/nl.planon.enterprise.service.api.impl-*.jar ${TOMCAT_WEBAPPS}/nyx/WEB-INF/lib/
+cp ${TOMCAT}/bundles/nl.planon.enterprise.service.api-*.jar ${TOMCAT_WEBAPPS}/nyx/WEB-INF/lib/
 
 #webdav users
 cp ${OPENSHIFT_PLN_DIR}conf/tomcat-users.xml 			${TOMCAT_CONF}/
