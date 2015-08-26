@@ -16,7 +16,7 @@ export JDK_MINOR='45'
 
 export JBOSS_VERSION="jboss-6.1.0"
 
-export TOMCAT_VERSION="tomcat-7.0.57"
+export TOMCAT_VERSION="tomcat-7.0.63"
 
 # Constants
 export PLANON="${OPENSHIFT_PLN_DIR}PlanonProCenter"
