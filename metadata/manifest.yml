@@ -38,13 +38,13 @@ Endpoints:
     Mappings:
     - Frontend: ''
       Backend: ''
-      # Options: { tohttps: '' }
+      Options: { tohttps: '' }
     - Frontend: '/webstart'
       Backend: '/PlanonWebstart/planon.jnlp'
-      # Options: { tohttps: '' }
+      Options: { tohttps: '' }
     - Frontend:      '/health'
       Backend:       ''
-      # Options: { health: true, tohttps: '' }
+      Options: { health: true, tohttps: '' }
   - Private-IP-Name: IP
     Private-Port-Name: HTTP_PORT_JBOSS
     Private-Port: 18080
@@ -55,6 +55,6 @@ Endpoints:
     Mappings:
     - Frontend: 'invoker'
       Backend: 'invoker'
-      # Options: { tohttps: 'invoker' }
+      Options: { tohttps: 'invoker' }
 Additional-Control-Actions:   
 - threaddump
