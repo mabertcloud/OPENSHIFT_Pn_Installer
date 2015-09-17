@@ -120,7 +120,6 @@ getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/
 #set embedded jdk path for upgrade module
 echo ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk >>${OPENSHIFT_PLN_DIR}/env/PLN_JDK
 
-#Set Get APP DNS for correct Ruxit Process ID
-echo ${OPENSHIFT_APP_DNS} > ${OPENSHIFT_PLN_DIR}/env/RUXIT_CLUSTER_ID
+
 
 exit 0

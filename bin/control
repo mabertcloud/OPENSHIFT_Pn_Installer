@@ -139,6 +139,10 @@ start()
 			showstatus "1" "Program JBoss is already running"
 		else
 			showstatus "0" "Program JBoss is not running, starting up."
+			
+			#Set Get APP DNS for correct Ruxit Process ID
+			echo ${OPENSHIFT_APP_DNS}-jboss > ${OPENSHIFT_PLN_DIR}/env/RUXIT_CLUSTER_ID
+			
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 			nohup ${JBOSS}/bin/run.sh				\
 				-H ${OPENSHIFT_PLN_IP}				\
@@ -161,6 +165,10 @@ start()
 			showstatus "1" "Program Tomcat is already running"
 		else
 			showstatus "0" "Program Tomcat is not running, starting up."
+			
+			#Set Get APP DNS for correct Ruxit Process ID
+			echo ${OPENSHIFT_APP_DNS}-tomcat > ${OPENSHIFT_PLN_DIR}/env/RUXIT_CLUSTER_ID
+			
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 			nohup ${TOMCAT}/bin/startup.sh >${OPENSHIFT_PLN_DIR}/logs/tomcat_startup.log 2>&1 &
 		fi
