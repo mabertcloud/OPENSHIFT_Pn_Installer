@@ -196,6 +196,8 @@ stop()
 			showstatus "0" "Program Tomcat is already stopped"
 		fi
 		rm -f ${TOMCATPID}
+		#Cleanup temp folder
+		rm -rf ${TOMCAT}/temp/*
 	fi
 
     if [[ x"${progs}" = x"all" ]] 
@@ -215,6 +217,10 @@ stop()
 			showstatus "0" "Program JBoss is already stopped"
 		fi
 		rm -f ${JBOSSPID}
+		#Cleanup temp folders
+		rm -rf ${JBOSS}/server/default/tmp 
+		rm -rf ${JBOSS}/server/default/work
+		rm -rf ${JBOSS}/server/default/data/bundlecache
 	fi
 	return 0
 }

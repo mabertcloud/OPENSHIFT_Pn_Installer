@@ -1,7 +1,7 @@
 ; default configuration for PSS2 keystore access.
 
 ; keystore file to load the private key from
-keystore-file = <%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.64/pss2.jks
+keystore-file = ${TOMCAT}/pss2.jks
 ; password to access the keystore itself
 keystore-password = geheim
 ; password to access the key

@@ -290,9 +290,13 @@ showstatus "0" "Securedocs configured!"
 
 
 #Copy PC4A in webdav
-mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon
+mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
 cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/"Planon Connect for AutoCAD Setup.exe"
 showstatus "0" "PC4A copied!"
+rm -f ${PLANON}/addon/language ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language/*
+cp -u ${PLANON}/addon/language ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
+showstatus "0" "Languagefiles copied!"
+
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
 mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content
