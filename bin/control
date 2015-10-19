@@ -304,6 +304,21 @@ tms()
         link "scheduler" "${JBOSS_BUNDLES}/planon"
 }
 
+# Procedure to empty log files
+tidy()
+{
+	truncate --size 0 catalina*.*
+	truncate --size 0 host-manager*.*
+	truncate --size 0 jboss_*.*
+	truncate --size 0 manager*.*
+	truncate --size 0 mobile*.*
+	truncate --size 0 perfmon*.*
+	truncate --size 0 sdk*.*
+	truncate --size 0 securityaudit*.*
+	truncate --size 0 server*.*
+	truncate --size 0 tomcat*.*	
+}
+
 catchall()
 {
 	showstatus "0" "	${1:-}: not yet implemented"

@@ -275,6 +275,16 @@ ln -s ${OPENSHIFT_PLN_DIR}mount/live/peet/ ${OPENSHIFT_PLN_DIR}data/peet
 ln -s ${OPENSHIFT_PLN_DIR}data/peet/ ${TOMCAT_WEBAPPS}
 showstatus "0" "peet configured!"
 
+# step 1 in old peet folder removal
+ if [ -d "${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET" ]; 
+ 	then
+  		mv ${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET/ ${OPENSHIFT_PLN_DIR}mount/live/webdav/Obsolete_peet
+  		cp -u ${OPENSHIFT_PLN_DIR}resources/readme_urgent.txt  ${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET/README_URGENT.txt
+  		showstatus "0" "default webdav peet folder marked for obsolute!"
+  	else
+  		showstatus "0" "no default webdav peet folder present"
+fi
+
 #Create Symlink for nyx/webservices to webservices folder 
 mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF
 cp -u ${OPENSHIFT_PLN_DIR}resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF/web.xml
@@ -288,6 +298,9 @@ showstatus "0" "Webservices symlink configured!"
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}data/securedocs
 showstatus "0" "Securedocs configured!"
 
+#Create Migrate folder for Migration process
+mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Migrate
+showstatus "0" "Migrate folder created"
 
 #Copy PC4A in webdav
 mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
