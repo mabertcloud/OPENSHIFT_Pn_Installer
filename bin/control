@@ -336,9 +336,10 @@ in
 	status)					status				     ;;
     mount)                  mount    "${2:-create}"  ;; 
 	tms)					tms                      ;;
+	tidy)					tidy     		         ;;
 	deploy)					catchall "${1}"		     ;;
 	reload)					catchall "${1}"	         ;;
-	tidy)					catchall "${1}"	         ;;
+	
 	pre-build)				catchall "${1}"	         ;;
 	build)					catchall "${1}"	         ;;
 	post-deploy)			catchall "${1}"	         ;;
