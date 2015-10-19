@@ -293,8 +293,9 @@ showstatus "0" "Securedocs configured!"
 mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
 cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/"Planon Connect for AutoCAD Setup.exe"
 showstatus "0" "PC4A copied!"
+#Copy language files in webdav
 rm -f ${PLANON}/addon/language ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language/*
-cp -u ${PLANON}/addon/language ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
+cp -u ${PLANON}/addon/language/* ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
 showstatus "0" "Languagefiles copied!"
 
 
@@ -393,11 +394,5 @@ if [[ x"${SSO_ENABLED}" == x"y" ]]
   
   showstatus "0" "Keycloak client installed"
 fi
-
-
-
-#write environmentsettings to file in setup
-#env >${OPENSHIFT_PLN_DIR}env/setupinstall.txt
-
 
 exit 0
