@@ -307,16 +307,16 @@ tms()
 # Procedure to empty log files
 tidy()
 {
-	truncate --size 0 catalina*.*
-	truncate --size 0 host-manager*.*
-	truncate --size 0 jboss_*.*
-	truncate --size 0 manager*.*
-	truncate --size 0 mobile*.*
-	truncate --size 0 perfmon*.*
-	truncate --size 0 sdk*.*
-	truncate --size 0 securityaudit*.*
-	truncate --size 0 server*.*
-	truncate --size 0 tomcat*.*	
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/catalina*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/host-manager*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/jboss_*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/manager*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/mobile*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/perfmon*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/sdk*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/securityaudit*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/server*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/tomcat*.*
 }
 
 catchall()
