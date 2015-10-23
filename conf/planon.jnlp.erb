@@ -9,9 +9,8 @@
     <all-permissions/>
   </security>
   <resources>
-           
-        
-    <j2se version="1.8.0_51*" java-vm-args="-da" initial-heap-size="32m" max-heap-size="700m" />
+         
+    <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
         
           <jar href="Apollo.jar"/>
         
@@ -211,7 +210,6 @@
         
           <jar href="nl.planon.pss.common-7.0.9.0.jar"/>
         
-           
     <property name="jnlp.systemproperty.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.systemproperty.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" /> 
     <property name="jnlp.systemproperty.java.naming.factory.url.pkgs" value="org.jboss.naming:org.jnp.interfaces" />
@@ -220,10 +218,8 @@
     <property name="jnlp.systemproperty.com.planonsoftware.javaversionindependent" value="true"/>
     <property name="jnlp.systemproperty.pollingAlarms" value="true"/>
            
-        
-           
   </resources>
-  <application-desc main-class="nl.planon.ares.Ares" />
-</jnlp>           
-           
-        
+    <application-desc main-class="nl.planon.ares.Ares">
+    <argument>-ConfigurationMode=true</argument>
+    </application-desc>
+</jnlp>

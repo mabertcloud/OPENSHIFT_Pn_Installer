@@ -81,7 +81,9 @@ getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
 tar -xf ${DOWNLOAD_FILE_JDK}
 mv jdk1.${JDK_MAJOR}.0_${JDK_MINOR} ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
-rm -f ${DOWNLOAD_FILE_JDK}
+rm -f ${DOWNLOAD_FILE_JDK} 
+#Replace cacerts file with office365 added certificate chain
+${OPENSHIFT_PLN_DIR}/conf/cacerts ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk/jre/lib/security/cacerts
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
 # JBoss Installation
@@ -245,11 +247,22 @@ set -x
 #
 share 'create'
 
+# Ensure webdav structure
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Documents" 
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Evacuation plans"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Exported reports"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Forms"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Images"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PALs"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PSS20Knowledgebase"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Templates"
+
 # create symbolic link for webdav
 mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF
 cp -u ${OPENSHIFT_PLN_DIR}resources/WEBDAVweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT_WEBAPPS}
+
 showstatus "0" "Webdav configured!"
 
 # create symbolic link for tms
