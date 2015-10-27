@@ -146,6 +146,7 @@ mkdir -p ${TOMCAT}/bundles/twowayauth
 cp ${TOMCAT}/bundles/mobile/* ${TOMCAT}/bundles/twowayauth
 
 #extract war files 
+extract ${TOMCAT_WEBAPPS}/awm.war 				${TOMCAT_WEBAPPS}/awm
 extract ${TOMCAT_WEBAPPS}/mobile.war 			${TOMCAT_WEBAPPS}/mobile
 extract ${TOMCAT_WEBAPPS}/pesc.war 				${TOMCAT_WEBAPPS}/pesc
 extract ${TOMCAT_WEBAPPS}/ROOT.war 				${TOMCAT_WEBAPPS}/ROOT
