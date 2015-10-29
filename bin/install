@@ -327,26 +327,38 @@ showstatus "0" "PC4A copied!"
 
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
-mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content
+mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon
 #KJ changed since release 15.6.0 to device depended images
 #cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
 #cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
 cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
 cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
 
+#Ensure presence of favicons in case of new install
 cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico
-cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon* ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/
 
-#KJ changed since release 15.6.0 to device depended images
-#rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+#Ensure restore to defaults
+cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-114.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-114.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-128.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-128.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-144.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-144.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-152.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-152.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-16.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-16.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-24.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-24.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-32.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-32.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-57.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-57.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-72.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-72.default.png
+
+#Remove images from static folder
 rm -f ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-1280.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-768.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-480.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/favicon.ico
-rm -f ${TOMCAT_WEBAPPS}/static/images/favicon.ico
+rm -f ${TOMCAT_WEBAPPS}/static/images/favicon/favicon*
 
-#KJ changed since release 15.6.0 to device depended images
+#Link images and favicon from webdav static folder 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-1280.jpg
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-768.jpg
@@ -356,8 +368,16 @@ ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMC
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg
 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/favicon.ico 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon.ico 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico ${TOMCAT_WEBAPPS}/static/favicon.default.ico
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-114.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-128.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-144.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-152.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-16.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-24.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-32.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-57.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-72.png 
+
 showstatus "0" "Login background image + favicon symlink configured!"
 
 #Create link to catalina.out
