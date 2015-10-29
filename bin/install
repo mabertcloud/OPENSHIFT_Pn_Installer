@@ -76,17 +76,14 @@ touch ${OPENSHIFT_PLN_DIR}/logs/mobile.log
 cd ${OPENSHIFT_PLN_DIR}
 mkdir -p ${OPENSHIFT_PLN_DIR}PlanonProCenter
 
-
-# Get the right DB connections
-getcockpit ${PLANON_COCKPIT_URL}Database/${OPENSHIFT_APP_DNS}/${version}	\
-	${OPENSHIFT_PLN_DIR}conf/planon-ds.xml
-
 #Download and install correct JDK
 getartifact ${DOWNLOAD_FILE_JDK} ${DOWNLOAD_FILE_JDK}
 showstatus "0" "JDK downloaded"
-tar -xf jdk-7u71-linux-x64.gz
-mv jdk1.7.0_71 ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
-rm -f jdk-7u71-linux-x64.gz
+tar -xf ${DOWNLOAD_FILE_JDK}
+mv jdk1.${JDK_MAJOR}.0_${JDK_MINOR} ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk
+rm -f ${DOWNLOAD_FILE_JDK} 
+#Replace cacerts file with office365 added certificate chain
+${OPENSHIFT_PLN_DIR}/conf/cacerts ${OPENSHIFT_PLN_DIR}PlanonProCenter/jdk/jre/lib/security/cacerts
 showstatus "0" "JDK installed in ${JAVA_HOME}"
 
 # JBoss Installation
@@ -100,7 +97,6 @@ chmod +x ${JBOSS}/bin/shutdown.sh
 
 #remove of planon application files. These will be placed by the services cartridge
 mkdir ${JBOSS}/initmode
-mv ${JBOSS_DEPLOY}/planon-telesto.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonbackgroundactionjobs.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonexchangelink.ear ${JBOSS}/initmode/
 mv ${JBOSS_DEPLOY}/planonschedulerengine.ear ${JBOSS}/initmode/
@@ -110,20 +106,20 @@ rm -rf ${JBOSS}/server/default/jndi.properties
 rm -rf ${JBOSS}/tanuki
 
 showstatus "0" "JBoss cleaned"
-#add environment/pcc specific config files
 
+#add environment/pcc specific config files
 cp ${OPENSHIFT_PLN_DIR}conf/jboss-service.xml				${JBOSS_DEPLOY}/http-invoker.sar/META-INF/
 cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${JBOSS}/server/default/
 cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 					${JBOSS_DEPLOY}/
-cp ${OPENSHIFT_PLN_DIR}conf/ApplicationMapping.properties 	${JBOSS_CONF}/
+#Can be removed as of sp14? 
+#cp ${OPENSHIFT_PLN_DIR}conf/ApplicationMapping.properties 	${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/license.lic 					${JBOSS_CONF}/
-
-#no change in erb file cp ${OPENSHIFT_PLN_DIR}/conf/login-config.xml 				${JBOSS_CONF}/
 cp ${OPENSHIFT_PLN_DIR}conf/jboss.logging.properties 		${JBOSS}/bin/logging.properties
 # Update transaction-jboss-beans and put the following line at line 74 to avoid binding on localhost.
 sed -i "74a <property name=\"processImplementation\">com.arjuna.ats.internal.arjuna.utils.ExecProcessId</property>" ${JBOSS_DEPLOY}/transaction-jboss-beans.xml
+
 showstatus "0" "JBoss configured!"
 
 # TOMCAT Installation
@@ -132,51 +128,84 @@ showstatus "0" "Tomcat download"
 extract ${DOWNLOAD_FILE_TOMCAT} PlanonProCenter
 rm ${DOWNLOAD_FILE_TOMCAT}
 showstatus "0" "Tomcat exctracted"
+
 #cleanup unnecessary components for cloud from default installset
 rm -rf ${TOMCAT}/tanuki 
 rm -f ${TOMCAT_WEBAPPS}/nyx.war
 rm -f ${TOMCAT_WEBAPPS}/pssmetadata.war
-rm -f ${TOMCAT_WEBAPPS}/ResourcePlanner.war
-rm -f ${TOMCAT_WEBAPPS}/ticket.war
-rm -rf ${TOMCAT_WEBAPPS}/webdav
-rm -rf ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
-rm -f ${TOMCAT}/conf/ticket.logging.properties
-rm -f ${TOMCAT}/conf/ticket.properties
-rm -f ${TOMCAT}/conf/Catalina/localhost/ticket.xml
+rm -f ${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
+rm -f ${TOMCAT_CONF}/tomcat-users.xml
+rm -f ${TOMCAT_CONF}/Catalina/localhost/webdav.xml
+rm -f ${TOMCAT_CONF}/Catalina/localhost/customization.xml
+
 showstatus "0" "Tomcat cleaned"
 
+#install TwoFactorAuthenticationForMobile
+cp ${TOMCAT_WEBAPPS}/mobile.war ${TOMCAT_WEBAPPS}/twowayauth.war
+mkdir -p ${TOMCAT}/bundles/twowayauth
+cp ${TOMCAT}/bundles/mobile/* ${TOMCAT}/bundles/twowayauth
+
 #extract war files 
-extract ${TOMCAT_WEBAPPS}/mobile.war ${TOMCAT_WEBAPPS}/mobile
-extract ${TOMCAT_WEBAPPS}/pesc.war ${TOMCAT_WEBAPPS}/pesc
-extract ${TOMCAT_WEBAPPS}/ROOT.war ${TOMCAT_WEBAPPS}/ROOT
-extract ${TOMCAT_WEBAPPS}/sdk.war ${TOMCAT_WEBAPPS}/sdk
-extract ${TOMCAT_WEBAPPS}/static.war ${TOMCAT_WEBAPPS}/static
-extract ${TOMCAT_WEBAPPS}/webclient.war ${TOMCAT_WEBAPPS}/webclient
+extract ${TOMCAT_WEBAPPS}/awm.war 				${TOMCAT_WEBAPPS}/awm
+extract ${TOMCAT_WEBAPPS}/mobile.war 			${TOMCAT_WEBAPPS}/mobile
+extract ${TOMCAT_WEBAPPS}/pesc.war 				${TOMCAT_WEBAPPS}/pesc
+extract ${TOMCAT_WEBAPPS}/ROOT.war 				${TOMCAT_WEBAPPS}/ROOT
+extract ${TOMCAT_WEBAPPS}/sdk.war 				${TOMCAT_WEBAPPS}/sdk
+extract ${TOMCAT_WEBAPPS}/static.war 			${TOMCAT_WEBAPPS}/static
+extract ${TOMCAT_WEBAPPS}/webclient.war 		${TOMCAT_WEBAPPS}/webclient
+extract ${TOMCAT_WEBAPPS}/ResourcePlanner.war 	${TOMCAT_WEBAPPS}/ResourcePlanner
+extract ${TOMCAT_WEBAPPS}/ticket.war 			${TOMCAT_WEBAPPS}/ticket
+extract ${TOMCAT_WEBAPPS}/twowayauth.war 		${TOMCAT_WEBAPPS}/twowayauth
+
 #remove exctracted war files
 rm -f ${TOMCAT_WEBAPPS}/*.war
 #removal of the original nyx webservices services folder, content will come from symlink folder on FS
 rm -rf ${TOMCAT_WEBAPPS}/nyx/WEB-INF/services
-cp ${OPENSHIFT_PLN_DIR}conf/jndi.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/jaas.config 				${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/ROOT.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/sdk.properties 			${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
-cp ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/ROOT.logging.properties 	${TOMCAT_CONF}/
-cp ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 	${TOMCAT_CONF}/
+#copy various config files
+cp -f ${OPENSHIFT_PLN_DIR}resources/twowayauth.xml 			${TOMCAT_CONF}/Catalina/localhost/
 
-#osgi setting 
-cp ${OPENSHIFT_PLN_DIR}conf/mobile.osgi.properties 	${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}conf/ROOT.osgi.properties 		${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}conf/sdk.osgi.properties 		${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+
+cp -f ${OPENSHIFT_PLN_DIR}conf/jndi.properties 				${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/jaas.config 					${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.properties 			${TOMCAT_CONF}/twowayauth.properties
+cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.properties 				${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.properties 				${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.properties			${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/tomcat.logging.properties 	${TOMCAT_CONF}/logging.properties
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/mobile.logging.properties 	${TOMCAT_CONF}/twowayauth.logging.properties
+cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.logging.properties 		${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
+
+#osgi setting ROOT
+sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
+#osgi setting SDK
+sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
+sed -i 's/9191/9292/g' ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
+#osgi setting Mobile
+sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+sed -i 's/9191/9393/g' ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+#osgi setting JBOSS
+cp ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties ${JBOSS}/server/default
+sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${JBOSS}/server/default/framework.properties
+sed -i 's/9191/9494/g' ${JBOSS}/server/default/framework.properties
+cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${JBOSS_BUNDLES}/system
+cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${JBOSS_BUNDLES}/system
+
+#nyx config
 cp ${OPENSHIFT_PLN_DIR}conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
+cp ${TOMCAT}/bundles/sdk/nl.planon.enterprise.service.api.impl-*.jar ${TOMCAT_WEBAPPS}/nyx/WEB-INF/lib/
+cp ${TOMCAT}/bundles/sdk/nl.planon.enterprise.service.api-*.jar ${TOMCAT_WEBAPPS}/nyx/WEB-INF/lib/
+
 #webdav users
 cp ${OPENSHIFT_PLN_DIR}conf/tomcat-users.xml 			${TOMCAT_CONF}/
 cp -avr ${OPENSHIFT_PLN_DIR}conf/Catalina				${TOMCAT_CONF}/
@@ -219,9 +248,22 @@ set -x
 #
 share 'create'
 
+# Ensure webdav structure
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Documents" 
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Evacuation plans"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Exported reports"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Forms"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Images"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PALs"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PSS20Knowledgebase"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Templates"
+
 # create symbolic link for webdav
+mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF
+cp -u ${OPENSHIFT_PLN_DIR}resources/WEBDAVweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF/web.xml
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/webdav/ ${OPENSHIFT_PLN_DIR}data/webdav
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/ ${TOMCAT_WEBAPPS}
+
 showstatus "0" "Webdav configured!"
 
 # create symbolic link for tms
@@ -247,6 +289,16 @@ ln -s ${OPENSHIFT_PLN_DIR}mount/live/peet/ ${OPENSHIFT_PLN_DIR}data/peet
 ln -s ${OPENSHIFT_PLN_DIR}data/peet/ ${TOMCAT_WEBAPPS}
 showstatus "0" "peet configured!"
 
+# step 1 in old peet folder removal
+ if [ -d "${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET" ]; 
+ 	then
+  		mv ${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET/ ${OPENSHIFT_PLN_DIR}mount/live/webdav/Obsolete_peet
+  		cp -u ${OPENSHIFT_PLN_DIR}resources/readme_urgent.txt  ${OPENSHIFT_PLN_DIR}mount/live/webdav/PEET/README_URGENT.txt
+  		showstatus "0" "default webdav peet folder marked for obsolute!"
+  	else
+  		showstatus "0" "no default webdav peet folder present"
+fi
+
 #Create Symlink for nyx/webservices to webservices folder 
 mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF
 cp -u ${OPENSHIFT_PLN_DIR}resources/NYXweb.xml ${OPENSHIFT_PLN_DIR}mount/live/webservices/WEB-INF/web.xml
@@ -260,30 +312,72 @@ showstatus "0" "Webservices symlink configured!"
 ln -s ${OPENSHIFT_PLN_DIR}mount/live/securedocs/ ${OPENSHIFT_PLN_DIR}data/securedocs
 showstatus "0" "Securedocs configured!"
 
+#Create Migrate folder for Migration process
+mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Migrate
+showstatus "0" "Migrate folder created"
 
 #Copy PC4A in webdav
 mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon
-cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/"Planon Connect for AutoCAD Setup.exe"
+cp -u ${PLANON}/addon/PC4A/"Planon Connect for AutoCAD Setup.exe" ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/"PlanonConnectforAutoCADSetup.exe"
 showstatus "0" "PC4A copied!"
+#Copy language files in webdav
+#rm -f ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language/*
+#cp -u ${PLANON}/addon/language/* ${OPENSHIFT_PLN_DIR}data/webdav/Static/addon/language
+#showstatus "0" "Languagefiles copied!"
+
 
 #Copy background login image from tomcat to webdav if file not allready present and make static symlink for login-background.jpg
-mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
-cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
+mkdir -p ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon
+#KJ changed since release 15.6.0 to device depended images
+#cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
+#cp -n ${TOMCAT_WEBAPPS}/static/images/login_background.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg
+cp -n ${TOMCAT_WEBAPPS}/static/images/background-index.jpg ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg
 
+#Ensure presence of favicons in case of new install
 cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon* ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/
+
+#Ensure restore to defaults
 cp -n ${TOMCAT_WEBAPPS}/static/favicon.ico ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-114.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-114.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-128.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-128.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-144.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-144.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-152.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-152.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-16.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-16.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-24.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-24.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-32.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-32.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-57.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-57.default.png
+cp -n ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-72.png ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/images/favicon/favicon-72.default.png
 
-rm -f ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+#Remove images from static folder
+rm -f ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-1280.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-768.jpg
+rm -f ${TOMCAT_WEBAPPS}/static/images/background-index-480.jpg
 rm -f ${TOMCAT_WEBAPPS}/static/favicon.ico
-rm -f ${TOMCAT_WEBAPPS}/static/images/favicon.ico
+rm -f ${TOMCAT_WEBAPPS}/static/images/favicon/favicon*
 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg 
+#Link images and favicon from webdav static folder 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-1280.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-768.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/background-index-480.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/background-index.default.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.jpg
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/login_background.default.jpg ${TOMCAT_WEBAPPS}/static/images/login_background.default.jpg
 
 ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/favicon.ico 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon.ico 
-ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.default.ico ${TOMCAT_WEBAPPS}/static/favicon.default.ico
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-114.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-128.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-144.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-152.png
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-16.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-24.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-32.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-57.png 
+ln -s ${OPENSHIFT_PLN_DIR}data/webdav/Static/content/favicon.ico ${TOMCAT_WEBAPPS}/static/images/favicon/favicon-72.png 
+
 showstatus "0" "Login background image + favicon symlink configured!"
 
 #Create link to catalina.out
@@ -306,8 +400,46 @@ mv  ${JBOSS}/initmode/cockpit/nl.planon.cloud.cloudextendedqueries.jar ${JBOSS_B
 cp ${OPENSHIFT_PLN_DIR}conf/planon.jnlp	 	${TOMCAT_WEBAPPS}/PlanonWebstart/planon.jnlp
 showstatus "0" "Webstart configured!"
 
-#write environmentsettings to file in setup
-#env >${OPENSHIFT_PLN_DIR}env/setupinstall.txt
+SSO_ENABLED=`cat ${OPENSHIFT_PLN_DIR}/env/PLN_SSO_ENABLED`
+if [[ x"${SSO_ENABLED}" == x"y" ]]
+  then
+  
+  #download keycloakclient 
+  mkdir keycloakclient
+  cd keycloakclient
+  
+  wget -q --output-document="keycloakclient.tar.gz" 	"${PLANON_ARTIFACT_URL}keycloak/client/keycloakclient.tar.gz"
+  showstatus "0" "Keycloak downloaded"
+  
+  tar -xf keycloakclient.tar.gz
+  rm -f keycloakclient.tar.gz
+  
+  #install keycloakclient adapter in tomcat
+  mv *  ${TOMCAT}/lib
+  cd ..
+  rm -rf keycloakclient
+  
+  mv ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml ${OPENSHIFT_PLN_DIR}conf/ROOT.xml.init || showstatus %1 "store init ROOT.xml"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/ROOT.xml ${TOMCAT_CONF}/Catalina/localhost/ROOT.xml || showstatus %1 "copy keyclocked ROOT.xml"
+  
+  mv ${TOMCAT_CONF}/Catalina/localhost/webclient.xml ${OPENSHIFT_PLN_DIR}env/webclient.xml.init || showstatus %1 "store init webclient.xml"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/webclient.xml ${TOMCAT_CONF}/Catalina/localhost/webclient.xml || showstatus %1 "copy keyclocked webclient.xml"
+  
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/ROOT/WEB-INF/keycloak.json || showstatus %1 "copy ROOT keycloak.json file"
+  cp -f ${OPENSHIFT_PLN_DIR}/conf/keycloak.json ${TOMCAT}/webapps/webclient/WEB-INF/keycloak.json || showstatus %1 "copy webclient keycloak.json file"
 
+  mv ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar ${OPENSHIFT_PLN_DIR}conf/nl.planon.pssm.frameui.engine.jar.init || showstatus %1 "copy ROOT frameUI bundle file"
+  cp -f ${OPENSHIFT_PLN_DIR}resources/SSO_nl.planon.pssm.frameui.engine.jar ${TOMCAT_BUNDLES}/ROOT/nl.planon.pssm.frameui.engine.jar || showstatus %1 "ensure real Onetime Login"
+
+  if [ x"${OPENSHIFT_NAMESPACE}" == x"prod" ]
+    then
+	  showstatus "0" "PRODUCTION Environment."
+    else
+      cp -f ${OPENSHIFT_PLN_DIR}/resources/info.jsp ${TOMCAT}/webapps/ROOT/info.jsp
+      showstatus "0" "NON-PRODUCTION Environment, added info.jsp"
+  fi
+  
+  showstatus "0" "Keycloak client installed"
+fi
 
 exit 0

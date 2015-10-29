@@ -11,13 +11,16 @@ MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
 	BEGIN { print int(tot * perc / 100) }')
 
 JAVA_OPTS=""
-JAVA_OPTS="${JAVA_OPTS} -server -Xms256m -Xmx${MAXMXMEM}m -XX:MaxPermSize=256m"
+JAVA_OPTS="${JAVA_OPTS} -server" 
+JAVA_OPTS="${JAVA_OPTS} -Xms256m"
+JAVA_OPTS="${JAVA_OPTS} -Xmx${MAXMXMEM}m"
+JAVA_OPTS="${JAVA_OPTS} -Djava.endorsed.dirs=${JBOSS}/lib/endorsed"
 JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.resolver.warning=true"
 JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000"
 JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.server.gcInterval=3600000"
 JAVA_OPTS="${JAVA_OPTS} -Djboss.service.binding.set=ports-1"
 JAVA_OPTS="${JAVA_OPTS} -Djboss.server.log.dir=<%= ENV['OPENSHIFT_PLN_DIR'] %>logs/"
-JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:<%= ENV['OPENSHIFT_PLN_DIR'] %>PlanonProCenter/jboss-6.1.0.Final/bin/logging.properties"
+JAVA_OPTS="${JAVA_OPTS} -Dlogging.configuration=file:${JBOSS}/bin/logging.properties"
 JAVA_OPTS="${JAVA_OPTS} -Dnl.planon.mail.esmtp=true"
 JAVA_OPTS="${JAVA_OPTS} -da"
 JAVA_OPTS="${JAVA_OPTS} -DPMFS_CloudUrl=https://pmfs.planonsoftware.com/MovilizerDistributionService/"

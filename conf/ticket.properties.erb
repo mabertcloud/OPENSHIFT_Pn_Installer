@@ -1,7 +1,7 @@
 ; default configuration for PSS2 keystore access.
 
 ; keystore file to load the private key from
-keystore-file = <%= ENV['OPENSHIFT_PLN_DIR'] %>/PlanonProCenter/tomcat-7.0.57/pss2.jks
+keystore-file = <%= ENV['PLN_TOMCATFOLDER'] %>/pss2.jks
 ; password to access the keystore itself
 keystore-password = geheim
 ; password to access the key
@@ -12,5 +12,5 @@ key-alias = pss2
 ; whether we're forced to run in production mode
 force-production = true
 
-mobile-web-url = <%= ENV['OPENSHIFT_APP_DNS'] %>/mobile
+mobile-web-url = https://<%= ENV['OPENSHIFT_APP_DNS'] %>/twowayauth
 ; EOF

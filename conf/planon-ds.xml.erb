@@ -5,7 +5,7 @@
 <!-- MSSQL -->
 <!-- ================================================================================================================= -->
     <jndi-name>PlanonDS</jndi-name> <!--DS-TYPE=MSSQL-->
-    <connection-url>jdbc://<%= ENV['PLN_DB_SERVER'] %></connection-url>
+    <connection-url>jdbc:sqlserver://<%= ENV['PLN_DB_SERVER'] %></connection-url>
     <driver-class>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver-class>      
    
     <user-name><%= ENV['PLN_DB_USERNAME'] %></user-name>

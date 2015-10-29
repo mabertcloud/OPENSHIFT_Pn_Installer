@@ -41,6 +41,10 @@
       <param-name>readonly</param-name>
       <param-value>false</param-value>
     </init-param>
+    <init-param>
+      <param-name>showServerInfo</param-name>
+      <param-value>false</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>
@@ -50,7 +54,7 @@
 
   <security-constraint>
 	<web-resource-collection>
-      <web-resource-name>TMS</web-resource-name>
+      <web-resource-name>tms</web-resource-name>
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
 

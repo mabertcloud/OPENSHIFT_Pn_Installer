@@ -54,12 +54,12 @@
 
   <security-constraint>
 	<web-resource-collection>
-      <web-resource-name>Planon Webservices</web-resource-name>
+      <web-resource-name>webdav</web-resource-name>
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
 
     <auth-constraint>
-      <role-name>webservices</role-name>
+      <role-name>webdav</role-name>
     </auth-constraint>
   </security-constraint>
 
@@ -72,7 +72,7 @@
     <description>
       A role defined in users-file
     </description>
-    <role-name>webservices</role-name>
+    <role-name>webdav</role-name>
   </security-role>
 
 </web-app>

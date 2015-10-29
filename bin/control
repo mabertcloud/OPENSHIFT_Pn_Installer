@@ -124,7 +124,7 @@ start()
 
 	typeset -i RC=0
 	showstatus "0" "start"
-	showstatus "0" "	Start planon cartridge runtime"
+	showstatus "0" "Start planon cartridge runtime"
 
 	# Create the file share mount
 	share 'create'
@@ -139,6 +139,10 @@ start()
 			showstatus "1" "Program JBoss is already running"
 		else
 			showstatus "0" "Program JBoss is not running, starting up."
+			
+			#Set Get APP DNS for correct Ruxit Process ID
+			export RUXIT_CLUSTER_ID=${OPENSHIFT_APP_DNS}-jboss
+			
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
 			nohup ${JBOSS}/bin/run.sh				\
 				-H ${OPENSHIFT_PLN_IP}				\
@@ -146,8 +150,11 @@ start()
 			echo "${!}" > ${JBOSSPID}
 		fi
 	fi
-
-	sleep 30
+   
+    if [[ x"${progs}" = x"all" ]] 
+    then
+        sleep 30
+    fi
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
 	then
@@ -158,13 +165,14 @@ start()
 			showstatus "1" "Program Tomcat is already running"
 		else
 			showstatus "0" "Program Tomcat is not running, starting up."
+			
+			#Set Get APP DNS for correct Ruxit Process ID
+			export RUXIT_CLUSTER_ID=${OPENSHIFT_APP_DNS}-tomcat
+			
 			source ${OPENSHIFT_PLN_DIR}/conf/tomcat_settings
 			nohup ${TOMCAT}/bin/startup.sh >${OPENSHIFT_PLN_DIR}/logs/tomcat_startup.log 2>&1 &
 		fi
 	fi
-
-	#Link TMS folder
-	${OPENSHIFT_PLN_DIR}/bin/control tms
 
 	showstatus "0" "trats"
 }
@@ -188,9 +196,14 @@ stop()
 			showstatus "0" "Program Tomcat is already stopped"
 		fi
 		rm -f ${TOMCATPID}
+		#Cleanup temp folder
+		rm -rf ${TOMCAT}/temp/*
 	fi
 
-	sleep 10
+    if [[ x"${progs}" = x"all" ]] 
+       then
+       sleep 10
+    fi
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"jboss" ) ]]
 	then
@@ -204,9 +217,14 @@ stop()
 			showstatus "0" "Program JBoss is already stopped"
 		fi
 		rm -f ${JBOSSPID}
+		#Cleanup temp folders
+		rm -rf ${JBOSS}/server/default/tmp 
+		rm -rf ${JBOSS}/server/default/work
+		rm -rf ${JBOSS}/server/default/data/bundlecache
 	fi
 	return 0
 }
+
 
 
 # Restart all services
@@ -256,7 +274,8 @@ link()
   TMS_FROM_DIR=${OPENSHIFT_PLN_DIR}data/tms/upload/$1/*
   TMS_TO_DIR=$2
   echo "# Beginning links for $1 to $TMS_TO_DIR" >> "${OPENSHIFT_PLN_DIR}data/tms/status/TMS-deployed.out"
-
+  #Remove broken links
+  find -L "$TMS_TO_DIR" -type l -exec rm -f {} +
   #Loop over all files
   for f in $TMS_FROM_DIR
   do
@@ -285,6 +304,21 @@ tms()
         link "scheduler" "${JBOSS_BUNDLES}/planon"
 }
 
+# Procedure to empty log files
+tidy()
+{
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/catalina*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/host-manager*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/jboss_*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/manager*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/mobile*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/perfmon*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/sdk*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/securityaudit*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/server*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/tomcat*.*
+}
+
 catchall()
 {
 	showstatus "0" "	${1:-}: not yet implemented"
@@ -301,10 +335,10 @@ in
 	restart)				restart	"${2:-all}"	     ;;
 	status)					status				     ;;
     mount)                  mount    "${2:-create}"  ;; 
+	tidy)					tidy                     ;;
 	tms)					tms                      ;;
 	deploy)					catchall "${1}"		     ;;
 	reload)					catchall "${1}"	         ;;
-	tidy)					catchall "${1}"	         ;;
 	pre-build)				catchall "${1}"	         ;;
 	build)					catchall "${1}"	         ;;
 	post-deploy)			catchall "${1}"	         ;;
