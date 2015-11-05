@@ -314,9 +314,10 @@ tidy()
 	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/mobile*.*
 	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/perfmon*.*
 	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/sdk*.*
-	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/securityaudit*.*
+	#truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/securityaudit*.*
 	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/server*.*
 	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/tomcat*.*
+	truncate --size 0 ${OPENSHIFT_PLN_DIR}/logs/localhost.*
 }
 
 catchall()

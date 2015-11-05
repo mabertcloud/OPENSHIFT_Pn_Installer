@@ -180,26 +180,26 @@ cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
 
-#osgi setting ROOT
-sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
-#osgi setting SDK
-sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
-sed -i 's/9191/9292/g' ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
-#osgi setting Mobile
-sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
-sed -i 's/9191/9393/g' ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
-#osgi setting JBOSS
-cp ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties ${JBOSS}/server/default
-sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${JBOSS}/server/default/framework.properties
-sed -i 's/9191/9494/g' ${JBOSS}/server/default/framework.properties
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${JBOSS_BUNDLES}/system
-cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${JBOSS_BUNDLES}/system
+####osgi setting ROOT
+###sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles
+####osgi setting SDK
+###sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
+###sed -i 's/9191/9292/g' ${TOMCAT_WEBAPPS}/sdk/WEB-INF/framework.properties
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles
+####osgi setting Mobile
+###sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+###sed -i 's/9191/9393/g' ${TOMCAT_WEBAPPS}/mobile/WEB-INF/framework.properties
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${TOMCAT_WEBAPPS}/mobile/WEB-INF/bundles
+####osgi setting JBOSS
+###cp ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties ${JBOSS}/server/default
+###sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${JBOSS}/server/default/framework.properties
+###sed -i 's/9191/9494/g' ${JBOSS}/server/default/framework.properties
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${JBOSS_BUNDLES}/system
+###cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell.remote-1.1.2.jar ${JBOSS_BUNDLES}/system
 
 #nyx config
 cp ${OPENSHIFT_PLN_DIR}conf/axis2.xml ${TOMCAT_WEBAPPS}/nyx/WEB-INF/conf/
