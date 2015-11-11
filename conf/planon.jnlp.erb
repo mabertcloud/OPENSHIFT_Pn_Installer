@@ -10,8 +10,7 @@
   </security>
   <resources>
            
-        
-    <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
+      <j2se version="1.8*" java-vm-args="-da -XX:MaxPermSize=128m -Djsse.enableSNIExtension=false" initial-heap-size="32m" max-heap-size="700m" />
         
           <jar href="Apollo.jar"/>
         
@@ -175,7 +174,7 @@
         
           <jar href="org.osgi.compendium-4.2.0.jar"/>
         
-          <jar href="orviewer50-15.0.0.37.jar"/>
+          <jar href="orviewer50-15.0.0.38.jar"/>
         
           <jar href="planon-jboss-extensions-1.1.0.jar"/>
         
@@ -209,8 +208,7 @@
         
           <jar href="xml-apis.jar"/>
         
-          <jar href="nl.planon.pss.common-7.0.9.0.jar"/>
-        
+          <jar href="nl.planon.pss.common-7.0.10.0.jar"/>
            
     <property name="jnlp.systemproperty.java.security.auth.login.config" value="https://<%= ENV['OPENSHIFT_APP_DNS'] %>/PlanonWebstart/auth.conf"/>
     <property name="jnlp.systemproperty.java.naming.factory.initial" value="org.jboss.naming.HttpNamingContextFactory" /> 
@@ -219,9 +217,7 @@
     <property name="jnlp.systemproperty.felix.extensions.disable" value="true"/>
     <property name="jnlp.systemproperty.com.planonsoftware.javaversionindependent" value="true"/>
     <property name="jnlp.systemproperty.pollingAlarms" value="true"/>
-           
         
-           
   </resources>
     <application-desc main-class="nl.planon.ares.Ares">
     <argument>-ConfigurationMode=true</argument>
