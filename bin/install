@@ -249,14 +249,14 @@ set -x
 share 'create'
 
 # Ensure webdav structure
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Documents" 
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Evacuation plans"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Exported reports"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Forms"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Images"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PALs"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/PSS20Knowledgebase"
-mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/Templates"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Documents" 
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Evacuation plans"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Exported reports"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Forms"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Images"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/PALs"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/PSS20Knowledgebase"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Templates"
 
 # create symbolic link for webdav
 mkdir -p ${OPENSHIFT_PLN_DIR}mount/live/webdav/WEB-INF
