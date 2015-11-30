@@ -140,6 +140,8 @@ start()
 		else
 			showstatus "0" "Program JBoss is not running, starting up."
 			
+			#Remove server.log file to enable jboss startup check
+			rm -f ${OPENSHIFT_PLN_DIR}/logs/server.log
 			#Set Get APP DNS for correct Ruxit Process ID
 			export RUXIT_CLUSTER_ID=${OPENSHIFT_APP_DNS}-jboss
 			
@@ -153,7 +155,10 @@ start()
    
     if [[ x"${progs}" = x"all" ]] 
     then
-        sleep 30
+        while [ ! -f ${OPENSHIFT_PLN_DIR}/logs/server.log ]
+			do
+  				sleep 1
+			done
     fi
 
 	if [[ ( x"${progs}" = x"all" ) || ( x"${progs}" = x"tomcat" ) ]]
