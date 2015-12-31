@@ -248,7 +248,9 @@ set -x
 #
 share 'create'
 
-# Ensure webdav structure
+# Ensure fileserver structure
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/backup"
+mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/securedocs"
 mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Documents" 
 mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Evacuation plans"
 mkdir -p "${OPENSHIFT_PLN_DIR}mount/live/webdav/Exported reports"

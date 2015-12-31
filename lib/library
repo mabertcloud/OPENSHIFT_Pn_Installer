@@ -103,6 +103,7 @@ share()
                         -o UserKnownHostsFile=/dev/null                                 \
                         -o reconnect                                                    \
                         -o delay_connect                                                \
+                        -o follow_symlinks                                              \
                         ${CUSTSHARE}                                                    \
                         ${OPENSHIFT_PLN_DIR}mount
                     fusermount -uz ${OPENSHIFT_PLN_DIR}mount
@@ -115,6 +116,7 @@ share()
                         -o UserKnownHostsFile=/dev/null                                 \
                         -o reconnect                                                    \
                         -o delay_connect                                                \
+                        -o follow_symlinks                                              \
                         ${CUSTSHARE}                                                    \
                         ${OPENSHIFT_PLN_DIR}mount
                 showstatus "0" "mount : ${1}"
