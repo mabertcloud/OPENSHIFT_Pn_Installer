@@ -112,6 +112,14 @@ getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/user ${
 #get PEET password
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/peet/pass ${OPENSHIFT_PLN_DIR}/env/PLN_PEET_PASSWORD
 
+#get AWS user
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/awskey ${OPENSHIFT_PLN_DIR}/env/PLN_AWS_KEY
+#get AWS secret
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/awssecret ${OPENSHIFT_PLN_DIR}/env/PLN_AWS_SECRET
+#get AWS secret
+getcockpit	${PLANON_COCKPIT_URL}InstanceProperty/${OPENSHIFT_APP_DNS}/awsregion ${OPENSHIFT_PLN_DIR}/env/PLN_AWS_REGION
+
+
 #get webservices credentials
 getcockpit	${PLANON_COCKPIT_URL}WebdavResource/${OPENSHIFT_APP_DNS}/webservices/user ${OPENSHIFT_PLN_DIR}/env/PLN_WEBSERVICES_USERNAME
 #get PEET password
