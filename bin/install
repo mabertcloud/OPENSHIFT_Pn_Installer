@@ -181,7 +181,14 @@ cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
 
 #DEBUG MARK ##########################################################################################
-getdebugartifact 'infra/test/cloudwatch-log4j-appender-1.0.1.jar' ${TOMCAT_LIB}/cloudwatch.jar
+getdebugartifact 'infra/test/nl.planon.cloud.aws.cloudwatch-1.0.jar' ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar
+
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/ROOT/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/ticket/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/sdk/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/mobile/
+
 #DEBUG MARK ##########################################################################################
 
 #osgi setting ROOT
