@@ -29,6 +29,7 @@ export JBOSS_BUNDLES="${JBOSS}/server/default/bundles"
 export TOMCAT="${PLANON}/${TOMCAT_VERSION}"
 export TOMCAT_WEBAPPS="${TOMCAT}/webapps"
 export TOMCAT_CONF="${TOMCAT}/conf"
+export TOMCAT_LIB="${TOMCAT}/lib"
 export TOMCAT_BUNDLES="${TOMCAT}/bundles"
 export TOMCATPID="${OPENSHIFT_PLN_DIR}run/tomcat.pid"
 export JBOSSPID="${OPENSHIFT_PLN_DIR}run/jboss.pid"
@@ -208,36 +209,73 @@ getcockpit()
 
 getartifact()
 {
-	SRC="${1}"
-	DST="${2}"
+    SRC="${1}"
+    DST="${2}"
 
-	wget -q --output-document="${DST}" 	\
-	 	 "${DOWNLOAD_LOCATION}${version}/${SRC}"
+    wget -q --output-document="${DST}"  \
+         "${DOWNLOAD_LOCATION}${version}/${SRC}"
 
-	RC=${?}
+    RC=${?}
 
-	 # Check the wget exitcode. If it's 0, return to the calling
-	 # program/function. If it's NOT 0, there is some kind of error
-	 # and we cannot continue. Just exit!!
-	 case ${RC}
-	 in
-	 	0)	return 0								;;
-	 	1)	MSG="Generic error code"				;;
-	 	2)	MSG="Parse error"						;;
-	 	3)	MSG="File I/O error"					;;
-	 	4)	MSG="Network failure"					;;
-	 	5)	MSG="SSL verification failure"			;;
-	 	6)	MSG="Authentication failure"			;;
-	 	7)	MSG="Protocol error"					;;
-	 	8)	MSG="Server issued an error response"	;;
-	 	*)	MSG="Unknown error response"			;;
-	 esac
+     # Check the wget exitcode. If it's 0, return to the calling
+     # program/function. If it's NOT 0, there is some kind of error
+     # and we cannot continue. Just exit!!
+     case ${RC}
+     in
+        0)  return 0                                ;;
+        1)  MSG="Generic error code"                ;;
+        2)  MSG="Parse error"                       ;;
+        3)  MSG="File I/O error"                    ;;
+        4)  MSG="Network failure"                   ;;
+        5)  MSG="SSL verification failure"          ;;
+        6)  MSG="Authentication failure"            ;;
+        7)  MSG="Protocol error"                    ;;
+        8)  MSG="Server issued an error response"   ;;
+        *)  MSG="Unknown error response"            ;;
+     esac
 
      case ${RC}
-	 in
-	    0)	return 0								;;
-        *)	showstatus "${RC}" "wget: ${MSG} Artifact ${DOWNLOAD_LOCATION}${version}/${SRC}"		;;
-	 esac
+     in
+        0)  return 0                                ;;
+        *)  showstatus "${RC}" "wget: ${MSG} Artifact ${DOWNLOAD_LOCATION}${version}/${SRC}"        ;;
+     esac
 
-	exit ${RC}
+    exit ${RC}
 }
+
+getdebugartifact()
+{
+    SRC="${1}"
+    DST="${2}"
+
+    wget -q --output-document="${DST}"  \
+         "${DOWNLOAD_LOCATION}${SRC}"
+
+    RC=${?}
+
+     # Check the wget exitcode. If it's 0, return to the calling
+     # program/function. If it's NOT 0, there is some kind of error
+     # and we cannot continue. Just exit!!
+     case ${RC}
+     in
+        0)  return 0                                ;;
+        1)  MSG="Generic error code"                ;;
+        2)  MSG="Parse error"                       ;;
+        3)  MSG="File I/O error"                    ;;
+        4)  MSG="Network failure"                   ;;
+        5)  MSG="SSL verification failure"          ;;
+        6)  MSG="Authentication failure"            ;;
+        7)  MSG="Protocol error"                    ;;
+        8)  MSG="Server issued an error response"   ;;
+        *)  MSG="Unknown error response"            ;;
+     esac
+
+     case ${RC}
+     in
+        0)  return 0                                ;;
+        *)  showstatus "${RC}" "wget: ${MSG} Artifact ${DOWNLOAD_LOCATION}${SRC}"        ;;
+     esac
+
+    exit ${RC}
+}
+

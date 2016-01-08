@@ -21,6 +21,18 @@ log4j.rootLogger = INFO, SdkConsoleAppender, SdkRollingAppender
 # you know what you're doing!!!
 log4j.additivity.pnlog = false
 # the default PnLogger level is INFO
-log4j.logger.pnlog = INFO, SdkConsoleAppender, SdkRollingAppender
+log4j.logger.pnlog = INFO, SdkConsoleAppender, SdkRollingAppender, CLOUDWATCH
+
+
+  
+log4j.appender.CLOUDWATCH = nl.planon.cloud.aws.logging.log4jappenders.CloudWatchAppenderSkeleton
+log4j.appender.CLOUDWATCH.layout = org.apache.log4j.PatternLayout
+log4j.appender.CLOUDWATCH.layout.ConversionPattern = %d [%t] %-5p %c- %m%n
+log4j.appender.CLOUDWATCH.awsLogGroupName = customers-<%= ENV['OPENSHIFT_NAMESPACE'] %>
+log4j.appender.CLOUDWATCH.awsLogStreamName = <%= ENV['OPENSHIFT_APP_DNS'] %>
+log4j.appender.CLOUDWATCH.awsLogStreamFlushPeriodInSeconds = 5
+log4j.appender.CLOUDWATCH.awsRegionName = eu-central-1
+
+
 
 ###EOF###

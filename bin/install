@@ -180,6 +180,10 @@ cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
 
+#DEBUG MARK ##########################################################################################
+getdebugartifact 'test/cloudwatch-log4j-appender-1.0.1.jar' ${TOMCAT_LIB}
+#DEBUG MARK ##########################################################################################
+
 #osgi setting ROOT
 sed -i "2a osgi.shell.telnet.ip=${OPENSHIFT_PLN_IP}" ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/framework.properties
 cp ${OPENSHIFT_PLN_DIR}resources/org.apache.felix.shell-1.4.3.jar ${TOMCAT_WEBAPPS}/ROOT/WEB-INF/bundles

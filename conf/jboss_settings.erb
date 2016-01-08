@@ -26,6 +26,8 @@ JAVA_OPTS="${JAVA_OPTS} -da"
 JAVA_OPTS="${JAVA_OPTS} -DPMFS_CloudUrl=https://pmfs.planonsoftware.com/MovilizerDistributionService/"
 JAVA_OPTS="${JAVA_OPTS} -DPMFS_SystemID=<%= ENV['PLN_PMFS_ID'] %>"
 JAVA_OPTS="${JAVA_OPTS} -DPMFS_Password=<%= ENV['PLN_PMFS_PASSWORD'] %>"
+JAVA_OPTS="${JAVA_OPTS} -Daws.accessKeyId=<%= ENV['PLN_AWS_KEY'] %>"
+JAVA_OPTS="${JAVA_OPTS} -Daws.secretKey=<%= ENV['PLN_AWS_SECRET'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODE'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODETEXT'] %>"
 
