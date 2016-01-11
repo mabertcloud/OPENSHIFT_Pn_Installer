@@ -184,8 +184,9 @@ cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
 getdebugartifact 'infra/test/nl.planon.cloud.aws.cloudwatch-1.0.jar' ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar
 
 #cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
-cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/ROOT/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/sdk/
 cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/bundles/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
 
 #DEBUG MARK ##########################################################################################
 
