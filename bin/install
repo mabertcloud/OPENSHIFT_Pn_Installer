@@ -188,6 +188,7 @@ cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUN
 cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/ticket/
 cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/sdk/
 cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_BUNDLES}/mobile/
+cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/lib/
 
 #DEBUG MARK ##########################################################################################
 
