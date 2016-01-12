@@ -14,8 +14,8 @@
 # limitations under the License.
 
 # Planon: We put the ConsoleHandler in the first place, otherwise the SimpleFormatter does not function properly.
-handlers = java.util.logging.ConsoleHandler, 1catalina.org.apache.juli.FileHandler, 2localhost.org.apache.juli.FileHandler, 3manager.org.apache.juli.FileHandler, 4host-manager.org.apache.juli.FileHandler
-.handlers = java.util.logging.ConsoleHandler, 1catalina.org.apache.juli.FileHandler
+handlers = nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler, 1catalina.org.apache.juli.FileHandler, 2localhost.org.apache.juli.FileHandler, 3manager.org.apache.juli.FileHandler, 4host-manager.org.apache.juli.FileHandler
+.handlers = nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler, 1catalina.org.apache.juli.FileHandler
 
 .level = INFO
 
@@ -40,8 +40,8 @@ handlers = java.util.logging.ConsoleHandler, 1catalina.org.apache.juli.FileHandl
 4host-manager.org.apache.juli.FileHandler.directory = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs
 4host-manager.org.apache.juli.FileHandler.prefix = host-manager.
 
-java.util.logging.ConsoleHandler.level = FINE
-java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.level = FINE
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.formatter = java.util.logging.SimpleFormatter
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.level = INFO
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.formatter = java.util.logging.SimpleFormatter
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsLogGroupName = customers-<%= ENV['OPENSHIFT_NAMESPACE'] %>
