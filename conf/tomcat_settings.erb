@@ -44,5 +44,7 @@ CATALINA_OPTS="${CATALINA_OPTS} -DCSSFILE=${PLANONDIR}/conf/pss-login.css"
 CATALINA_OPTS="${CATALINA_OPTS} -Djdk.util.TimeZone.allowSetDefault=true"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.config.file=${PLANONDIR}/conf/logging.properties"
 CATALINA_OPTS="${CATALINA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+CATALINA_OPTS="${CATALINA_OPTS} -Daws.accessKeyId=<%= ENV['PLN_AWS_KEY'] %>"
+CATALINA_OPTS="${CATALINA_OPTS} -Daws.secretKey=<%= ENV['PLN_AWS_SECRET'] %>"
 
 export CATALINA_OPTS
