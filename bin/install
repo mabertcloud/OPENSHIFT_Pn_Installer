@@ -179,11 +179,12 @@ cp -f ${OPENSHIFT_PLN_DIR}conf/ROOT.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/sdk.logging.properties 		${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/ticket.logging.properties	${TOMCAT_CONF}/
 cp -f ${OPENSHIFT_PLN_DIR}conf/planon-ds.xml 				${TOMCAT_CONF}/
+cp -f ${OPENSHIFT_PLN_DIR}conf/setenv.sh                    ${TOMCAT}/bin/
 
 #DEBUG MARK ##########################################################################################
 getdebugartifact 'infra/test/nl.planon.cloud.aws.cloudwatch-1.0.jar' ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar
 showstatus "0" "Configuring loggee..."
-cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
+#cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
 cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT}/bin/
 #cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_WEBAPPS}/sdk/WEB-INF/lib/
 #cp ${OPENSHIFT_PLN_DIR}resources/nl.planon.cloud.aws.cloudwatch.jar ${TOMCAT_LIB}/
@@ -223,6 +224,7 @@ cp ${OPENSHIFT_PLN_DIR}conf/server.xml		 			${TOMCAT_CONF}/
 chmod +x ${TOMCAT}/bin/startup.sh
 chmod +x ${TOMCAT}/bin/catalina.sh
 chmod +x ${TOMCAT}/bin/shutdown.sh
+chmod +x ${TOMCAT}/bin/setenv.sh
 showstatus "0" "Tomcat download, unzipped and configured!"
 
 #Get credentials for share.
