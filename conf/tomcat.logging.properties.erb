@@ -40,8 +40,8 @@ handlers = nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandle
 4host-manager.org.apache.juli.FileHandler.directory = <%= ENV['OPENSHIFT_PLN_DIR'] %>logs
 4host-manager.org.apache.juli.FileHandler.prefix = host-manager.
 
-nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.level = FINE
-nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.formatter = java.util.logging.SimpleFormatter
+java.util.logging.SimpleFormatter.format=%1$tH:%1$tM:%1$tS %4$-6s %2$s %5$s%6$s%n
+
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.level = INFO
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.formatter = java.util.logging.SimpleFormatter
 nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsLogGroupName = customers-<%= ENV['OPENSHIFT_NAMESPACE'] %>
