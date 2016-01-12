@@ -42,7 +42,12 @@ handlers = java.util.logging.ConsoleHandler, 1catalina.org.apache.juli.FileHandl
 
 java.util.logging.ConsoleHandler.level = FINE
 java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
-
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.level = INFO
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.formatter = java.util.logging.SimpleFormatter
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsLogGroupName = customers-<%= ENV['OPENSHIFT_NAMESPACE'] %>
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsLogStreamName = <%= ENV['OPENSHIFT_APP_DNS'] %>
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsLogStreamFlushPeriodInSeconds = 5
+nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler.awsRegionName = eu-central-1
 
 ############################################################
 # Facility specific properties.
@@ -50,7 +55,7 @@ java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
 ############################################################
 
 org.apache.catalina.core.ContainerBase.[Catalina].[localhost].level = INFO
-org.apache.catalina.core.ContainerBase.[Catalina].[localhost].handlers = 2localhost.org.apache.juli.FileHandler
+org.apache.catalina.core.ContainerBase.[Catalina].[localhost].handlers =nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler
 
 org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/manager].level = INFO
 org.apache.catalina.core.ContainerBase.[Catalina].[localhost].[/manager].handlers = 3manager.org.apache.juli.FileHandler
