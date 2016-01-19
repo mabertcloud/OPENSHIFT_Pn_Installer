@@ -69,6 +69,14 @@ handler.SERVER.suffix=.yyyy-MM-dd
 #handler.SERVER.rotateSize=400000
 #handler.SERVER.maxBackupIndex=2
 
+handler.CLOUD = nl.planon.cloud.aws.logging.log4jappenders.CloudJavaUtilLoggingHandler
+handler.CLOUD.level = ${jboss.boot.server.log.file.level:INFO}
+handler.CLOUD.properties=awsLogGroupName,awsLogStreamName,awsLogStreamFlushPeriodInSeconds,awsRegionName
+handler.CLOUD.awsLogGroupName= customers-<%= ENV['OPENSHIFT_NAMESPACE'] %>
+handler.CLOUD.awsLogStreamName= <%= ENV['OPENSHIFT_APP_DNS'] %>
+handler.CLOUD.awsLogStreamFlushPeriodInSeconds=5
+handler.CLOUD.awsRegionName=eu-central-1
+
 
 # Formatter pattern configuration
 formatter.PATTERN=org.jboss.logmanager.formatters.PatternFormatter
