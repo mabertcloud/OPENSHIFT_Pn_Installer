@@ -146,8 +146,9 @@ start()
 			export RUXIT_CLUSTER_ID=${OPENSHIFT_APP_DNS}-jboss
 			
 			source ${OPENSHIFT_PLN_DIR}/conf/jboss_settings
-			nohup ${JBOSS}/bin/run.sh				\
-				-H ${OPENSHIFT_PLN_IP}				\
+			nohup ${JBOSS}/bin/run.sh								\
+				-C ${JBOSS}/bin/nl.planon.cloud.aws.cloudwatch.jar  \
+				-H ${OPENSHIFT_PLN_IP}								\
 				-b ${OPENSHIFT_PLN_IP} >${OPENSHIFT_PLN_DIR}/logs/jboss_startup.log 2>&1 &
 			echo "${!}" > ${JBOSSPID}
 		fi
