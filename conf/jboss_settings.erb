@@ -35,7 +35,7 @@ JAVA_OPTS="${JAVA_OPTS} -Djavax.management.builder.initial=org.jboss.system.serv
 JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.logging.Logger.pluginClass=org.jboss.logging.logmanager.LoggerPluginImpl"
 
-JBOSS_CLASSPATH=${JBOSS}/bin/nl.planon.cloud.aws.cloudwatch.jar
+JBOSS_CLASSPATH=${JBOSS}/bin/nl.planon.cloud.aws.cloudwatch.jar:${JBOSS}/lib/jboss-mbeanserver.jar:${JBOSS}/lib/jboss-logmanager.jar
 export JBOSS_CLASSPATH;
 
 export JAVA_OPTS
