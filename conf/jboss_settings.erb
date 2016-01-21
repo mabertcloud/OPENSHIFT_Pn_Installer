@@ -31,7 +31,7 @@ JAVA_OPTS="${JAVA_OPTS} -Daws.secretKey=<%= ENV['PLN_AWS_SECRET'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODE'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODETEXT'] %>"
 JAVA_OPTS="${JAVA_OPTS} -Djboss.platform.mbeanserver"
-JAVA_OPTS="${JAVA_OPTS} -Djavax.management.builder.initial=org.jboss.system.server.jmx.MBeanServerBuilderImpl"
+
 JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.logging.Logger.pluginClass=org.jboss.logging.logmanager.LoggerPluginImpl"
 
