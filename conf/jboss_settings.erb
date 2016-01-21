@@ -2,13 +2,13 @@
 
 # Calculate the memory alotted to JBOSS 40% of the (gearsize - 512)
 
-MEMPERC=40		# Percentage of total memory for JBOSS
+MEMPERC=40      # Percentage of total memory for JBOSS
 
 TOTMEM=$(awk -v tot=${OPENSHIFT_GEAR_MEMORY_MB} '
-	BEGIN { print int(tot - 512) }')
+    BEGIN { print int(tot - 512) }')
 
 MAXMXMEM=$(awk  -v perc=${MEMPERC} -v tot=${TOTMEM} '
-	BEGIN { print int(tot * perc / 100) }')
+    BEGIN { print int(tot * perc / 100) }')
 
 JAVA_OPTS=""
 JAVA_OPTS="${JAVA_OPTS} -server" 
@@ -30,9 +30,8 @@ JAVA_OPTS="${JAVA_OPTS} -Daws.accessKeyId=<%= ENV['PLN_AWS_KEY'] %>"
 JAVA_OPTS="${JAVA_OPTS} -Daws.secretKey=<%= ENV['PLN_AWS_SECRET'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODE'] %>"
 JAVA_OPTS="${JAVA_OPTS} <%= ENV['PLN_JBOSS_MODETEXT'] %>"
-JAVA_OPTS="${JAVA_OPTS} -DdisableRMIServerCodebase=true"
 JAVA_OPTS="${JAVA_OPTS} -Djboss.platform.mbeanserver"
-JAVA_OPTS="${JAVA_OPTS} -Djava.rmi.server.RMIClassLoaderSpi=nl.planon.jboss.system.PlanonJBossRMIClassLoader"
+JAVA_OPTS="${JAVA_OPTS} -Djavax.management.builder.initial=org.jboss.system.server.jmx.MBeanServerBuilderImpl"
 JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.logging.Logger.pluginClass=org.jboss.logging.logmanager.LoggerPluginImpl"
 
